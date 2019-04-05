@@ -23,6 +23,7 @@ class Monster extends Component {
 		return (
 			<div className='monster-wrap' onClick={this.onClick}>
 				<div className='hitpoints'>
+					<div className='hitpoints_stats'>{currentMonster.current_hp}/{currentMonster.max_hp}</div>
 					<div className='current_hitpoints' style={{width: this.calculateHitpointsPercentage(currentMonster.current_hp, currentMonster.max_hp)}} ></div>
 				</div>
 				<h1 className='monster-name'>{monsters.chicken.name}</h1>
