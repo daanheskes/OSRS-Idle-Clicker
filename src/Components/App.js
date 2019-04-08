@@ -41,6 +41,13 @@ const monsters = {
 		img: "https://oldschool.runescape.wiki/images/thumb/8/84/Cow.png/" + pxsize + "px-Cow.png?d4b4c",
 		bones: "Bones"
 	},
+	minotaur: {
+		name: "Minotaur",
+		combatLevel: 12,
+		hitpoints: 10,
+		img: "https://oldschool.runescape.wiki/images/thumb/7/7e/Minotaur.png/" + pxsize + "-Minotaur.png?65d6a",
+		bones: "Bones"
+	},
 	hillgiant: {
 		name: "Hill Giant",
 		combatlevel: 28,
@@ -104,6 +111,12 @@ class IdleOSRS extends Component {
 					experience: 0,
 					percentage: 0
 				},
+				slayer: {
+					name: 'Slayer',
+					level: 1,
+					experience: 0,
+					percentage: 0
+				},
 				total: {
 					name: 'Total',
 					level: 0
@@ -120,7 +133,7 @@ class IdleOSRS extends Component {
 		}
  	}
 
-	clickMonster(currentMonster) {
+	clickMonster(currentMonster, Xcoord, Ycoord) {
 		const damage = this.state.damage;
 		let newstate = this.state;
 		newstate.currentMonster.current_hp = currentMonster.current_hp - damage;
@@ -128,6 +141,7 @@ class IdleOSRS extends Component {
 		this.grantExperience('hitpoints', damage * hitpointsExperiencePerDamage);
 		if (newstate.currentMonster.current_hp === 0) {
 			this.grantPrayerEXP(currentMonster);
+			this.grantSlayerEXP(currentMonster);
 			const that = this;
 			setTimeout(function() {
 				that.newMonster();
@@ -174,8 +188,9 @@ class IdleOSRS extends Component {
 	}
 
 	grantExperience(skill, experience) {
+		let exp_multiplier = 5;
 		let newstate = this.state;
-		newstate.stats[skill].experience += experience;
+		newstate.stats[skill].experience += (experience * exp_multiplier);
 		newstate.stats[skill].percentage = this.calculateNextLevelPercentage(newstate.stats[skill].experience);
 		this.setState(newstate);
 		this.checkLevelUp(skill);
@@ -185,6 +200,11 @@ class IdleOSRS extends Component {
 	grantPrayerEXP(currentMonster) {
 		const experienceAmount = prayerExperience[currentMonster.bones];
 		this.grantExperience('prayer', experienceAmount);
+	}
+
+	grantSlayerEXP(currentMonster) {
+		const experienceAmount = currentMonster.max_hp;
+		this.grantExperience('slayer', experienceAmount);
 	}
 
 	chooseNewMonster() {
@@ -263,7 +283,7 @@ class IdleOSRS extends Component {
 		const combatLevel = this.calculateCombat(stats);
 
 		let newstate = this.state;
-		this.state.stats.combat.level = combatLevel;
+		newstate.stats.combat.level = combatLevel;
 
 		this.setState(newstate);
 	}

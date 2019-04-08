@@ -13,6 +13,7 @@ class Skills extends Component {
 			magic: "https://oldschool.runescape.wiki/images/5/5c/Magic_icon.png?334cf",
 			hitpoints: "https://oldschool.runescape.wiki/images/9/96/Hitpoints_icon.png?a4819",
 			prayer: "https://oldschool.runescape.wiki/images/f/f2/Prayer_icon.png?ca0dc",
+			slayer: "https://oldschool.runescape.wiki/images/2/28/Slayer_icon.png?cd34f",
 			total: "https://oldschool.runescape.wiki/images/b/bd/Stats_icon.png?1b467"
 		}
 		this.skillIcons = skillIcons;
@@ -44,7 +45,7 @@ class Skills extends Component {
 							<img src={this.skillIcons[item[0]]} title={item[1].name} alt={item[1].name} />
 						</div>
 						<span className='skillLevel'>{(item[0] === 'total' ? totalLevel : item[1].level)}</span>
-						{("experience" in item[1] ? <div className="skillProgress" style={{opacity: isSelected || item[0] === 'hitpoints' || item[0] === 'prayer' ? '1' : ''}}><div className='skillProgressBar' style={{width: item[1].percentage + "%"}}></div></div> : '')}
+						{("experience" in item[1] ? <div className="skillProgress" style={{opacity: isSelected || item[0] === 'hitpoints' || item[0] === 'prayer' || item[0] === 'slayer' ? '1' : ''}}><div className='skillProgressBar' style={{width: item[1].percentage + "%"}}></div></div> : '')}
 						
 					</div>
 				})

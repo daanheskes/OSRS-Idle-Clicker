@@ -9,7 +9,10 @@ class Monster extends Component {
 	}
 
 	handleClick(e) {
-		this.props.clickMonster(this.props.currentMonster);
+		const Xcoord = e.clientX;
+		const Ycoord = e.clientY;
+
+		this.props.clickMonster(this.props.currentMonster, Xcoord, Ycoord);
 	}
 
 	calculateHitpointsPercentage(currentHP, maxHP) {

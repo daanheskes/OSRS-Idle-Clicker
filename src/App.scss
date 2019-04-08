@@ -23,30 +23,27 @@ body, html, #root {
 nav {
 	position:absolute;
 	width:100%;
-	height:$navbarheight;
+	height: $navbarheight;
 	background-color: #080d17;
    box-shadow: 0px 2px 4px 0px #1b1b1b;
-	margin-bottom:$navbarheight;
+	margin-bottom: $navbarheight;
 }
 
 .column {
 	margin-top:$navbarheight;
-	height:calc(100% - $navbarheight);
+	height:calc(100% - #{$navbarheight});
 }
 
 .column-1 {
 	width: 20%;
-	height: 100%;
 }
 
 .column-2 {
 	width: 77.5%;
-	height: 100%;
 }
 
 .column-3 {
 	width: 80px;
-	height: 100%;
 }
 
 .skills-wrap {
