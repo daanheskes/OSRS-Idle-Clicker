@@ -124,18 +124,21 @@ nav {
 
 	.monster-image-wrap {
 		position: absolute;
-		left: calc(15% + #{$monsternameheight / 2});
-		top: calc(15% + #{$monsternameheight} + #{$monsterhpheight});
-		width: calc(70% - #{$monsternameheight});
-		height: calc(70% - #{$monsternameheight});
+		left: calc(50% - 139px);
+		top: calc(50% - 98px);
+		width: 278px;
+		height: 278px;
 		border-radius: 100%;
 		border: 6px solid #0f1319;
 		padding: 34px;
 		background-color: #22282f;
 		box-sizing: border-box;
-		user-select:none;
-		cursor:pointer;
-		box-shadow: 0 0px 20px 4px rgba(0,0,0,.55);
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		cursor: pointer;
+		box-shadow: 0 0px 20px 4px rgba(0, 0, 0, 0.55);
 
 		img {
 			display:block;
