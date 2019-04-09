@@ -23,11 +23,12 @@ body, html, #root {
 }
 
 nav {
+	z-index:100;
 	position:absolute;
 	width:100%;
 	height: $navbarheight;
 	background-color: #080d17;
-   box-shadow: 0px 2px 4px 0px #1b1b1b;
+	box-shadow: 0px 1px 7px 1px rgba(0,0,0,0.65);
 	margin-bottom: $navbarheight;
 }
 
@@ -134,18 +135,41 @@ nav {
 	}
 }
 
+#coinDisplay {
+	width: 100%;
+	height: $monsternameheight;
+	background-color: #12151a;
+
+	.coin-wrapper {
+		display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    height: 100%;
+    margin: auto 12px;
+		#coinAmount {
+			color: white;
+		 font-family: "Montserrat", sans-serif;
+		 font-size: 24px;
+		 font-weight: 400;
+		 padding-left: 6px;
+		 letter-spacing: 1px;
+		 display: inline-block;
+		}
+	}
+}
+
 .skill {
 	display: flex;
-	position:relative;
-	align-items: center;
-	width:100%;
-	height:50px;
-	box-sizing:border-box;
-	background-color:#353f4c;
-	text-align:center;
-	padding:10px;
-	border:1px solid #191e24;
-	border-top:none;
+    position: relative;
+    align-items: center;
+    width: 100%;
+    height: 58px;
+    box-sizing: border-box;
+    background-color: #353f4c;
+    text-align: center;
+    padding: 0px 6px;
+	 border: 1px solid #191e24;
+	 border-top:none;
 	&:first-of-type {
 		border-top:1px;
 	}

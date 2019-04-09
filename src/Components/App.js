@@ -173,9 +173,15 @@ class IdleOSRS extends Component {
 	}
 
 	clickMonster(currentMonster, Xcoord, Ycoord) {
-		const damage = this.state.damage;
+		let damage = this.calculateMaxHit();
 		let newstate = this.state;
+		if (damage > currentMonster.current_hp) {
+			damage = currentMonster.current_hp;
+		}
 		newstate.currentMonster.current_hp = currentMonster.current_hp - damage;
+		if (newstate.currentMonster.current_hp < 0) {
+			newstate.currentMonster.current_hp = 0;
+		}
 		this.grantCombatExperience(this.state.attackmethod, damage);
 		this.grantExperience('hitpoints', damage * 1.33);
 		if (newstate.currentMonster.current_hp <= 0) {
@@ -222,12 +228,14 @@ class IdleOSRS extends Component {
 		return meleeBonusMultiplier;
 	}
 
-	calculateMaxHit(combatstyle) {
-		if (combatstyle === 'attack' || combatstyle === 'strength' || combatstyle === 'defence') {
+	calculateMaxHit() {
+		const attackmethod = this.state.attackmethod;
+		
+		if (attackmethod.startsWith('melee-')) {
 			return this.calculateMaxMeleeHit();
-		} else if (combatstyle === 'ranged') {
+		} else if (attackmethod.startsWith('ranged-')) {
 			return this.calculateMaxRangedHit();
-		} else if (combatstyle === 'magic') {
+		} else if (attackmethod.startsWith('magic-')) {
 			return this.calculateMaxMagicHit();
 		}
 	}
@@ -236,6 +244,7 @@ class IdleOSRS extends Component {
 		const attackStyleBonus = this.getAttackStyleBonus();
 		const prayerBonus = this.getPrayerBonus();
 		let effectiveStrength = attackStyleBonus * prayerBonus;
+		effectiveStrength = 1;
 		return effectiveStrength;
 	}
 

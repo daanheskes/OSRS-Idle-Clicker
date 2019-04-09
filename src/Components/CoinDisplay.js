@@ -52,8 +52,8 @@ class CoinDisplay extends Component {
     }
 
     render() {
-        const coins = 10000; //this.props.coins;
-        let coinImage;
+        const coins = this.props.coins;
+        let coinImage = "https://oldschool.runescape.wiki/images/4/44/Coins_1.png";
 
         Object.values(coinImages).forEach(coin => {
             if (coins >= coin.amount) {
@@ -62,7 +62,11 @@ class CoinDisplay extends Component {
         });
         
         return(
-            <div id='coindisplay'><img src={coinImage} />{Math.floor(this.props.coins)}</div>
+            <div id='coinDisplay'>
+                <div className='coin-wrapper'>
+                    <img src={coinImage} /><span id='coinAmount'>{Math.floor(this.props.coins)}</span>
+                </div>
+            </div>
         );
     }
 }
