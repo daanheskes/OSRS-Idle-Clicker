@@ -6,7 +6,7 @@ import Monster from './Monster.js';
 import Skills from './Skills.js';
 import '../App.scss';
 
-const multiplier = 5;
+const multiplier = 1;
 const prayerExperience = {
 	"Bones": 4,
 	"Big bones": 15

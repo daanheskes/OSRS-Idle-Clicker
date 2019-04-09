@@ -41,6 +41,14 @@ nav {
 	width: 25%;
 }
 
+#column-2 {
+	width: 41%;
+}
+
+#column-3 {
+	width:30%;
+}
+
 #column-4 {
 	width: 4%;
 	min-width:75px;
@@ -52,6 +60,7 @@ nav {
 }
 
 .monster-wrap {
+	z-index:1;
 	position:relative;
 	background-image: url(https://pbs.twimg.com/media/DKzHK-LX0AEhMnF.jpg);
 	background-size:cover;
@@ -65,6 +74,7 @@ nav {
 		display:flex;
 		justify-content:center;
 		align-items:center;
+		box-shadow: 0 0 4px 1px rgba(0,0,0,.75);
 
 		h1 {
 			font-family: "Montserrat", sans-serif;
@@ -80,7 +90,8 @@ nav {
 		height:$monsterhpheight;
 		background-color: #e74c3c;
 		box-shadow: inset 0px 0px 8px 2px #bf3729;
-		position:relative;
+		position:relative;	
+		z-index:-1;	
 
 		&::after {
 			content: "";
@@ -139,13 +150,15 @@ nav {
 	width: 100%;
 	height: $monsternameheight;
 	background-color: #12151a;
+	box-shadow: 0 0 4px 1px rgba(0,0,0,.75);
 
 	.coin-wrapper {
 		display: flex;
-    box-sizing: border-box;
-    align-items: center;
-    height: 100%;
-    margin: auto 12px;
+		box-sizing: border-box;
+		align-items: center;
+		height: 100%;
+		margin: auto 18px;
+
 		#coinAmount {
 			color: white;
 		 font-family: "Montserrat", sans-serif;
