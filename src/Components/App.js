@@ -4,14 +4,13 @@ import Monster from './Monster.js';
 import Skills from './Skills.js';
 import '../App.scss';
 
-const combatExperiencePerDamage = 4;
-const hitpointsExperiencePerDamage = 1.33;
+const exp_multiplier = 5;
 const prayerExperience = {
 	"Bones": 4,
 	"Big bones": 15
 }
 
-const pxsize = 64;
+const pxsize = 128;
 const monsters = {
 	chicken: {
 		name: "Chicken",
@@ -43,7 +42,7 @@ const monsters = {
 	},
 	minotaur: {
 		name: "Minotaur",
-		combatLevel: 12,
+		combatlevel: 12,
 		hitpoints: 10,
 		img: "https://oldschool.runescape.wiki/images/thumb/7/7e/Minotaur.png/" + pxsize + "-Minotaur.png?65d6a",
 		bones: "Bones"
@@ -57,12 +56,14 @@ const monsters = {
 	}
 }
 
+const firstMonster = monsters.chicken;
+
 class IdleOSRS extends Component {
 	constructor(props) {
 		super(props);
 		this.clickMonster = this.clickMonster.bind(this);
 		this.state = {
-			attackmethod: 'strength',
+			attackmethod: 'melee-controlled',
 			damage: 1,
 			stats: {
 				combat: {
@@ -123,25 +124,26 @@ class IdleOSRS extends Component {
 				}
 			},
 			currentMonster: {
-				name: 'chicken',
-				combatlevel: 1,
-				max_hp: 3,
-				current_hp: 3,
-				img: "https://oldschool.runescape.wiki/images/thumb/8/84/Cow.png/" + pxsize + "px-Cow.png?d4b4c",
-				bones: "Bones"
+				name: firstMonster.name,
+				combatlevel: firstMonster.combatlevel,
+				max_hp: firstMonster.hitpoints,
+				current_hp: firstMonster.hitpoints,
+				img: firstMonster.img,
+				bones: firstMonster.bones
 			}
 		}
- 	}
+	}
 
 	clickMonster(currentMonster, Xcoord, Ycoord) {
 		const damage = this.state.damage;
 		let newstate = this.state;
 		newstate.currentMonster.current_hp = currentMonster.current_hp - damage;
-		this.grantExperience(this.state.attackmethod, damage * combatExperiencePerDamage);
-		this.grantExperience('hitpoints', damage * hitpointsExperiencePerDamage);
-		if (newstate.currentMonster.current_hp === 0) {
-			this.grantPrayerEXP(currentMonster);
-			this.grantSlayerEXP(currentMonster);
+		this.grantCombatExperience(this.state.attackmethod, damage);
+		this.grantExperience('hitpoints', damage * 1.33);
+		if (newstate.currentMonster.current_hp <= 0) {
+			this.grantPrayerExperience(currentMonster);
+			this.grantSlayerExperience(currentMonster);
+			this.assignCoinDrop(currentMonster);
 			const that = this;
 			setTimeout(function() {
 				that.newMonster();
@@ -149,6 +151,37 @@ class IdleOSRS extends Component {
 		} else {
 			this.setState(newstate);
 		}
+	}
+
+	getAttackStyleBonus() {
+		if (this.state.combatstyle === 'attack') {
+			return 1;
+		} else if (this.state.combatstyle === 'strength') {
+			return 3;
+		} else {
+			return 0;
+		}
+	}
+
+	getPrayerBonus() {
+		const prayerLevel = this.state.stats.prayer.level;
+		let meleeBonusMultiplier = 1;
+		if (prayerLevel >= 4) {
+			meleeBonusMultiplier = 1.05;
+		}
+		if (prayerLevel >= 13) {
+			meleeBonusMultiplier = 1.1;
+		}
+		if (prayerLevel >= 31) {
+			meleeBonusMultiplier = 1.15;
+		}
+		if (prayerLevel >= 60) {
+			meleeBonusMultiplier = 1.18;
+		}
+		if (prayerLevel >= 70) {
+			meleeBonusMultiplier = 1.23;
+		}
+		return meleeBonusMultiplier;
 	}
 
 	calculateMaxHit(combatstyle) {
@@ -162,9 +195,10 @@ class IdleOSRS extends Component {
 	}
 
 	calculateMaxMeleeHit() {
-		let effectiveStrength = 0;
-
-		return 1;
+		const attackStyleBonus = this.getAttackStyleBonus();
+		const prayerBonus = this.getPrayerBonus();
+		let effectiveStrength = attackStyleBonus * prayerBonus;
+		return effectiveStrength;
 	}
 
 	calculateMaxRangedHit() {
@@ -175,42 +209,79 @@ class IdleOSRS extends Component {
 		return 1;
 	}
 
-	checkLevelUp(skill) {
-		const level = this.state.stats[skill].level;
-		const experience = this.state.stats[skill].experience;
+	checkLevelUp(currentLevel, newExperience) {
+		const newLevel = this.calculateLevel(newExperience);
 		
-		const newLevel = this.calculateLevel(experience);
-		if (newLevel > level) {
-			let newstate = this.state;
-			newstate.stats[skill].level = newLevel;
-			this.setState(newstate);
+		if (newLevel > currentLevel) {
+			return newLevel;
 		}
+		return currentLevel;
 	}
 
 	grantExperience(skill, experience) {
-		let exp_multiplier = 5;
 		let newstate = this.state;
-		newstate.stats[skill].experience += (experience * exp_multiplier);
-		newstate.stats[skill].percentage = this.calculateNextLevelPercentage(newstate.stats[skill].experience);
+		if (Array.isArray(skill)) {
+			skill.forEach(sk => {
+				newstate.stats[sk].experience += (experience * exp_multiplier);
+				newstate.stats[sk].percentage = this.calculateNextLevelPercentage(newstate.stats[sk].experience);
+				newstate.stats[sk].level = this.checkLevelUp(newstate.stats[sk].level, newstate.stats[sk].experience);
+			});
+		} else {
+			newstate.stats[skill].experience += (experience * exp_multiplier);
+			newstate.stats[skill].percentage = this.calculateNextLevelPercentage(newstate.stats[skill].experience);
+			newstate.stats[skill].level = this.checkLevelUp(newstate.stats[skill].level, newstate.stats[skill].experience);
+		}
 		this.setState(newstate);
-		this.checkLevelUp(skill);
 		this.updateCombat();
 	}
 
-	grantPrayerEXP(currentMonster) {
+	grantCombatExperience(attackmethod, damage) {
+		switch(attackmethod) {
+			case 'melee-accurate':
+				this.grantExperience('attack', damage * 4);
+			break;
+			case 'melee-aggressive':
+				this.grantExperience('strength', damage * 4);
+			break;
+			case 'melee-defensive':
+				this.grantExperience('defence', damage * 4);
+			break;
+			case 'melee-controlled':
+				this.grantExperience(['attack','strength','defence'], damage * 1.33);
+			break;
+			default:
+				this.grantExperience('strength', damage * 1.33);
+			break;
+		}
+	}
+
+	grantPrayerExperience(currentMonster) {
 		const experienceAmount = prayerExperience[currentMonster.bones];
 		this.grantExperience('prayer', experienceAmount);
 	}
 
-	grantSlayerEXP(currentMonster) {
+	grantSlayerExperience(currentMonster) {
 		const experienceAmount = currentMonster.max_hp;
 		this.grantExperience('slayer', experienceAmount);
 	}
 
-	chooseNewMonster() {
-		const newMonster = 'chicken';
+	returnRandom(arr) {
+		return arr[Math.floor(Math.random() * arr.length)];
+	}
 
-		return newMonster;
+	chooseNewMonster() {
+		const combatLevel = this.state.stats.combat.level;
+		let monsterList = [];
+
+		Object.entries(monsters).forEach(monster => {
+			if (combatLevel >= monster[1].combatlevel && combatLevel < (monster[1].combatlevel * 4)) {
+				monsterList.push(monster[0]);
+			}
+		});
+		if (!monsterList.length) {
+			monsterList = ['chicken'];
+		}
+		return this.returnRandom(monsterList);
 	}
 
 	newMonster() {
@@ -227,9 +298,13 @@ class IdleOSRS extends Component {
 		this.setState(newstate);
 	}
 
-	calculateCoins(monster) {
+	assignCoinDrop(monster) {
 		const multiplier = this.state.multiplier;
-		return monster.max_hp * 1.5 * multiplier;
+		let newstate = this.state;
+		
+		newstate.coins += monster.hitpoints * 1.5 * multiplier;
+
+		this.setState(newstate);
 	}
 
 	calculateNextLevelPercentage(experience) {		
@@ -310,11 +385,11 @@ class IdleOSRS extends Component {
 			<div className='wrap'>
 				<Navbar />
 				<div className='column column-1'>
-					<Monster monsters={monsters} currentMonster={this.state.currentMonster} clickMonster={this.clickMonster} />
+					<Monster clickMonster={this.clickMonster} currentMonster={this.state.currentMonster} />
 				</div>
 				<div className='column column-2'></div>
 				<div className='column column-3'>
-					<Skills stats={this.state.stats} attackMethod={this.state.attackmethod} />
+					<Skills stats={this.state.stats} />
 				</div>
 			</div>
 		);

@@ -21,7 +21,6 @@ class Monster extends Component {
 
 	render() {
 		const currentMonster = this.props.currentMonster;
-		const monsters = this.props.monsters;
 
 		return (
 			<div className='monster-wrap' onClick={this.onClick}>
@@ -29,8 +28,8 @@ class Monster extends Component {
 					<div className='hitpoints_stats'>{currentMonster.current_hp}/{currentMonster.max_hp}</div>
 					<div className='current_hitpoints' style={{width: this.calculateHitpointsPercentage(currentMonster.current_hp, currentMonster.max_hp)}} ></div>
 				</div>
-				<h1 className='monster-name'>{monsters.chicken.name}</h1>
-				<img src={monsters.chicken.img} alt={monsters.chicken.name}/>
+				<h1 className='monster-name'>{currentMonster.name}</h1>
+				<img src={currentMonster.img} alt={currentMonster.img}/>
 			</div>
 		);
 	}

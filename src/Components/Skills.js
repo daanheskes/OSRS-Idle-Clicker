@@ -31,27 +31,25 @@ class Skills extends Component {
 
 	render() {
 		const stats = this.props.stats;
-		const attackMethod = this.props.attackMethod;
 		const totalLevel = this.calculateTotalLevel(stats);
 
 		return(
 			<div className='skills-wrap'>
 			{
-				Object.entries(stats).map(item => {
-					const isSelected = (item[0] === attackMethod);
-
-					return <div className={isSelected ? "skill selected" : "skill"} key={item[1].name}>
+				Object.entries(stats).map(stat => {
+					return(
+					<div className="skill" key={stat[1].name}>
 						<div className='skillImg-wrap'>
-							<img src={this.skillIcons[item[0]]} title={item[1].name} alt={item[1].name} />
+							<img src={this.skillIcons[stat[0]]} title={stat[1].name} alt={stat[1].name} />
 						</div>
-						<span className='skillLevel'>{(item[0] === 'total' ? totalLevel : item[1].level)}</span>
-						{("experience" in item[1] ? <div className="skillProgress" style={{opacity: isSelected || item[0] === 'hitpoints' || item[0] === 'prayer' || item[0] === 'slayer' ? '1' : ''}}><div className='skillProgressBar' style={{width: item[1].percentage + "%"}}></div></div> : '')}
-						
+						<span className='skillLevel'>{(stat[0] === 'total' ? totalLevel : stat[1].level)}</span>
+						{("experience" in stat[1] ? <div className="skillProgress"><div className='skillProgressBar' style={{width: stat[1].percentage + "%"}}></div></div> : '')}
 					</div>
+					);
 				})
 			}
 			</div>
-		)
+		);
 	}
 }
 
