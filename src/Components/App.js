@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar.js';
+import Equipment from './Equipment.js';
+import CoinDisplay from './CoinDisplay.js';
 import Monster from './Monster.js';
 import Skills from './Skills.js';
 import '../App.scss';
 
-const exp_multiplier = 5;
+const multiplier = 5;
 const prayerExperience = {
 	"Bones": 4,
 	"Big bones": 15
@@ -64,6 +66,7 @@ class IdleOSRS extends Component {
 		this.clickMonster = this.clickMonster.bind(this);
 		this.state = {
 			attackmethod: 'melee-controlled',
+			coins: 0,
 			damage: 1,
 			stats: {
 				combat: {
@@ -222,12 +225,12 @@ class IdleOSRS extends Component {
 		let newstate = this.state;
 		if (Array.isArray(skill)) {
 			skill.forEach(sk => {
-				newstate.stats[sk].experience += (experience * exp_multiplier);
+				newstate.stats[sk].experience += (experience * multiplier);
 				newstate.stats[sk].percentage = this.calculateNextLevelPercentage(newstate.stats[sk].experience);
 				newstate.stats[sk].level = this.checkLevelUp(newstate.stats[sk].level, newstate.stats[sk].experience);
 			});
 		} else {
-			newstate.stats[skill].experience += (experience * exp_multiplier);
+			newstate.stats[skill].experience += (experience * multiplier);
 			newstate.stats[skill].percentage = this.calculateNextLevelPercentage(newstate.stats[skill].experience);
 			newstate.stats[skill].level = this.checkLevelUp(newstate.stats[skill].level, newstate.stats[skill].experience);
 		}
@@ -299,10 +302,9 @@ class IdleOSRS extends Component {
 	}
 
 	assignCoinDrop(monster) {
-		const multiplier = this.state.multiplier;
 		let newstate = this.state;
 		
-		newstate.coins += monster.hitpoints * 1.5 * multiplier;
+		newstate.coins += monster.max_hp * 1.5 * multiplier;
 
 		this.setState(newstate);
 	}
@@ -384,11 +386,17 @@ class IdleOSRS extends Component {
 
 			<div className='wrap'>
 				<Navbar />
-				<div className='column column-1'>
+				<div id='column-1' className='column'>
 					<Monster clickMonster={this.clickMonster} currentMonster={this.state.currentMonster} />
+					<Equipment combatstyle={this.state.combatstyle} />
 				</div>
-				<div className='column column-2'></div>
-				<div className='column column-3'>
+				<div id='column-2' className='column'>
+					<CoinDisplay coins={this.state.coins} />
+				</div>
+				<div id='column-3' className='column'>
+					
+				</div>
+				<div id='column-4' className='column'>
 					<Skills stats={this.state.stats} />
 				</div>
 			</div>
