@@ -6,7 +6,7 @@ import Monster from './Monster.js';
 import Skills from './Skills.js';
 import '../App.scss';
 
-const multiplier = 1;
+const multiplier = 10;
 const prayerExperience = {
 	"Bones": 4,
 	"Big bones": 15
@@ -100,9 +100,8 @@ class IdleOSRS extends Component {
 		super(props);
 		this.clickMonster = this.clickMonster.bind(this);
 		this.state = {
-			attackmethod: 'melee-controlled',
+			attackmethod: 'melee-aggressive',
 			coins: 0,
-			damage: 1,
 			stats: {
 				combat: {
 					name: 'Combat',
