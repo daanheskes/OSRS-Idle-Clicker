@@ -65,7 +65,7 @@ nav {
 	}
 
 	to {
-		transform: translate(-50px, -140px);
+		transform: translate(-30px, -160px);
 	}
 }
 
@@ -75,16 +75,13 @@ nav {
 	}
 
 	to {
-		transform: translate(50px, -140px);
+		transform: translate(30px, -160px);
 	}
 }
 
 .monster-wrap {
 	z-index:1;
 	position:relative;
-	background-image: url(https://pbs.twimg.com/media/DKzHK-LX0AEhMnF.jpg);
-	background-size:cover;
-	background-position:center;
 	height: 50%;
 
 	.monster-name-wrap {
@@ -142,10 +139,20 @@ nav {
 		}
 	}
 
+	.monster-background {
+		position:relative;
+		width: 100%;
+		height: calc(100% - 82px);
+		background-image: url(https://pbs.twimg.com/media/DKzHK-LX0AEhMnF.jpg);
+		background-size: cover;
+		background-position: center;
+		overflow: hidden;
+	}
+
 	.monster-image-wrap {
 		position: absolute;
 		left: calc(50% - 139px);
-		top: calc(50% - 98px);
+		top: calc(50% - 139px);
 		width: 278px;
 		height: 278px;
 		border-radius: 100%;
@@ -174,12 +181,14 @@ nav {
 				user-select:none;
 
 				&.travelLeft {
-					animation-duration: 4s;
+					animation-duration: 2s;
+					animation-timing-function: ease-in;
 					animation-name: moveLeft;
 				}
 
 				&.travelRight {
-					animation-duration: 4s;
+					animation-duration: 2s;
+					animation-timing-function: ease-in;
 					animation-name: moveRight;
 				}
 
@@ -217,12 +226,12 @@ nav {
 
 		#coinAmount {
 			color: white;
-		 font-family: "Montserrat", sans-serif;
-		 font-size: 24px;
-		 font-weight: 400;
-		 padding-left: 6px;
-		 letter-spacing: 1px;
-		 display: inline-block;
+			font-family: "Montserrat", sans-serif;
+			font-size: 24px;
+			font-weight: 400;
+			padding-left: 6px;
+			letter-spacing: 1px;
+			display: inline-block;
 		}
 	}
 }

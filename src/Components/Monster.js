@@ -10,10 +10,9 @@ class Monster extends Component {
 
 	handleClick(e) {
 		const element = document.getElementsByClassName('monster-image-wrap')[0];
-		const minusX = element.offsetLeft;
-		const minusY = element.offsetTop;
-		const Xcoord = e.clientX - minusX - 30;
-		const Ycoord = e.clientY - minusY - 90;
+		console.log(e.clientY, element.offsetTop);
+		const Xcoord = e.clientX - element.offsetLeft - 24;
+		const Ycoord = e.clientY - element.offsetTop - 178;
 
 		this.props.clickMonster(this.props.currentMonster, Xcoord, Ycoord);
 	}
@@ -34,9 +33,11 @@ class Monster extends Component {
 					<div className='monster-hitpoints_stats'>{currentMonster.current_hp}/{currentMonster.max_hp}</div>
 					<div className='monster-current_hitpoints' style={{width: this.calculateHitpointsPercentage(currentMonster.current_hp, currentMonster.max_hp)}} ></div>
 				</div>
-				<div className='monster-image-wrap' onClick={this.onClick}>
-					<div id='monster-hitsplats'></div>
-					<img className='monster-image' src={currentMonster.img} alt={currentMonster.img} />
+				<div className='monster-background'>
+					<div className='monster-image-wrap' onClick={this.onClick}>
+						<div id='monster-hitsplats'></div>
+						<img className='monster-image' src={currentMonster.img} alt={currentMonster.img} />
+					</div>
 				</div>
 			</div>
 		);
