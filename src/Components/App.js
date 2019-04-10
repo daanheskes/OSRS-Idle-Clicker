@@ -106,7 +106,7 @@ class IdleOSRS extends Component {
 		hitsplatwrap.appendChild(hitsplat);
 		setTimeout(function() {
 			hitsplat.remove();
-		}, 1500);
+		}, 1800);
 	}
 
 	clickMonster(currentMonster, Xcoord, Ycoord) {

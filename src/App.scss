@@ -65,7 +65,7 @@ nav {
 	}
 
 	to {
-		transform: translate(-30px, -160px);
+		transform: translate(-35px, -150px);
 	}
 }
 
@@ -75,7 +75,7 @@ nav {
 	}
 
 	to {
-		transform: translate(30px, -160px);
+		transform: translate(35px, -150px);
 	}
 }
 
@@ -160,8 +160,9 @@ nav {
 		padding: 34px;
 		background-color: #22282f;
 		box-sizing: border-box;
-		cursor: pointer;
 		box-shadow: 0 0px 20px 4px rgba(0, 0, 0, 0.55);
+		user-select:none;
+		cursor: pointer;
 
 		#monster-hitsplats {
 			position:absolute;
@@ -183,12 +184,16 @@ nav {
 				&.travelLeft {
 					animation-duration: 2s;
 					animation-timing-function: ease-in;
+					animation-timing-function: cubic-bezier(.11,.4,.58,-0.15);
+					animation-timing-function: cubic-bezier(.35,.47,.75,.1);
 					animation-name: moveLeft;
 				}
 
 				&.travelRight {
 					animation-duration: 2s;
 					animation-timing-function: ease-in;
+					animation-timing-function: cubic-bezier(.11,.4,.58,-0.15);
+					animation-timing-function: cubic-bezier(.35,.47,.75,.1);
 					animation-name: moveRight;
 				}
 
