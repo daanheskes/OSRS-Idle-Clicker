@@ -57,6 +57,13 @@ export default {
 		img: "https://oldschool.runescape.wiki/images/thumb/7/7a/Al-Kharid_warrior.png/" + pxsize + "px-Al-Kharid_warrior.png",
 		bones: "Bones"
 	},
+	wolf: {
+		name: "Wolf",
+		combatlevel: 11,
+		hitpoints: 10,
+		img: "https://oldschool.runescape.wiki/images/thumb/f/fe/Wolf_%28SOS%29.png/" + pxsize + "px-Wolf_%28SOS%29.png",
+		bones: "Bones"
+	},
 	minotaur: {
 		name: "Minotaur",
 		combatlevel: 12,
@@ -69,6 +76,13 @@ export default {
 		combatlevel: 14,
 		hitpoints: 17,
 		img: "https://oldschool.runescape.wiki/images/thumb/a/ab/Scorpion.png/" + pxsize + "px-Scorpion.png",
+		bones: "Bones"
+	},
+	guard: {
+		name: "Guard",
+		combatlevel: 21,
+		hitpoints: 22,
+		img: "https://oldschool.runescape.wiki/images/thumb/4/4c/Guard_%28Falador%2C_sword%29.png/" + pxsize + "px-Guard_%28Falador%2C_sword%29.png",
 		bones: "Bones"
 	},
 	hillgiant: {

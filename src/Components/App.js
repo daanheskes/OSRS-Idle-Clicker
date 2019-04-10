@@ -9,7 +9,7 @@ import '../App.scss';
 
 const multiplier = 10;
 const prayerExperience = {
-	"Bones": 4,
+	"Bones": 4.5,
 	"Big bones": 15
 }
 
