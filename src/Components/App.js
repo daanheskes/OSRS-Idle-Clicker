@@ -6,18 +6,18 @@ import Monster from './Monster.js';
 import Skills from './Skills.js';
 import '../App.scss';
 
-const multiplier = 5;
+const multiplier = 1;
 const prayerExperience = {
 	"Bones": 4,
 	"Big bones": 15
 }
 
-const pxsize = 128;
+const pxsize = 172;
 const monsters = {
 	chicken: {
 		name: "Chicken",
 		combatlevel: 1,
-		img: "https://oldschool.runescape.wiki/images/thumb/a/a3/Chicken.png/" + pxsize + "px-Chicken.png?00c5a",
+		img: "https://oldschool.runescape.wiki/images/thumb/a/a3/Chicken.png/" + pxsize + "px-Chicken.png",
 		hitpoints: 3,
 		bones: "Bones"
 	},
@@ -25,35 +25,70 @@ const monsters = {
 		name: "Goblin",
 		combatlevel: 2,
 		hitpoints: 5,
-		img: "https://oldschool.runescape.wiki/images/thumb/d/d2/Goblin.png/" + pxsize + "px-Goblin.png?21289",
+		img: "https://oldschool.runescape.wiki/images/thumb/d/d2/Goblin.png/" + pxsize + "px-Goblin.png",
 		bones: "Bones"
 	},
 	cowcalf: {
 		name: "Cow calf",
 		combatlevel: 2,
 		hitpoints: 6,
-		img: "https://oldschool.runescape.wiki/images/thumb/7/72/Cow_calf.png/" + pxsize + "px-Cow_calf.png?a24a0",
+		img: "https://oldschool.runescape.wiki/images/thumb/7/72/Cow_calf.png/" + pxsize + "px-Cow_calf.png",
 		bones: "Bones"
 	},
 	cow: {
 		name: "Cow",
 		combatlevel: 2,
 		hitpoints: 8,
-		img: "https://oldschool.runescape.wiki/images/thumb/8/84/Cow.png/" + pxsize + "px-Cow.png?d4b4c",
+		img: "https://oldschool.runescape.wiki/images/thumb/8/84/Cow.png/" + pxsize + "px-Cow.png",
+		bones: "Bones"
+	},
+	highwayman: {
+		name: "Highwayman",
+		combatlevel: 5,
+		hitpoints: 13,
+		img: "https://oldschool.runescape.wiki/images/thumb/7/7c/Highwayman.png/" + pxsize + "px-Highwayman.png",
+		bones: "Bones"
+	},
+	darkwizard: {
+		name: "Dark wizard",
+		combatlevel: 7,
+		hitpoints: 12,
+		img: "https://oldschool.runescape.wiki/images/thumb/b/b4/Dark_wizard.png/" + pxsize + "px-Dark_wizard.png",
+		bones: "Bones"
+	},
+	dwarf: {
+		name: "Dwarf",
+		combatlevel: 10,
+		hitpoints: 16,
+		img: "https://oldschool.runescape.wiki/images/thumb/e/ed/Dwarf.png/" + pxsize + "px-Dwarf.png",
+		bones: "Bones"
+	},
+	alkharidwarrior: {
+		name: "Al-Kharid warrior",
+		combatlevel: 9,
+		hitpoints: 19,
+		img: "https://oldschool.runescape.wiki/images/thumb/7/7a/Al-Kharid_warrior.png/" + pxsize + "px-Al-Kharid_warrior.png",
 		bones: "Bones"
 	},
 	minotaur: {
 		name: "Minotaur",
 		combatlevel: 12,
 		hitpoints: 10,
-		img: "https://oldschool.runescape.wiki/images/thumb/7/7e/Minotaur.png/" + pxsize + "-Minotaur.png?65d6a",
+		img: "https://oldschool.runescape.wiki/images/thumb/7/7e/Minotaur.png/" + pxsize + "px-Minotaur.png",
+		bones: "Bones"
+	},
+	scorpion: {
+		name: "Scorpion",
+		combatlevel: 14,
+		hitpoints: 17,
+		img: "https://oldschool.runescape.wiki/images/thumb/a/ab/Scorpion.png/" + pxsize + "px-Scorpion.png",
 		bones: "Bones"
 	},
 	hillgiant: {
 		name: "Hill Giant",
 		combatlevel: 28,
 		hitpoints: 35,
-		img: "https://oldschool.runescape.wiki/images/b/bd/Hill_giant.png?e6339",
+		img: "https://oldschool.runescape.wiki/images/b/bd/Hill_giant.png",
 		bones: "Big bones"
 	}
 }
@@ -138,9 +173,15 @@ class IdleOSRS extends Component {
 	}
 
 	clickMonster(currentMonster, Xcoord, Ycoord) {
-		const damage = this.state.damage;
+		let damage = this.calculateMaxHit();
 		let newstate = this.state;
+		if (damage > currentMonster.current_hp) {
+			damage = currentMonster.current_hp;
+		}
 		newstate.currentMonster.current_hp = currentMonster.current_hp - damage;
+		if (newstate.currentMonster.current_hp < 0) {
+			newstate.currentMonster.current_hp = 0;
+		}
 		this.grantCombatExperience(this.state.attackmethod, damage);
 		this.grantExperience('hitpoints', damage * 1.33);
 		if (newstate.currentMonster.current_hp <= 0) {

@@ -23,13 +23,17 @@ class Monster extends Component {
 		const currentMonster = this.props.currentMonster;
 
 		return (
-			<div className='monster-wrap' onClick={this.onClick}>
-				<div className='hitpoints'>
-					<div className='hitpoints_stats'>{currentMonster.current_hp}/{currentMonster.max_hp}</div>
-					<div className='current_hitpoints' style={{width: this.calculateHitpointsPercentage(currentMonster.current_hp, currentMonster.max_hp)}} ></div>
+			<div className='monster-wrap'>
+				<div className='monster-name-wrap'>
+					<h1 className='monster-name'>{currentMonster.name} (Lv. {currentMonster.combatlevel})</h1>
 				</div>
-				<h1 className='monster-name'>{currentMonster.name}</h1>
-				<img src={currentMonster.img} alt={currentMonster.img}/>
+				<div className='monster-hitpoints'>
+					<div className='monster-hitpoints_stats'>{currentMonster.current_hp}/{currentMonster.max_hp}</div>
+					<div className='monster-current_hitpoints' style={{width: this.calculateHitpointsPercentage(currentMonster.current_hp, currentMonster.max_hp)}} ></div>
+				</div>
+				<div className='monster-image-wrap' onClick={this.onClick}>
+					<img className='monster-image' src={currentMonster.img} alt={currentMonster.img} />
+				</div>
 			</div>
 		);
 	}
