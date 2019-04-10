@@ -1,6 +1,7 @@
 ﻿## OSRS Idle Clicker
 
 An Idle Clicker game built with ReactJS and based on the game Old School Runescape.
+
 Website: https://oldschool.runescape.com/
 
 ------------
