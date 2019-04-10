@@ -172,6 +172,22 @@ class IdleOSRS extends Component {
 		}
 	}
 
+	createHitSplat(Xcoord, Ycoord, damage) {
+		let hitsplat = document.createElement("div");
+		hitsplat.className = (Math.random() >= 0.5 ? 'hitsplat travelLeft' : 'hitsplat travelRight');
+		hitsplat.style = 'position:absolute;left: ' + Xcoord + 'px;top:' + Ycoord + 'px';
+		let hitsplatDamage = document.createElement("span");
+		hitsplatDamage.className = 'hitsplatDamage';
+		hitsplatDamage.textContent = damage;
+		hitsplat.appendChild(hitsplatDamage);
+		console.log(damage);
+		const hitsplatwrap = document.getElementById('monster-hitsplats');
+		hitsplatwrap.appendChild(hitsplat);
+		setTimeout(function() {
+			hitsplat.remove();
+		}, 1250);
+	}
+
 	clickMonster(currentMonster, Xcoord, Ycoord) {
 		let damage = this.calculateMaxHit();
 		let newstate = this.state;
@@ -179,6 +195,8 @@ class IdleOSRS extends Component {
 			damage = currentMonster.current_hp;
 		}
 		newstate.currentMonster.current_hp = currentMonster.current_hp - damage;
+		
+		this.createHitSplat(Xcoord, Ycoord, damage);
 		if (newstate.currentMonster.current_hp < 0) {
 			newstate.currentMonster.current_hp = 0;
 		}
@@ -228,7 +246,8 @@ class IdleOSRS extends Component {
 		return meleeBonusMultiplier;
 	}
 
-	calculateMaxHit(attackmethod) {
+	calculateMaxHit() {
+		const attackmethod = this.state.attackmethod;
 		if (attackmethod.startsWith('melee-')) {
 			return this.calculateMaxMeleeHit();
 		} else if (attackmethod.startsWith('ranged-')) {
