@@ -263,12 +263,13 @@ class IdleOSRS extends Component {
 		let monsterList = [];
 
 		Object.entries(monsters).forEach(monster => {
-			if (combatLevel >= monster[1].combatlevel && combatLevel < (monster[1].combatlevel * 4)) {
+			if (combatLevel >= monster[1].combatlevel && combatLevel < (monster[1].combatlevel * 3)) {
 				monsterList.push(monster[0]);
 			}
 		});
 		if (!monsterList.length) {
-			monsterList = ['chicken'];
+			console.log("Error: No monster available on combat level " + combatLevel);
+			monsterList = ['hillgiant'];
 		}
 		return this.returnRandom(monsterList);
 	}
