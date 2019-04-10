@@ -187,21 +187,26 @@ class IdleOSRS extends Component {
 		return meleeBonusMultiplier;
 	}
 
-	calculateMaxHit(combatstyle) {
-		if (combatstyle === 'attack' || combatstyle === 'strength' || combatstyle === 'defence') {
+	calculateMaxHit(attackmethod) {
+		if (attackmethod.startsWith('melee-')) {
 			return this.calculateMaxMeleeHit();
-		} else if (combatstyle === 'ranged') {
+		} else if (attackmethod.startsWith('ranged-')) {
 			return this.calculateMaxRangedHit();
-		} else if (combatstyle === 'magic') {
+		} else if (attackmethod.startsWith('magic-')) {
 			return this.calculateMaxMagicHit();
 		}
 	}
 
 	calculateMaxMeleeHit() {
 		const attackStyleBonus = this.getAttackStyleBonus();
+		const potionBonus = 0;
 		const prayerBonus = this.getPrayerBonus();
-		let effectiveStrength = attackStyleBonus * prayerBonus;
-		return effectiveStrength;
+		const strengthBonus = 0;
+		const strengthLevel = this.state.stats.strength.level;
+
+		let effectiveStrength = Math.floor((strengthLevel + potionBonus) * prayerBonus + attackStyleBonus);
+		const baseDamage = 1.3 + (effectiveStrength / 10) + (strengthBonus / 80) + ((effectiveStrength * strengthBonus) / 640);
+		return Math.floor(baseDamage);
 	}
 
 	calculateMaxRangedHit() {

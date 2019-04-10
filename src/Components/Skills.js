@@ -5,16 +5,16 @@ class Skills extends Component {
 	constructor(props) {
 		super(props);
 		const skillIcons = {
-			combat: "https://oldschool.runescape.wiki/images/8/8f/Combat_icon.png?93d63",
-			attack: "https://oldschool.runescape.wiki/images/f/fe/Attack_icon.png?b4bce",
-			strength: "https://oldschool.runescape.wiki/images/1/1b/Strength_icon.png?e6e0c",
-			defence: "https://oldschool.runescape.wiki/images/b/b7/Defence_icon.png?ca0cd",
-			ranged: "https://oldschool.runescape.wiki/images/1/19/Ranged_icon.png?01b0e",
-			magic: "https://oldschool.runescape.wiki/images/5/5c/Magic_icon.png?334cf",
-			hitpoints: "https://oldschool.runescape.wiki/images/9/96/Hitpoints_icon.png?a4819",
-			prayer: "https://oldschool.runescape.wiki/images/f/f2/Prayer_icon.png?ca0dc",
-			slayer: "https://oldschool.runescape.wiki/images/2/28/Slayer_icon.png?cd34f",
-			total: "https://oldschool.runescape.wiki/images/b/bd/Stats_icon.png?1b467"
+			combat: "https://oldschool.runescape.wiki/images/8/8f/Combat_icon.png",
+			attack: "https://oldschool.runescape.wiki/images/f/fe/Attack_icon.png",
+			strength: "https://oldschool.runescape.wiki/images/1/1b/Strength_icon.png",
+			defence: "https://oldschool.runescape.wiki/images/b/b7/Defence_icon.png",
+			ranged: "https://oldschool.runescape.wiki/images/1/19/Ranged_icon.png",
+			magic: "https://oldschool.runescape.wiki/images/5/5c/Magic_icon.png",
+			hitpoints: "https://oldschool.runescape.wiki/images/9/96/Hitpoints_icon.png",
+			prayer: "https://oldschool.runescape.wiki/images/f/f2/Prayer_icon.png",
+			slayer: "https://oldschool.runescape.wiki/images/2/28/Slayer_icon.png",
+			total: "https://oldschool.runescape.wiki/images/b/bd/Stats_icon.png"
 		}
 		this.skillIcons = skillIcons;
 	}
