@@ -26,7 +26,7 @@ class Monster extends Component {
 
 		return (
 			<div className='monster-wrap'>
-				<div className='monster-name-wrap'>
+				<div className='monster-name-wrap full-width-bar'>
 					<h1 className='monster-name'>{currentMonster.name} (Lv. {currentMonster.combatlevel})</h1>
 				</div>
 				<div className='monster-hitpoints'>

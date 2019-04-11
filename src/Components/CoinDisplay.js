@@ -62,7 +62,7 @@ class CoinDisplay extends Component {
         });
         
         return(
-            <div id='coinDisplay'>
+            <div id='coinDisplay' className='full-width-bar'>
                 <div className='coin-wrapper'>
                     <img src={coinImage} alt='Coins' /><span id='coinAmount'>{Math.floor(this.props.coins)}</span>
                 </div>

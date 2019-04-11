@@ -39,19 +39,23 @@ nav {
 
 #column-1 {
 	width: 25%;
+	z-index: 4;
 }
 
 #column-2 {
 	width: 41%;
+	z-index: 3;
 }
 
 #column-3 {
 	width:30%;
+	z-index: 2;
 }
 
 #column-4 {
 	width: 4%;
 	min-width:75px;
+	z-index: 1;
 }
 
 .skills-wrap {
@@ -65,7 +69,7 @@ nav {
 	}
 
 	to {
-		transform: translate(-35px, -150px);
+		transform: translate(-35px, -180px);
 	}
 }
 
@@ -75,8 +79,15 @@ nav {
 	}
 
 	to {
-		transform: translate(35px, -150px);
+		transform: translate(35px, -180px);
 	}
+}
+
+.full-width-bar {
+	width:100%;
+	background-color: #12151a;
+	height:$monsternameheight;
+	box-shadow: 0 0 4px 1px rgba(0,0,0,.75);
 }
 
 .monster-wrap {
@@ -85,13 +96,9 @@ nav {
 	height: 50%;
 
 	.monster-name-wrap {
-		width:100%;
-		height:$monsternameheight;
-		background-color: #12151a;
 		display:flex;
 		justify-content:center;
 		align-items:center;
-		box-shadow: 0 0 4px 1px rgba(0,0,0,.75);
 
 		h1 {
 			font-family: "Montserrat", sans-serif;
@@ -216,10 +223,6 @@ nav {
 }
 
 #coinDisplay {
-	width: 100%;
-	height: $monsternameheight;
-	background-color: #12151a;
-	box-shadow: 0 0 4px 1px rgba(0,0,0,.75);
 
 	.coin-wrapper {
 		display: flex;
