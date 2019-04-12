@@ -110,17 +110,19 @@ class IdleOSRS extends Component {
 	}
 
 	componentDidMount() {
+		let intervalms = 3000;
+
 		this.interval = setInterval(() => {
-			this.givePassiveIncome();
-		}, 1000);
+			this.givePassiveIncome(intervalms);
+		}, intervalms);
 	}
 
 	componentWillUnmount() {
 		clearInterval(this.interval);
 	}
 
-	givePassiveIncome() {
-		const passiveIncome = this.state.income * multiplier;
+	givePassiveIncome(intervalms) {
+		const passiveIncome = this.state.income * multiplier * (intervalms / 1000);
 		let newstate = this.state;
 		newstate.coins += passiveIncome;
 
