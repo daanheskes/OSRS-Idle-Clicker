@@ -26,6 +26,7 @@ class IdleOSRS extends Component {
 		this.state = {
 			attackmethod: 'melee-aggressive',
 			coins: 0,
+			income: 0,
 			stats: {
 				combat: {
 					name: 'Combat',
@@ -106,6 +107,24 @@ class IdleOSRS extends Component {
 				bones: firstMonster.bones
 			}
 		}
+	}
+
+	componentDidMount() {
+		this.interval = setInterval(() => {
+			this.givePassiveIncome();
+		}, 1000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.interval);
+	}
+
+	givePassiveIncome() {
+		const passiveIncome = this.state.income * multiplier;
+		let newstate = this.state;
+		newstate.coins += passiveIncome;
+
+		this.setState(newstate);
 	}
 
 	createHitSplat(Xcoord, Ycoord, damage) {
