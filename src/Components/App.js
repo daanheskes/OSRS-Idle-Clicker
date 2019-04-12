@@ -4,6 +4,7 @@ import Equipment from './Equipment.js';
 import CoinDisplay from './CoinDisplay.js';
 import MonsterList from './MonsterList.js';
 import Monster from './Monster.js';
+import EquipmentList from './EquipmentList.js';
 import Skills from './Skills.js';
 import '../App.scss';
 
@@ -14,6 +15,7 @@ const prayerExperience = {
 }
 
 const monsters = MonsterList;
+const equipmentList = EquipmentList;
 
 const firstMonster = monsters.chicken;
 
@@ -82,6 +84,19 @@ class IdleOSRS extends Component {
 					level: 0
 				}
 			},
+			equipment: {
+				head: equipmentList.head.bronzemedhelm,
+				cape: equipmentList.cape.redcape,
+				neck: equipmentList.neck.amuletofaccuracy,
+				ammunition: equipmentList.ammunition.bronzearrow,
+				weapon: equipmentList.weapon.bronzesword,
+				body: equipmentList.body.bronzechainbody,
+				shield: equipmentList.shield.woodenshield,
+				legs: equipmentList.legs.bronzeplatelegs,
+				hand: equipmentList.hand.leathergloves,
+				feet: equipmentList.feet.leatherboots,
+				ring: equipmentList.ring.goldring
+			},
 			currentMonster: {
 				name: firstMonster.name,
 				combatlevel: firstMonster.combatlevel,
@@ -96,12 +111,12 @@ class IdleOSRS extends Component {
 	createHitSplat(Xcoord, Ycoord, damage) {
 		let hitsplat = document.createElement("div");
 		hitsplat.className = (Math.random() >= 0.5 ? 'hitsplat travelLeft' : 'hitsplat travelRight');
-		console.log(Ycoord);
 		hitsplat.style = 'position:absolute;left: ' + Xcoord + 'px;top:' + Ycoord + 'px';
 		let hitsplatDamage = document.createElement("span");
 		hitsplatDamage.className = 'hitsplatDamage';
 		hitsplatDamage.textContent = damage;
 		hitsplat.appendChild(hitsplatDamage);
+
 		const hitsplatwrap = document.getElementById('monster-hitsplats');
 		hitsplatwrap.appendChild(hitsplat);
 		setTimeout(function() {
@@ -178,11 +193,22 @@ class IdleOSRS extends Component {
 		}
 	}
 
+	calculateStrengthBonus() {
+		const equipment = this.state.equipment;
+		let strengthBonus = 0;
+
+		Object.values(equipment).forEach(function(item) {
+			strengthBonus += item.str_bonus;
+		});
+		
+		return strengthBonus;
+	}
+
 	calculateMaxMeleeHit() {
 		const attackStyleBonus = this.getAttackStyleBonus();
 		const potionBonus = 0;
 		const prayerBonus = this.getPrayerBonus();
-		const strengthBonus = 0;
+		const strengthBonus = this.calculateStrengthBonus();
 		const strengthLevel = this.state.stats.strength.level;
 
 		let effectiveStrength = Math.floor((strengthLevel + potionBonus) * prayerBonus + attackStyleBonus);
@@ -375,13 +401,12 @@ class IdleOSRS extends Component {
 				<Navbar />
 				<div id='column-1' className='column'>
 					<Monster clickMonster={this.clickMonster} currentMonster={this.state.currentMonster} />
-					<Equipment combatstyle={this.state.combatstyle} />
 				</div>
 				<div id='column-2' className='column'>
 					<CoinDisplay coins={this.state.coins} />
 				</div>
 				<div id='column-3' className='column'>
-					<Equipment />
+					<Equipment equipment={this.state.equipment} />
 				</div>
 				<div id='column-4' className='column'>
 					<Skills stats={this.state.stats} />

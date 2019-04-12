@@ -10,7 +10,7 @@ class Monster extends Component {
 
 	handleClick(e) {
 		const element = document.getElementsByClassName('monster-image-wrap')[0];
-		console.log(e.clientY, element.offsetTop);
+
 		const Xcoord = e.clientX - element.offsetLeft - 24;
 		const Ycoord = e.clientY - element.offsetTop - 178;
 
