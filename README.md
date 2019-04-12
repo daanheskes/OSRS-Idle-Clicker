@@ -6,6 +6,6 @@ Play here: https://daanheskes.github.io/OSRS-Idle-Clicker/
 
 ------------
 
-**Disclaimer:  I do not own any of these photos. please note that all images and copyrights belong to their original owners. no copyright infringement intended.**
+**Disclaimer:  I do not own any of the used images. Please note that all images and copyrights belong to their original owners. No copyright infringement intended.**
 
 All images are from the Old School Runescape Wiki (https://oldschool.runescape.wiki/) and/or from the Old School Runescape Twitter (https://twitter.com/oldschoolrs/).
