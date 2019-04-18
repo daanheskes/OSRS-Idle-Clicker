@@ -228,8 +228,16 @@ nav {
 		display: flex;
 		box-sizing: border-box;
 		align-items: center;
-		height: 100%;
+		height: 65%;
 		margin: auto 18px;
+
+		.coin-img-wrapper {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 31px;
+			height: 29px;
+		}
 
 		#coinAmount {
 			color: white;
@@ -239,6 +247,32 @@ nav {
 			padding-left: 6px;
 			letter-spacing: 1px;
 			display: inline-block;
+		}
+	}
+
+	.income-wrapper {
+		display:flex;
+		align-items: center;
+		height:35%;
+		margin: auto 18px;
+
+		#incomeAmount {
+			display: flex;
+			height: 100%;
+			color: rgba(255,255,255,0.7);
+			font-family: "Montserrat", sans-serif;
+			font-size: 14px;
+			font-weight: 300;
+
+			.income-img-wrapper {
+				display:flex;
+				justify-content: center;
+				align-items:center;
+
+				img {
+					padding: 0 6px;
+				}
+			}
 		}
 	}
 }

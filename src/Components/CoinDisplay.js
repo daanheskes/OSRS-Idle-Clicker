@@ -54,20 +54,29 @@ class CoinDisplay extends Component {
     render() {
         const coins = this.props.coins;
         let coinImage = "https://oldschool.runescape.wiki/images/4/44/Coins_1.png";
+        let income = this.props.income * this.props.multiplier;
+        income = parseFloat(income.toFixed(2));
+        let incomeImage = "https://oldschool.runescape.wiki/images/4/44/Coins_1.png";
 
         Object.values(coinImages).forEach(coin => {
             if (coins >= coin.amount) {
                 coinImage = coin.img;
             }
+            if (income >= coin.amount) {
+                incomeImage = coin.img;
+            }
         });
-        
+
         return(
             <div id='coinDisplay' className='full-width-bar'>
                 <div className='coin-wrapper'>
-                    <img src={coinImage} alt='Coins' /><span id='coinAmount'>{Math.floor(this.props.coins)}</span>
+                    <div className='coin-img-wrapper'>
+                        <img src={coinImage} alt='Coins' />
+                    </div>
+                    <span id='coinAmount'>{Math.floor(this.props.coins)}</span>
                 </div>
                 <div className='income-wrapper'>
-                    <span>Income: {this.props.income * this.props.multiplier}</span>
+                    <span id='incomeAmount'>Income<div class='income-img-wrapper'><img src={incomeImage} alt='Coins' /></div>{income}</span>
                 </div>
             </div>
         );

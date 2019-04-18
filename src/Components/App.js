@@ -11,7 +11,12 @@ import '../App.scss';
 const multiplier = 5;
 const prayerExperience = {
 	"Bones": 4.5,
-	"Big bones": 15
+	"Big bones": 15,
+	"Baby dragon bones": 30,
+	"Dragon bones": 72,
+	"Wyvern bones": 72,
+	"Lava dragon bones": 85,
+	"Superior dragon bones": 150
 }
 
 const monsters = MonsterList;
@@ -26,7 +31,7 @@ class IdleOSRS extends Component {
 		this.state = {
 			attackmethod: 'melee-aggressive',
 			coins: 0,
-			income: 1,
+			income: 0.25,
 			stats: {
 				combat: {
 					name: 'Combat',
@@ -121,9 +126,24 @@ class IdleOSRS extends Component {
 		clearInterval(this.interval);
 	}
 
+	calculatePassiveIncome(intervalms) {
+		let passiveIncome = 0;
+		passiveIncome += (this.state.stats.combat.level - 3) * 0.015;
+		passiveIncome += (this.state.stats.hitpoints.level - 10) * 0.005;
+		passiveIncome += (this.state.stats.attack.level - 1) * 0.005;
+		passiveIncome += (this.state.stats.strength.level - 1) * 0.0025;
+		passiveIncome += (this.state.stats.defence.level - 1) * 0.0125;
+		passiveIncome += (this.state.stats.prayer.level - 1) * 0.0025;
+		passiveIncome += (this.state.stats.slayer.level - 1) * 0.0075;
+
+		return passiveIncome * multiplier * (intervalms / 1000);
+	}
+
 	givePassiveIncome(intervalms) {
-		const passiveIncome = this.state.income * multiplier * (intervalms / 1000);
+		const passiveIncome = this.calculatePassiveIncome(intervalms);
+		
 		let newstate = this.state;
+		newstate.income = passiveIncome;
 		newstate.coins += passiveIncome;
 
 		this.setState(newstate);
@@ -338,7 +358,7 @@ class IdleOSRS extends Component {
 	assignCoinDrop(monster) {
 		let newstate = this.state;
 		
-		newstate.coins += monster.max_hp * 1.5 * multiplier;
+		newstate.coins += monster.max_hp * 0.3 * multiplier;
 
 		this.setState(newstate);
 	}
