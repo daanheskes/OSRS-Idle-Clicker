@@ -1,14 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Quantico:300,400,700');
 
 $navbarheight: 48px;
 $monsterhpheight: 24px;
 $monsternameheight: 58px;
 
+* {
+	user-select:none;
+}
+
 body, html, #root {
 	margin: 0;
 	width: 100%;
 	height: 100%;
-	font-family: "Monserrat", sans-serif;
+	font-family: "Quantico", sans-serif;
 }
 
 #root {
@@ -38,21 +42,21 @@ nav {
 }
 
 #column-1 {
+	display: flex;
+	flex-direction: column;
 	width: 25%;
 	z-index: 4;
 }
 
 #column-2 {
-	width: 41%;
+	display:flex;
+	flex-direction:row;
+	flex-wrap:wrap;
+	width: 71%;
 	z-index: 3;
 }
 
 #column-3 {
-	width:30%;
-	z-index: 2;
-}
-
-#column-4 {
 	width: 4%;
 	min-width:75px;
 	z-index: 1;
@@ -73,6 +77,16 @@ nav {
 	}
 }
 
+@keyframes moveLeft2 {
+	from {
+		transform: translate(0, 0);
+	}
+
+	to {
+		transform: translate(-60px, -210px);
+	}
+}
+
 @keyframes moveRight {
 	from {
 		transform: translate(0, 0);
@@ -80,6 +94,16 @@ nav {
 
 	to {
 		transform: translate(35px, -180px);
+	}
+}
+
+@keyframes moveRight2 {
+	from {
+		transform: translate(0, 0);
+	}
+
+	to {
+		transform: translate(60px, -210px);
 	}
 }
 
@@ -101,7 +125,7 @@ nav {
 		align-items:center;
 
 		h1 {
-			font-family: "Montserrat", sans-serif;
+			font-family: "Quantico", sans-serif;
 			margin:0;
 			color:white;
 			font-size:24px;
@@ -187,23 +211,28 @@ nav {
 				color:white;
 				text-align:center;
 				user-select:none;
+				animation-duration: 2s;
+				animation-timing-function: ease-in;
+				animation-timing-function: cubic-bezier(.35,.47,.75,.1);
 
 				&.travelLeft {
-					animation-duration: 2s;
-					animation-timing-function: ease-in;
-					animation-timing-function: cubic-bezier(.35,.47,.75,.1);
 					animation-name: moveLeft;
 				}
 
+				&.travelLeft2 {
+					animation-name: moveLeft2;
+				}
+
 				&.travelRight {
-					animation-duration: 2s;
-					animation-timing-function: ease-in;
-					animation-timing-function: cubic-bezier(.35,.47,.75,.1);
 					animation-name: moveRight;
 				}
 
+				&.travelRight2 {
+					animation-name: moveRight2;
+				}
+
 				span {
-					font-family: 'Montserrat', sans-serif;
+					font-family: 'Quantico', sans-serif;
 					font-size:16px;
 					font-weight:700;
 					display:block;
@@ -222,14 +251,22 @@ nav {
 	}
 }
 
+#attackMethod {
+	background-color:#3E3529;
+	width:100%;
+	height:100px;
+}
+
 #coinDisplay {
+	display:flex;
+	flex-direction:column;
 
 	.coin-wrapper {
 		display: flex;
 		box-sizing: border-box;
-		align-items: center;
-		height: 65%;
-		margin: auto 18px;
+		height: 70%;
+		margin: 0 12px;
+		padding: 8px 0 0 0;
 
 		.coin-img-wrapper {
 			display: flex;
@@ -240,12 +277,12 @@ nav {
 		}
 
 		#coinAmount {
-			color: white;
-			font-family: "Montserrat", sans-serif;
+			color: rgba(255,255,255,0.95);
+			font-family: "Quantico", sans-serif;
 			font-size: 24px;
+			line-height: 29px;
 			font-weight: 400;
 			padding-left: 6px;
-			letter-spacing: 1px;
 			display: inline-block;
 		}
 	}
@@ -254,15 +291,20 @@ nav {
 		display:flex;
 		align-items: center;
 		height:35%;
-		margin: auto 18px;
+		margin: auto 12px;
 
-		#incomeAmount {
+		#income-amount-wrapper {
 			display: flex;
 			height: 100%;
 			color: rgba(255,255,255,0.7);
-			font-family: "Montserrat", sans-serif;
+			font-family: "Quantico", sans-serif;
 			font-size: 14px;
 			font-weight: 300;
+			padding-bottom:6px;
+
+			#incomeAmount {
+				color: rgba(255,255,255,0.95);
+			}
 
 			.income-img-wrapper {
 				display:flex;

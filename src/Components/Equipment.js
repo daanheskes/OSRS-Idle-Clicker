@@ -5,12 +5,11 @@ class Equipment extends Component {
         const equipment = this.props.equipment;
         return(
             <div id='equipmentDisplay'>
-                <div id='equipment' className='full-width-bar'></div>
                 <div className='equipment-wrapper'>
                     <div className='equipment-display'>   
                         {
                         Object.entries(equipment).map(function(slot) {
-                            let hasItemInSlot = (Object.entries(slot[1]).length > 0 && slot[1].constructor === Object);
+                            let hasItemInSlot = (slot[1] != null && slot[1].constructor === Object && Object.entries(slot[1]).length > 0);
                             if (hasItemInSlot) {
                                 return(
                                     <div id={'equipment-' + slot[0]} className={'equipment-item hasItem'} key={slot[0]}>

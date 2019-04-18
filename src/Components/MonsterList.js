@@ -96,7 +96,7 @@ export default {
 		name: "Moss Giant",
 		combatlevel: 42,
 		hitpoints: 60,
-		img: "https://oldschool.runescape.wiki/images/thumb/6/61/Moss_giant.png/" + pxsize + "-Moss_giant.png",
+		img: "https://oldschool.runescape.wiki/images/thumb/6/61/Moss_giant.png/" + pxsize + "px-Moss_giant.png",
 		bones: "Big bones"
 	}
 }

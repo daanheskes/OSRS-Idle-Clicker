@@ -4,6 +4,7 @@ import Equipment from './Equipment.js';
 import CoinDisplay from './CoinDisplay.js';
 import MonsterList from './MonsterList.js';
 import Monster from './Monster.js';
+import AttackStyle from './AttackStyle.js';
 import EquipmentList from './EquipmentList.js';
 import Skills from './Skills.js';
 import '../App.scss';
@@ -29,9 +30,9 @@ class IdleOSRS extends Component {
 		super(props);
 		this.clickMonster = this.clickMonster.bind(this);
 		this.state = {
-			attackmethod: 'melee-aggressive',
+			attackmethod: 'melee-controlled',
 			coins: 0,
-			income: 0.25,
+			income: 0,
 			stats: {
 				combat: {
 					name: 'Combat',
@@ -91,17 +92,17 @@ class IdleOSRS extends Component {
 				}
 			},
 			equipment: {
-				head: equipmentList.head.bronzemedhelm,
-				cape: equipmentList.cape.redcape,
-				neck: equipmentList.neck.amuletofaccuracy,
-				ammunition: equipmentList.ammunition.bronzearrow,
+				head: null,
+				cape: null,
+				neck: null,
+				ammunition: null,
 				weapon: equipmentList.weapon.bronzesword,
-				body: equipmentList.body.bronzechainbody,
+				body: null,
 				shield: equipmentList.shield.woodenshield,
-				legs: equipmentList.legs.bronzeplatelegs,
-				hand: equipmentList.hand.leathergloves,
-				feet: equipmentList.feet.leatherboots,
-				ring: equipmentList.ring.goldring
+				legs: null,
+				hand: null,
+				feet: null,
+				ring: null
 			},
 			currentMonster: {
 				name: firstMonster.name,
@@ -115,7 +116,7 @@ class IdleOSRS extends Component {
 	}
 
 	componentDidMount() {
-		let intervalms = 125;
+		let intervalms = 200;
 
 		this.interval = setInterval(() => {
 			this.givePassiveIncome(intervalms);
@@ -126,32 +127,47 @@ class IdleOSRS extends Component {
 		clearInterval(this.interval);
 	}
 
-	calculatePassiveIncome(intervalms) {
+	calculatePassiveIncome() {
 		let passiveIncome = 0;
-		passiveIncome += (this.state.stats.combat.level - 3) * 0.015;
-		passiveIncome += (this.state.stats.hitpoints.level - 10) * 0.005;
-		passiveIncome += (this.state.stats.attack.level - 1) * 0.005;
-		passiveIncome += (this.state.stats.strength.level - 1) * 0.0025;
-		passiveIncome += (this.state.stats.defence.level - 1) * 0.0125;
-		passiveIncome += (this.state.stats.prayer.level - 1) * 0.0025;
-		passiveIncome += (this.state.stats.slayer.level - 1) * 0.0075;
+		passiveIncome += (this.state.stats.combat.level - 3) * 0.03;
+		passiveIncome += (this.state.stats.hitpoints.level - 10) * 0.01;
+		passiveIncome += (this.state.stats.attack.level - 1) * 0.01;
+		passiveIncome += (this.state.stats.strength.level - 1) * 0.005;
+		passiveIncome += (this.state.stats.defence.level - 1) * 0.025;
+		passiveIncome += (this.state.stats.ranged.level -1) * 0.025;
+		passiveIncome += (this.state.stats.magic.level -1) * 0.025;
+		passiveIncome += (this.state.stats.prayer.level - 1) * 0.005;
+		passiveIncome += (this.state.stats.slayer.level - 1) * 0.015;
+		passiveIncome += this.calculateDefenceBonus() * 0.01;
+		passiveIncome += this.calculateStrengthBonus() * 0.03;
 
-		return passiveIncome * multiplier * (intervalms / 1000);
+		return passiveIncome * multiplier;
 	}
 
 	givePassiveIncome(intervalms) {
-		const passiveIncome = this.calculatePassiveIncome(intervalms);
+		const passiveIncome = this.calculatePassiveIncome();
 		
 		let newstate = this.state;
 		newstate.income = passiveIncome;
-		newstate.coins += passiveIncome;
+		if (passiveIncome >= 1) {
+			newstate.coins += passiveIncome * (intervalms / 1000);
+		}
 
 		this.setState(newstate);
 	}
 
 	createHitSplat(Xcoord, Ycoord, damage) {
 		let hitsplat = document.createElement("div");
-		hitsplat.className = (Math.random() >= 0.5 ? 'hitsplat travelLeft' : 'hitsplat travelRight');
+		let random = Math.random();
+		if (random >= 0 && random < 0.25) {
+			hitsplat.className = 'hitsplat travelLeft';
+		} else if (random >= 0.25 && random < 0.5) {
+			hitsplat.className = 'hitsplat travelLeft2';
+		} else if (random >= 0.5 && random < 0.75) {
+			hitsplat.className = 'hitsplat travelRight';
+		} else {
+			hitsplat.className = 'hitsplat travelRight2';
+		}
 		hitsplat.style = 'position:absolute;left: ' + Xcoord + 'px;top:' + Ycoord + 'px';
 		let hitsplatDamage = document.createElement("span");
 		hitsplatDamage.className = 'hitsplatDamage';
@@ -184,9 +200,7 @@ class IdleOSRS extends Component {
 			this.grantSlayerExperience(currentMonster);
 			this.assignCoinDrop(currentMonster);
 			const that = this;
-			setTimeout(function() {
-				that.newMonster();
-			}, 75);
+			that.newMonster();
 		} else {
 			this.setState(newstate);
 		}
@@ -234,12 +248,27 @@ class IdleOSRS extends Component {
 		}
 	}
 
+	calculateDefenceBonus() {
+		const equipment = this.state.equipment;
+		let defenceBonus = 0;
+
+		Object.values(equipment).forEach(function(item) {
+			if (item != null) {
+				defenceBonus += item.def_bonus;
+			}
+		});
+		
+		return defenceBonus;
+	}
+
 	calculateStrengthBonus() {
 		const equipment = this.state.equipment;
 		let strengthBonus = 0;
 
 		Object.values(equipment).forEach(function(item) {
-			strengthBonus += item.str_bonus;
+			if (item != null) {
+				strengthBonus += item.str_bonus;
+			}
 		});
 		
 		return strengthBonus;
@@ -330,7 +359,7 @@ class IdleOSRS extends Component {
 		let monsterList = [];
 
 		Object.entries(monsters).forEach(monster => {
-			if (combatLevel >= monster[1].combatlevel && combatLevel < (monster[1].combatlevel * 3)) {
+			if (combatLevel >= monster[1].combatlevel && combatLevel <= ((monster[1].combatlevel * 2) + 2)) {
 				monsterList.push(monster[0]);
 			}
 		});
@@ -442,14 +471,13 @@ class IdleOSRS extends Component {
 				<Navbar />
 				<div id='column-1' className='column'>
 					<Monster clickMonster={this.clickMonster} currentMonster={this.state.currentMonster} />
+					<AttackStyle attackMethod={this.state.attackmethod} />
 				</div>
 				<div id='column-2' className='column'>
-					<CoinDisplay coins={this.state.coins} income={this.state.income} multiplier={multiplier}/>
-				</div>
-				<div id='column-3' className='column'>
+					<CoinDisplay coins={this.state.coins} income={this.state.income} />
 					<Equipment equipment={this.state.equipment} />
 				</div>
-				<div id='column-4' className='column'>
+				<div id='column-3' className='column'>
 					<Skills stats={this.state.stats} />
 				</div>
 			</div>
