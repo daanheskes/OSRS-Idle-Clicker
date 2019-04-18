@@ -8,7 +8,7 @@ import EquipmentList from './EquipmentList.js';
 import Skills from './Skills.js';
 import '../App.scss';
 
-const multiplier = 10;
+const multiplier = 5;
 const prayerExperience = {
 	"Bones": 4.5,
 	"Big bones": 15
@@ -26,7 +26,7 @@ class IdleOSRS extends Component {
 		this.state = {
 			attackmethod: 'melee-aggressive',
 			coins: 0,
-			income: 0,
+			income: 1,
 			stats: {
 				combat: {
 					name: 'Combat',
@@ -110,7 +110,7 @@ class IdleOSRS extends Component {
 	}
 
 	componentDidMount() {
-		let intervalms = 3000;
+		let intervalms = 125;
 
 		this.interval = setInterval(() => {
 			this.givePassiveIncome(intervalms);
@@ -424,7 +424,7 @@ class IdleOSRS extends Component {
 					<Monster clickMonster={this.clickMonster} currentMonster={this.state.currentMonster} />
 				</div>
 				<div id='column-2' className='column'>
-					<CoinDisplay coins={this.state.coins} />
+					<CoinDisplay coins={this.state.coins} income={this.state.income} multiplier={multiplier}/>
 				</div>
 				<div id='column-3' className='column'>
 					<Equipment equipment={this.state.equipment} />
