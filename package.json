@@ -1,6 +1,6 @@
 {
   "name": "OSRS-Idle-Clicker",
-  "homepage": "https://daanheskes.github.io/OSRS-Idle-Clicker",
+  "homepage": "./",
   "version": "0.2.0",
   "private": false,
   "dependencies": {
