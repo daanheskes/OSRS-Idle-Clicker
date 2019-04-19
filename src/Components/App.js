@@ -5,11 +5,12 @@ import CoinDisplay from './CoinDisplay.js';
 import MonsterList from './MonsterList.js';
 import Monster from './Monster.js';
 import AttackStyle from './AttackStyle.js';
+import ItemShop from './ItemShop.js';
 import EquipmentList from './EquipmentList.js';
 import Skills from './Skills.js';
 import '../App.scss';
 
-const multiplier = 5;
+const multiplier = 500;
 const prayerExperience = {
 	"Bones": 4.5,
 	"Big bones": 15,
@@ -116,7 +117,7 @@ class IdleOSRS extends Component {
 	}
 
 	componentDidMount() {
-		let intervalms = 200;
+		let intervalms = 125;
 
 		this.interval = setInterval(() => {
 			this.givePassiveIncome(intervalms);
@@ -138,8 +139,19 @@ class IdleOSRS extends Component {
 		passiveIncome += (this.state.stats.magic.level -1) * 0.025;
 		passiveIncome += (this.state.stats.prayer.level - 1) * 0.005;
 		passiveIncome += (this.state.stats.slayer.level - 1) * 0.015;
-		passiveIncome += this.calculateDefenceBonus() * 0.01;
-		passiveIncome += this.calculateStrengthBonus() * 0.03;
+		passiveIncome += this.calculateItemBonus('atk_bonus') * 0.01;
+		passiveIncome += this.calculateItemBonus('str_bonus') * 0.03;
+		passiveIncome += this.calculateItemBonus('def_bonus') * 0.02;
+
+		if (this.state.equipment.weapon.name === 'Bronze Sword') {
+			passiveIncome -= equipmentList.weapon.bronzesword.atk_bonus * 0.01;
+			passiveIncome -= equipmentList.weapon.bronzesword.str_bonus * 0.03;
+		}
+		if (this.state.equipment.shield.name === 'Wooden Shield') {
+			passiveIncome -= equipmentList.shield.woodenshield.def_bonus * 0.02;
+		}
+
+		console.log(passiveIncome);
 
 		return passiveIncome * multiplier;
 	}
@@ -248,37 +260,24 @@ class IdleOSRS extends Component {
 		}
 	}
 
-	calculateDefenceBonus() {
+	calculateItemBonus(stat) {
 		const equipment = this.state.equipment;
-		let defenceBonus = 0;
+		let statBonus = 0;
 
 		Object.values(equipment).forEach(function(item) {
 			if (item != null) {
-				defenceBonus += item.def_bonus;
+				statBonus += item[stat];
 			}
 		});
 		
-		return defenceBonus;
-	}
-
-	calculateStrengthBonus() {
-		const equipment = this.state.equipment;
-		let strengthBonus = 0;
-
-		Object.values(equipment).forEach(function(item) {
-			if (item != null) {
-				strengthBonus += item.str_bonus;
-			}
-		});
-		
-		return strengthBonus;
+		return statBonus;
 	}
 
 	calculateMaxMeleeHit() {
 		const attackStyleBonus = this.getAttackStyleBonus();
 		const potionBonus = 0;
 		const prayerBonus = this.getPrayerBonus();
-		const strengthBonus = this.calculateStrengthBonus();
+		const strengthBonus = this.calculateItemBonus('str_bonus');
 		const strengthLevel = this.state.stats.strength.level;
 
 		let effectiveStrength = Math.floor((strengthLevel + potionBonus) * prayerBonus + attackStyleBonus);
@@ -465,6 +464,13 @@ class IdleOSRS extends Component {
 	}
 
 	render() {
+
+		const itemBonusses = {
+			atk_bonus: this.calculateItemBonus('atk_bonus'),
+			str_bonus: this.calculateItemBonus('str_bonus'),
+			def_bonus: this.calculateItemBonus('def_bonus')
+		}
+
 		return (
 
 			<div className='wrap'>
@@ -475,7 +481,8 @@ class IdleOSRS extends Component {
 				</div>
 				<div id='column-2' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />
-					<Equipment equipment={this.state.equipment} />
+					<ItemShop />
+					<Equipment equipment={this.state.equipment} itemstats={itemBonusses} />
 				</div>
 				<div id='column-3' className='column'>
 					<Skills stats={this.state.stats} />
