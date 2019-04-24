@@ -8,7 +8,7 @@ class Equipment extends Component {
                 <div className='equipment-wrapper'>
                     <div className='equipment-display'>   
                         {
-                        Object.entries(equipment).map(function(slot) {
+                        Object.entries(equipment).map((slot) => {
                             let hasItemInSlot = (slot[1] !== null && slot[1].constructor === Object && Object.entries(slot[1]).length > 0);
                             if (hasItemInSlot) {
                                 return(
@@ -17,7 +17,7 @@ class Equipment extends Component {
                                     </div>
                                 );
                             } else {
-                                return <div className='equipment-item'></div>
+                                return <div className='equipment-item' key={slot[0]}></div>
                             }
                         })
                         }                   

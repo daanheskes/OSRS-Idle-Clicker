@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import coinImages from './Data/CoinImages.js';
 
-console.log(coinImages);
-
 class CoinDisplay extends Component {
 
     componentDidMount() {

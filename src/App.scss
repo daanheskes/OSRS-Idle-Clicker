@@ -8,6 +8,12 @@ $monsternameheight: 58px;
 	user-select:none;
 }
 
+
+* { background-image: none!important; }
+img {
+	display:none!important;
+}
+
 body, html, #root {
 	margin: 0;
 	width: 100%;

@@ -5,6 +5,7 @@ import '../App.scss';
 import monsters from './Data/MonsterList.js';
 import equipmentList from './Data/EquipmentList.js';
 import prayerExperience from './Data/PrayerExperience.js';
+import magicSpells from './Data/MagicSpellsList.js';
 
 // Components
 import Navbar from './Navbar.js';
@@ -15,7 +16,7 @@ import ItemShop from './ItemShop.js';
 import Equipment from './Equipment.js';
 import Skills from './Skills.js';
 
-const multiplier = 50;
+const multiplier = 10;
 
 const firstMonster = monsters.chicken;
 
@@ -24,7 +25,8 @@ class IdleOSRS extends Component {
 		super(props);
 		this.clickMonster = this.clickMonster.bind(this);
 		this.state = {
-			attackmethod: 'melee-controlled',
+			attackstyle: 'magic',
+			attackmethod: 'spell',
 			coins: 0,
 			income: 0,
 			stats: {
@@ -123,6 +125,10 @@ class IdleOSRS extends Component {
 
 	calculatePassiveIncome() {
 		let passiveIncome = 0;
+		const atkmultiplier = 0.02;
+		const strmultiplier = 0.01;
+		const defmultiplier = 0.03;
+
 		passiveIncome += (this.state.stats.combat.level - 3) * 0.03;
 		passiveIncome += (this.state.stats.hitpoints.level - 10) * 0.01;
 		passiveIncome += (this.state.stats.attack.level - 1) * 0.01;
@@ -132,19 +138,20 @@ class IdleOSRS extends Component {
 		passiveIncome += (this.state.stats.magic.level -1) * 0.025;
 		passiveIncome += (this.state.stats.prayer.level - 1) * 0.005;
 		passiveIncome += (this.state.stats.slayer.level - 1) * 0.015;
-		passiveIncome += this.calculateItemBonus('atk_bonus') * 0.01;
-		passiveIncome += this.calculateItemBonus('str_bonus') * 0.03;
-		passiveIncome += this.calculateItemBonus('def_bonus') * 0.02;
+		passiveIncome += this.calculateItemBonus('atk_bonus') * atkmultiplier;
+		passiveIncome += this.calculateItemBonus('str_bonus') * strmultiplier;
+		passiveIncome += this.calculateItemBonus('def_bonus') * defmultiplier;
 
 		if (this.state.equipment.weapon.name === 'Bronze Sword') {
-			passiveIncome -= equipmentList.weapon.bronzesword.atk_bonus * 0.01;
-			passiveIncome -= equipmentList.weapon.bronzesword.str_bonus * 0.03;
+			passiveIncome -= equipmentList.weapon.bronzesword.atk_bonus * atkmultiplier;
+			passiveIncome -= equipmentList.weapon.bronzesword.str_bonus * strmultiplier;
 		}
 		if (this.state.equipment.shield.name === 'Wooden Shield') {
-			passiveIncome -= equipmentList.shield.woodenshield.def_bonus * 0.02;
+			passiveIncome -= equipmentList.shield.woodenshield.def_bonus * defmultiplier;
 		}
 
-		return passiveIncome * multiplier;
+		return Math.floor(passiveIncome * multiplier > 0 ? passiveIncome * multiplier : 0);
+
 	}
 
 	givePassiveIncome(intervalms) {
@@ -152,9 +159,7 @@ class IdleOSRS extends Component {
 		
 		let newstate = this.state;
 		newstate.income = passiveIncome;
-		if (passiveIncome >= 1) {
-			newstate.coins += passiveIncome * (intervalms / 1000);
-		}
+		newstate.coins += passiveIncome * (intervalms / 1000);
 
 		this.setState(newstate);
 	}
@@ -185,7 +190,7 @@ class IdleOSRS extends Component {
 	}
 
 	clickMonster(currentMonster, Xcoord, Ycoord) {
-		let damage = this.calculateMaxHit();
+		let damage = this.calculateDamage();
 		let newstate = this.state;
 		if (damage > currentMonster.current_hp) {
 			damage = currentMonster.current_hp;
@@ -196,14 +201,16 @@ class IdleOSRS extends Component {
 		if (newstate.currentMonster.current_hp < 0) {
 			newstate.currentMonster.current_hp = 0;
 		}
-		this.grantCombatExperience(this.state.attackmethod, damage);
+		this.grantCombatExperience(damage);
 		this.grantExperience('hitpoints', damage * 1.33);
 		if (newstate.currentMonster.current_hp <= 0) {
 			this.grantPrayerExperience(currentMonster);
 			this.grantSlayerExperience(currentMonster);
 			this.assignCoinDrop(currentMonster);
 			const that = this;
-			that.newMonster();
+			setTimeout(() => {
+				that.newMonster();
+			}, 75);
 		} else {
 			this.setState(newstate);
 		}
@@ -240,13 +247,13 @@ class IdleOSRS extends Component {
 		return meleeBonusMultiplier;
 	}
 
-	calculateMaxHit() {
-		const attackmethod = this.state.attackmethod;
-		if (attackmethod.startsWith('melee-')) {
+	calculateDamage() {
+		const attackstyle = this.state.attackstyle;
+		if (attackstyle === "melee") {
 			return this.calculateMaxMeleeHit();
-		} else if (attackmethod.startsWith('ranged-')) {
+		} else if (attackstyle === "ranged") {
 			return this.calculateMaxRangedHit();
-		} else if (attackmethod.startsWith('magic-')) {
+		} else if (attackstyle === "magic") {
 			return this.calculateMaxMagicHit();
 		}
 	}
@@ -281,7 +288,20 @@ class IdleOSRS extends Component {
 	}
 
 	calculateMaxMagicHit() {
-		return 1;
+		return this.getBestSpell().damage;
+	}
+
+	getBestSpell() {
+		const magicLevel = this.state.stats.magic.level;
+		let bestSpell = magicSpells.windstrike;
+
+		Object.values(magicSpells).forEach((spell) => {
+			if (magicLevel >= spell.level) {
+				bestSpell = spell;
+			}
+		});
+
+		return bestSpell;
 	}
 
 	checkLevelUp(currentLevel, newExperience) {
@@ -310,22 +330,60 @@ class IdleOSRS extends Component {
 		this.updateCombat();
 	}
 
-	grantCombatExperience(attackmethod, damage) {
-		switch(attackmethod) {
-			case 'melee-accurate':
-				this.grantExperience('attack', damage * 4);
-			break;
-			case 'melee-aggressive':
-				this.grantExperience('strength', damage * 4);
-			break;
-			case 'melee-defensive':
-				this.grantExperience('defence', damage * 4);
-			break;
-			case 'melee-controlled':
-				this.grantExperience(['attack','strength','defence'], damage * 1.33);
-			break;
+	grantCombatExperience(damage) {
+		const attackstyle = this.state.attackstyle;
+		const attackmethod = this.state.attackmethod;
+
+		switch(attackstyle) {
 			default:
-				this.grantExperience('strength', damage * 1.33);
+			case 'melee':
+				switch(attackmethod) {
+					case 'accurate':
+						this.grantExperience('attack', damage * 4);
+					break;
+
+					case 'aggressive':
+						this.grantExperience('strength', damage * 4);
+					break;
+
+					case 'defensive':
+						this.grantExperience('defence', damage * 4);
+					break;
+
+					default:
+					case 'controlled':
+						this.grantExperience(['attack','strength','defence'], damage * 1.33);
+					break;
+				}
+			break;
+
+			case 'ranged':
+				switch(attackmethod) {
+					default:
+					case 'accurate':
+					case 'rapid':
+						this.grantExperience('ranged', damage * 4);
+					break;
+
+					case 'longrange':
+						this.grantExperience(['ranged','defence'], damage * 2);
+					break;
+				}
+			break;
+
+			case 'magic':
+				switch(attackmethod) {
+					default:
+					case 'spell':
+						let totalMagicExp = this.getBestSpell().experience + damage * 2;
+						this.grantExperience('magic', totalMagicExp);
+					break;
+
+					case 'defensivespell':
+						this.grantExperience('magic', this.getBestSpell().experience);
+						this.grantExperience(['magic','defence'], damage * 2);
+					break;
+				}
 			break;
 		}
 	}
