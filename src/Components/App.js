@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import '../App.scss';
 
+// Data files
 import monsters from './Data/MonsterList.js';
 import equipmentList from './Data/EquipmentList.js';
 import prayerExperience from './Data/PrayerExperience.js';
 
+// Components
 import Navbar from './Navbar.js';
 import Monster from './Monster.js';
 import AttackStyle from './AttackStyle.js';
@@ -13,7 +15,7 @@ import ItemShop from './ItemShop.js';
 import Equipment from './Equipment.js';
 import Skills from './Skills.js';
 
-const multiplier = 500;
+const multiplier = 50;
 
 const firstMonster = monsters.chicken;
 
@@ -141,8 +143,6 @@ class IdleOSRS extends Component {
 		if (this.state.equipment.shield.name === 'Wooden Shield') {
 			passiveIncome -= equipmentList.shield.woodenshield.def_bonus * 0.02;
 		}
-
-		console.log(passiveIncome);
 
 		return passiveIncome * multiplier;
 	}
