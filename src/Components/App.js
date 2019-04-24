@@ -1,28 +1,19 @@
 import React, { Component } from 'react';
-import Navbar from './Navbar.js';
-import Equipment from './Equipment.js';
-import CoinDisplay from './CoinDisplay.js';
-import MonsterList from './MonsterList.js';
-import Monster from './Monster.js';
-import AttackStyle from './AttackStyle.js';
-import ItemShop from './ItemShop.js';
-import EquipmentList from './EquipmentList.js';
-import Skills from './Skills.js';
 import '../App.scss';
 
-const multiplier = 500;
-const prayerExperience = {
-	"Bones": 4.5,
-	"Big bones": 15,
-	"Baby dragon bones": 30,
-	"Dragon bones": 72,
-	"Wyvern bones": 72,
-	"Lava dragon bones": 85,
-	"Superior dragon bones": 150
-}
+import monsters from './Data/MonsterList.js';
+import equipmentList from './Data/EquipmentList.js';
+import prayerExperience from './Data/PrayerExperience.js';
 
-const monsters = MonsterList;
-const equipmentList = EquipmentList;
+import Navbar from './Navbar.js';
+import Monster from './Monster.js';
+import AttackStyle from './AttackStyle.js';
+import CoinDisplay from './CoinDisplay.js';
+import ItemShop from './ItemShop.js';
+import Equipment from './Equipment.js';
+import Skills from './Skills.js';
+
+const multiplier = 500;
 
 const firstMonster = monsters.chicken;
 

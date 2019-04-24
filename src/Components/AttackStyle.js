@@ -5,7 +5,7 @@ class AttackStyle extends Component {
         return(
             <div id='attackMethod'>
                 <div>
-                    <img src='https://oldschool.runescape.wiki/images/3/3d/CombatStyles_hacksword.png' />
+                    <img src='https://oldschool.runescape.wiki/images/3/3d/CombatStyles_hacksword.png' alt="Combat styles" />
                 </div>
             </div>
         );
