@@ -21,10 +21,9 @@ class CoinDisplay extends Component {
 
     render() {
         const coins = this.props.coins;
-        let coinImage = "https://oldschool.runescape.wiki/images/4/44/Coins_1.png";
-        let income = this.props.income;
-        income = parseFloat(income.toFixed(2));
-        let incomeImage = "https://oldschool.runescape.wiki/images/4/44/Coins_1.png";
+        let coinImage = coinImages[1].img;
+        let income = parseFloat(this.props.income.toFixed(2));
+        let incomeImage = coinImages[1].img;
 
         Object.values(coinImages).forEach(coin => {
             if (coins >= coin.amount) {
