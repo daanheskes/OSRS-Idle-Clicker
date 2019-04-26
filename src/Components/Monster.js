@@ -30,7 +30,7 @@ class Monster extends Component {
 					<h1 className='monster-name'>{currentMonster.name} (Lv. {currentMonster.combatlevel})</h1>
 				</div>
 				<div className='monster-hitpoints'>
-					<div className='monster-hitpoints_stats'>{currentMonster.current_hp}/{currentMonster.max_hp}</div>
+					<div className='monster-hitpoints_stats'>{Math.floor(currentMonster.current_hp)}/{Math.floor(currentMonster.max_hp)}</div>
 					<div className='monster-current_hitpoints' style={{width: this.calculateHitpointsPercentage(currentMonster.current_hp, currentMonster.max_hp)}} ></div>
 				</div>
 				<div className='monster-background'>

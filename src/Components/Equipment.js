@@ -16,16 +16,18 @@ class Equipment extends Component {
                                         <img src={slot[1].img} alt={slot[0]} />
                                     </div>
                                 );
+                            } else {
+                                return false;
                             }
                         })
                         }                   
                     </div>
                     <div className='equipment-stats'>
-                        <p>Attack: {this.props.itemstats.atk_bonus}</p>
-                        <p>Defence: {this.props.itemstats.def_bonus}</p>
-                        <p>Strength: {this.props.itemstats.str_bonus}</p>
-                        <p>Ranged: {this.props.itemstats.rngd_bonus}</p>
-                        <p>Magic: {this.props.itemstats.mage_bonus}</p>
+                        <p><span>Attack:</span>{this.props.itemstats.atk_bonus}</p>
+                        <p><span>Defence:</span>{this.props.itemstats.def_bonus}</p>
+                        <p><span>Strength:</span>{this.props.itemstats.str_bonus}</p>
+                        <p><span>Ranged:</span>{this.props.itemstats.rngd_bonus}</p>
+                        <p><span>Magic:</span>{this.props.itemstats.mage_bonus}</p>
                     </div>
                 </div>
             </div>

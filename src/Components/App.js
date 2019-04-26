@@ -17,7 +17,8 @@ import GearSets from './GearSets.js';
 import Equipment from './Equipment.js';
 import Skills from './Skills.js';
 
-const multiplier = 10;
+const multiplier = 1;
+const exp_multiplier = 10;
 
 const firstMonster = monsters.chicken;
 
@@ -26,8 +27,8 @@ class IdleOSRS extends Component {
 		super(props);
 		this.clickMonster = this.clickMonster.bind(this);
 		this.state = {
-			attackstyle: 'magic',
-			attackmethod: 'spell',
+			attackstyle: 'melee',
+			attackmethod: 'controlled',
 			coins: 0,
 			income: 0,
 			stats: {
@@ -155,22 +156,26 @@ class IdleOSRS extends Component {
 
 	calculatePassiveIncome() {
 		let passiveIncome = 0;
-		const atkmultiplier = 0.02;
-		const strmultiplier = 0.01;
-		const defmultiplier = 0.03;
+		const atkmultiplier = 0.04;
+		const strmultiplier = 0.02;
+		const defmultiplier = 0.06;
+		const rngdmultiplier = 0.06;
+		const magemultiplier = 0.06;
 
-		passiveIncome += (this.state.stats.combat.level - 3) * 0.03;
-		passiveIncome += (this.state.stats.hitpoints.level - 10) * 0.01;
-		passiveIncome += (this.state.stats.attack.level - 1) * 0.01;
-		passiveIncome += (this.state.stats.strength.level - 1) * 0.005;
-		passiveIncome += (this.state.stats.defence.level - 1) * 0.025;
-		passiveIncome += (this.state.stats.ranged.level -1) * 0.025;
-		passiveIncome += (this.state.stats.magic.level -1) * 0.025;
-		passiveIncome += (this.state.stats.prayer.level - 1) * 0.005;
-		passiveIncome += (this.state.stats.slayer.level - 1) * 0.015;
+		passiveIncome += (this.state.stats.combat.level - 3) * 0.06 + ((this.state.stats.combat.level - 3) * 0.125);
+		passiveIncome += (this.state.stats.hitpoints.level - 10) * 0.02;
+		passiveIncome += (this.state.stats.attack.level - 1) * 0.02;
+		passiveIncome += (this.state.stats.strength.level - 1) * 0.01;
+		passiveIncome += (this.state.stats.defence.level - 1) * 0.05;
+		passiveIncome += (this.state.stats.ranged.level -1) * 0.05;
+		passiveIncome += (this.state.stats.magic.level -1) * 0.05;
+		passiveIncome += (this.state.stats.prayer.level - 1) * 0.01;
+		passiveIncome += (this.state.stats.slayer.level - 1) * 0.03;
 		passiveIncome += this.calculateItemBonus('atk_bonus') * atkmultiplier;
 		passiveIncome += this.calculateItemBonus('str_bonus') * strmultiplier;
 		passiveIncome += this.calculateItemBonus('def_bonus') * defmultiplier;
+		passiveIncome += this.calculateItemBonus('rngd_bonus') * rngdmultiplier;
+		passiveIncome += this.calculateItemBonus('mage_bonus') * magemultiplier;
 		
 		if (this.state.gearsets[this.state.gearsets.worn].weapon.name === 'Bronze Sword') {
 			passiveIncome -= equipmentList.weapon.bronzesword.atk_bonus * atkmultiplier;
@@ -197,15 +202,17 @@ class IdleOSRS extends Component {
 	createHitSplat(Xcoord, Ycoord, damage) {
 		let hitsplat = document.createElement("div");
 		let random = Math.random();
+		const checkNoDamage = (damage === 0 ? ' blockHitsplat' : '');
 		if (random >= 0 && random < 0.25) {
-			hitsplat.className = 'hitsplat travelLeft';
+			hitsplat.className = 'hitsplat travelLeft' + checkNoDamage;
 		} else if (random >= 0.25 && random < 0.5) {
-			hitsplat.className = 'hitsplat travelLeft2';
+			hitsplat.className = 'hitsplat travelLeft2' + checkNoDamage;
 		} else if (random >= 0.5 && random < 0.75) {
-			hitsplat.className = 'hitsplat travelRight';
+			hitsplat.className = 'hitsplat travelRight' + checkNoDamage;
 		} else {
-			hitsplat.className = 'hitsplat travelRight2';
+			hitsplat.className = 'hitsplat travelRight2' + checkNoDamage;
 		}
+
 		hitsplat.style = 'position:absolute;left: ' + Xcoord + 'px;top:' + Ycoord + 'px';
 		let hitsplatDamage = document.createElement("span");
 		hitsplatDamage.className = 'hitsplatDamage';
@@ -347,12 +354,12 @@ class IdleOSRS extends Component {
 		let newstate = this.state;
 		if (Array.isArray(skill)) {
 			skill.forEach(sk => {
-				newstate.stats[sk].experience += (experience * multiplier);
+				newstate.stats[sk].experience += (experience * multiplier * exp_multiplier);
 				newstate.stats[sk].percentage = this.calculateNextLevelPercentage(newstate.stats[sk].experience);
 				newstate.stats[sk].level = this.checkLevelUp(newstate.stats[sk].level, newstate.stats[sk].experience);
 			});
 		} else {
-			newstate.stats[skill].experience += (experience * multiplier);
+			newstate.stats[skill].experience += (experience * multiplier * exp_multiplier);
 			newstate.stats[skill].percentage = this.calculateNextLevelPercentage(newstate.stats[skill].experience);
 			newstate.stats[skill].level = this.checkLevelUp(newstate.stats[skill].level, newstate.stats[skill].experience);
 		}
@@ -464,8 +471,9 @@ class IdleOSRS extends Component {
 
 	assignCoinDrop(monster) {
 		let newstate = this.state;
-		
-		newstate.coins += monster.max_hp * 0.125 * multiplier;
+		const combatMultiplier = 1 + this.state.stats.combat.level - 3 * 0.2;
+
+		newstate.coins += monster.max_hp * 0.1 * combatMultiplier * multiplier;
 
 		this.setState(newstate);
 	}
@@ -564,8 +572,8 @@ class IdleOSRS extends Component {
 				<div id='column-2' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />
 					<ItemShop />
-					<GearSets gearsets={this.state.gearsets} />
 					<Equipment equipment={this.state.gearsets[this.state.gearsets.worn]} itemstats={itemBonusses} />
+					<GearSets gearsets={this.state.gearsets} />
 				</div>
 				<div id='column-3' className='column'>
 					<Skills stats={this.state.stats} />
