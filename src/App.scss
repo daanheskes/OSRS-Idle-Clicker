@@ -401,6 +401,68 @@ nav {
 	}
 }
 
+#gearsets {
+	display: flex;
+	flex-direction: column;
+	padding: 12px;
+
+	.gearsetName {
+		font-weight: 400;
+		color:white;
+		margin:0;
+	}
+	.slot-wrapper {
+		display: flex;
+		flex-direction: row;
+	}
+	.slot {
+		display:flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		margin:0 4px;
+
+		&.hasItem {
+			background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjlDRTI4OTk1Q0ZDMTFFOUJCOThFQzA1RTQxODA5RDUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjlDRTI4OUE1Q0ZDMTFFOUJCOThFQzA1RTQxODA5RDUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyOUNFMjg5NzVDRkMxMUU5QkI5OEVDMDVFNDE4MDlENSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyOUNFMjg5ODVDRkMxMUU5QkI5OEVDMDVFNDE4MDlENSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PrVlCCAAAAdLSURBVHjaxJjZjuNE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');
+		}
+	}
+	.slot-head {
+		background-image: url("https://oldschool.runescape.wiki/images/3/35/Head_slot.png");
+	}
+	.slot-cape {
+		background-image: url("https://oldschool.runescape.wiki/images/b/ba/Cape_slot.png");
+	}
+	.slot-neck {
+		background-image: url("https://oldschool.runescape.wiki/images/b/b4/Neck_slot.png");
+	}
+	.slot-ammunition {
+		background-image: url("https://oldschool.runescape.wiki/images/6/64/Ammo_slot.png");
+	}
+	.slot-weapon {
+		background-image: url("https://oldschool.runescape.wiki/images/d/d1/Weapon_slot.png");
+	}
+	.slot-body {
+		background-image: url("https://oldschool.runescape.wiki/images/9/9f/Body_slot.png");
+	}
+	.slot-shield {
+		background-image: url("https://oldschool.runescape.wiki/images/d/d9/Shield_slot.png");
+	}
+	.slot-legs {
+		background-image: url("https://oldschool.runescape.wiki/images/2/25/Legs_slot.png");
+	}
+	.slot-hand {
+		background-image: url("https://oldschool.runescape.wiki/images/6/69/Gloves_slot.png");
+	}
+	.slot-feet {
+		background-image: url("https://oldschool.runescape.wiki/images/b/b0/Boots_slot.png");
+	}
+	.slot-ring {
+		background-image: url("https://oldschool.runescape.wiki/images/9/9f/Ring_slot.png");
+	}
+}
+
 .skill {
 	display: flex;
     position: relative;

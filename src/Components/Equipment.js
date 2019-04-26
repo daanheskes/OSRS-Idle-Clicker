@@ -16,8 +16,6 @@ class Equipment extends Component {
                                         <img src={slot[1].img} alt={slot[0]} />
                                     </div>
                                 );
-                            } else {
-                                return <div className='equipment-item' key={slot[0]}></div>
                             }
                         })
                         }                   
