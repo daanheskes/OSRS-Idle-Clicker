@@ -24,8 +24,10 @@ class Equipment extends Component {
                     </div>
                     <div className='equipment-stats'>
                         <p>Attack: {this.props.itemstats.atk_bonus}</p>
-                        <p>Strength: {this.props.itemstats.str_bonus}</p>
                         <p>Defence: {this.props.itemstats.def_bonus}</p>
+                        <p>Strength: {this.props.itemstats.str_bonus}</p>
+                        <p>Ranged: {this.props.itemstats.rngd_bonus}</p>
+                        <p>Magic: {this.props.itemstats.mage_bonus}</p>
                     </div>
                 </div>
             </div>

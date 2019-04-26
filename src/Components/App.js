@@ -13,6 +13,7 @@ import Monster from './Monster.js';
 import AttackStyle from './AttackStyle.js';
 import CoinDisplay from './CoinDisplay.js';
 import ItemShop from './ItemShop.js';
+import GearSets from './GearSets.js';
 import Equipment from './Equipment.js';
 import Skills from './Skills.js';
 
@@ -87,18 +88,47 @@ class IdleOSRS extends Component {
 					level: 0
 				}
 			},
-			equipment: {
-				head: null,
-				cape: null,
-				neck: null,
-				ammunition: null,
-				weapon: equipmentList.weapon.bronzesword,
-				body: null,
-				shield: equipmentList.shield.woodenshield,
-				legs: null,
-				hand: null,
-				feet: null,
-				ring: null
+			gearsets: {
+				worn: 'melee',
+				melee: {
+					head: null,
+					cape: null,
+					neck: null,
+					ammunition: null,
+					weapon: equipmentList.weapon.bronzesword,
+					body: null,
+					shield: equipmentList.shield.woodenshield,
+					legs: null,
+					hand: null,
+					feet: null,
+					ring: null
+				},
+				ranged: {
+					head: null,
+					cape: null,
+					neck: null,
+					ammunition: null,
+					weapon: null,
+					body: null,
+					shield: null,
+					legs: null,
+					hand: null,
+					feet: null,
+					ring: null
+				},
+				magic: {
+					head: null,
+					cape: null,
+					neck: null,
+					ammunition: null,
+					weapon: null,
+					body: null,
+					shield: null,
+					legs: null,
+					hand: null,
+					feet: null,
+					ring: null
+				}
 			},
 			currentMonster: {
 				name: firstMonster.name,
@@ -141,12 +171,12 @@ class IdleOSRS extends Component {
 		passiveIncome += this.calculateItemBonus('atk_bonus') * atkmultiplier;
 		passiveIncome += this.calculateItemBonus('str_bonus') * strmultiplier;
 		passiveIncome += this.calculateItemBonus('def_bonus') * defmultiplier;
-
-		if (this.state.equipment.weapon.name === 'Bronze Sword') {
+		
+		if (this.state.gearsets[this.state.gearsets.worn].weapon.name === 'Bronze Sword') {
 			passiveIncome -= equipmentList.weapon.bronzesword.atk_bonus * atkmultiplier;
 			passiveIncome -= equipmentList.weapon.bronzesword.str_bonus * strmultiplier;
 		}
-		if (this.state.equipment.shield.name === 'Wooden Shield') {
+		if (this.state.gearsets[this.state.gearsets.worn].shield.name === 'Wooden Shield') {
 			passiveIncome -= equipmentList.shield.woodenshield.def_bonus * defmultiplier;
 		}
 
@@ -259,7 +289,7 @@ class IdleOSRS extends Component {
 	}
 
 	calculateItemBonus(stat) {
-		const equipment = this.state.equipment;
+		const equipment = this.state.gearsets[this.state.gearsets.worn];
 		let statBonus = 0;
 
 		Object.values(equipment).forEach(function(item) {
@@ -412,7 +442,7 @@ class IdleOSRS extends Component {
 			}
 		});
 		if (!monsterList.length) {
-			console.log("Error: No monster available on combat level " + combatLevel);
+			console.log("UwU Oopsie Woopsie: No monster available on combat level " + combatLevel);
 			monsterList = ['hillgiant'];
 		}
 		return this.returnRandom(monsterList);
@@ -435,7 +465,7 @@ class IdleOSRS extends Component {
 	assignCoinDrop(monster) {
 		let newstate = this.state;
 		
-		newstate.coins += monster.max_hp * 0.3 * multiplier;
+		newstate.coins += monster.max_hp * 0.125 * multiplier;
 
 		this.setState(newstate);
 	}
@@ -443,7 +473,7 @@ class IdleOSRS extends Component {
 	calculateNextLevelPercentage(experience) {		
 		let points = 0;
 		let output = 0;
-		const maxlevel = 99
+		const maxlevel = 99;
 
 		let currentLevelExp = 0;
 		let nextLevelExp = 0;
@@ -509,6 +539,7 @@ class IdleOSRS extends Component {
 		const melee = 0.325 * (attack + strength);
 		const range = 0.325 * (Math.floor(3*ranged/2));
 		const mage = 0.325 * (Math.floor(3*magic/2));
+
 		return Math.floor(base + Math.max(melee, range, mage));
 	}
 
@@ -517,7 +548,9 @@ class IdleOSRS extends Component {
 		const itemBonusses = {
 			atk_bonus: this.calculateItemBonus('atk_bonus'),
 			str_bonus: this.calculateItemBonus('str_bonus'),
-			def_bonus: this.calculateItemBonus('def_bonus')
+			def_bonus: this.calculateItemBonus('def_bonus'),
+			rngd_bonus: this.calculateItemBonus('rngd_bonus'),
+			mage_bonus: this.calculateItemBonus('mage_bonus')
 		}
 
 		return (
@@ -531,7 +564,8 @@ class IdleOSRS extends Component {
 				<div id='column-2' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />
 					<ItemShop />
-					<Equipment equipment={this.state.equipment} itemstats={itemBonusses} />
+					<GearSets gearsets={this.state.gearsets} />
+					<Equipment equipment={this.state.gearsets[this.state.gearsets.worn]} itemstats={itemBonusses} />
 				</div>
 				<div id='column-3' className='column'>
 					<Skills stats={this.state.stats} />
