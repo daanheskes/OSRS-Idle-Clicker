@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Quantico:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Saira:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Saira:300,400,700');
 
 $navbarheight: 48px;
 $monsterhpheight: 24px;
@@ -12,7 +13,7 @@ body, html, #root {
 	margin: 0;
 	width: 100%;
 	height: 100%;
-	font-family: "Quantico", sans-serif;
+	font-family: "Saira", sans-serif;
 }
 
 #root {
@@ -126,7 +127,7 @@ nav {
 		align-items:center;
 
 		h1 {
-			font-family: "Quantico", sans-serif;
+			font-family: "Saira", sans-serif;
 			margin:0;
 			color:white;
 			font-size:24px;
@@ -238,7 +239,7 @@ nav {
 				}
 
 				span {
-					font-family: 'Quantico', sans-serif;
+					font-family: 'Saira', sans-serif;
 					font-size:16px;
 					font-weight:700;
 					display:block;
@@ -287,7 +288,7 @@ nav {
 
 		#coinAmount {
 			color: rgba(255,255,255,0.95);
-			font-family: "Quantico", sans-serif;
+			font-family: "Saira", sans-serif;
 			font-size: 24px;
 			line-height: 29px;
 			font-weight: 400;
@@ -306,7 +307,7 @@ nav {
 			display: flex;
 			height: 100%;
 			color: rgba(255,255,255,0.7);
-			font-family: "Quantico", sans-serif;
+			font-family: "Saira", sans-serif;
 			font-size: 14px;
 			font-weight: 300;
 			padding-bottom:6px;
@@ -331,8 +332,70 @@ nav {
 #itemShop {
     width: 70%;
     height: calc(100% - 350px);
-    background-color: rgba(0,0,0,0.28);
-    z-index: -1;
+    background-color: rgba(0,0,0,0.35);
+	z-index: -1;
+
+	.shopItem {
+		border-bottom: 1px solid rgb(0,0,0);
+		border-top: 1px solid rgba(0,0,0,0.5);
+		display: flex;
+		flex-direction: row;
+
+		&::after {
+			content: "";
+			display: block;
+			position: absolute;
+			bottom: -2px;
+			left: 0;
+			width: 100%;
+			height: 1px;
+			background-color: rgba(255, 255, 255, 0.05);
+		}
+	
+		.itemCost {
+			color: rgb(255, 255, 255);
+			font-weight: 700;
+		}
+
+		.itemStats {
+			position:relative;
+			border-right: 1px solid rgb(0,0,0);
+
+			&::after {
+				content: "";
+				display: block;
+				position: absolute;
+				top: 0px;
+				right: -2px;
+				width: 1px;
+				height: 100%;
+				background-color: rgba(255, 255, 255, 0.05);
+			}
+		}
+
+		.stat {
+			margin:0;
+			font-size: 13px;
+			line-height: 18px;
+			font-weight: 300;
+			color: rgba(255, 255, 255, 0.7);
+
+			&.stat-zero {
+				color: rgba(255, 255, 255, 0.2);
+			}
+		}
+
+		.stat-name {
+			display: inline-block;
+			text-align:right;
+			width:100px;
+		}
+
+		.stat-value {
+			margin-left: 6px;
+			font-weight: 400;
+		}
+	}
 }
 
 #equipmentDisplay {
