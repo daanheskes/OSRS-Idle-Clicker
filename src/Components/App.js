@@ -571,7 +571,7 @@ class IdleOSRS extends Component {
 				</div>
 				<div id='column-2' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />
-					<ItemShop />
+					<ItemShop equipment={this.state.gearsets[this.state.gearsets.worn]} />
 					<Equipment equipment={this.state.gearsets[this.state.gearsets.worn]} itemstats={itemBonusses} />
 					<GearSets gearsets={this.state.gearsets} />
 				</div>

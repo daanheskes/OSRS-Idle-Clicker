@@ -25,6 +25,7 @@ function addItem(slot, name, cost, img, income, atk_bonus, str_bonus, def_bonus,
     if (typeof mage_bonus === 'undefined') mage_bonus = 0;
 
     let newItem = {
+        slot: slot,
         name: name,
         cost: cost,
         img: img,

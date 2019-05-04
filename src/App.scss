@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Saira:300,400,700');
-@import url('https://fonts.googleapis.com/css?family=Saira:300,400,700');
 
 $navbarheight: 48px;
 $monsterhpheight: 24px;
@@ -331,13 +330,13 @@ nav {
 
 #itemShop {
     width: 70%;
-    height: calc(100% - 350px);
+    height: calc(100% - 348px);
     background-color: rgba(0,0,0,0.35);
 	z-index: -1;
 
 	.shopItem {
+		position:relative;
 		border-bottom: 1px solid rgb(0,0,0);
-		border-top: 1px solid rgba(0,0,0,0.5);
 		display: flex;
 		flex-direction: row;
 
@@ -360,6 +359,8 @@ nav {
 		.itemStats {
 			position:relative;
 			border-right: 1px solid rgb(0,0,0);
+			padding: 12px 0;
+			padding-right:36px;
 
 			&::after {
 				content: "";
@@ -392,8 +393,24 @@ nav {
 		}
 
 		.stat-value {
-			margin-left: 6px;
+			margin-left: 8px;
 			font-weight: 400;
+		}
+		
+		.stat-difference {
+			padding-left: 6px;
+
+			.stat-difference-value {
+				padding:0 2px;
+
+				&.positive-difference {
+					color:#27ae60;
+				}
+	
+				&.negative-difference {
+					color:#c0392b;
+				}
+			}
 		}
 	}
 }
@@ -508,7 +525,7 @@ nav {
 #gearsets {
 	display: flex;
     flex-direction: column;
-    padding: 34px 12px;
+    padding: 30px 12px;
     width: 70%;
     box-sizing: border-box;
 	background-color: rgba(0,0,0,0.1);

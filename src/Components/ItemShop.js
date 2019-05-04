@@ -16,50 +16,95 @@ class ItemShop extends Component {
         return coinImage;
     }
 
+    chooseItems() {
+        let items = [];
+        items.push(equipment.ring.goldring);
+        items.push(equipment.weapon.bronzescimitar);
+        return items;
+    }
+
+    allStats() {
+        return [
+            {name: "Attack", namekey: "atk_bonus"},
+            {name: "Strength", namekey: "str_bonus"},
+            {name: "Defence", namekey: "def_bonus"},
+            {name: "Ranged", namekey: "rngd_bonus"},
+            {name: "Magic", namekey: "mage_bonus"},
+            {name: "Income", namekey: "income"}
+        ];
+    }
+
+    calculateStatDifference(compareItem, stat) {
+        const currentItem = this.props.equipment[compareItem.slot];
+        if (currentItem !== null) {
+            if (compareItem[stat] === currentItem[stat]) {
+                return false;
+            }
+            if (compareItem[stat] - currentItem[stat] > 0) {
+                return '+' + (compareItem[stat] - currentItem[stat]);
+            }
+            return (compareItem[stat] - currentItem[stat]);
+        }
+        
+        return '+' + compareItem[stat];
+    }
+
+    renderStats(item) {
+        let allStats = this.allStats();
+        let stats = [];
+
+        allStats.forEach((stat) => {
+            let statDifference = null;
+            if (item[stat.namekey] !== 0) {
+                let statDifferenceValue = this.calculateStatDifference(item, stat.namekey);
+                if (statDifferenceValue !== false) {
+                    if (statDifferenceValue > 0) {
+                        statDifference = <span className='stat-difference'>(<span className='stat-difference-value positive-difference'>{statDifferenceValue}</span>)</span>;
+                    } else {
+                        statDifference = <span className='stat-difference'>(<span className='stat-difference-value negative-difference'>{statDifferenceValue}</span>)</span>;
+                    } 
+                }
+                
+            }
+            stats.push(
+                <p className={(item[stat.namekey] === 0 ? 'stat stat-zero' : 'stat')}>
+                    <span className='stat-name'>{stat.name}</span>
+                    <span className='stat-value'>{item[stat.namekey]}</span>
+                    {statDifference}
+                </p>
+            );
+        });
+        return stats;
+    }
+
     render() {
-        return(
-            <div id='itemShop'>
-                <div className='shopItem'>
-                    <div className='shop-column-1'>
-                        <div className='itemPrice'>
-                            <div className='itemPrice-icon-wrapper'>
-                                <img src={this.returnCoinImage(equipment.ring.goldring.cost)} />
+        const showItems = this.chooseItems();
+
+        const allItems = showItems.map((item) => {
+            return (
+            <div className='shopItem' key={item.name}>
+                <div className='shop-column-1'>
+                    <div className='itemPrice'>
+                        <div className='itemPrice-icon-wrapper'>
+                            <img src={this.returnCoinImage(item.cost)} alt='Coins' />
                             </div>
-                            <span class='itemCost'>{equipment.ring.goldring.cost}</span>
-                        </div>
-                        <img src={equipment.ring.goldring.img} />
+                        <span className='itemCost'>{item.cost}</span>
                     </div>
-                    <div className='shop-column-2'>
-                        <span className='itemName'>{equipment.ring.goldring.name}</span>
-                        <div className='itemStats'>
-                            
-                            <p className={(equipment.ring.goldring.atk_bonus === 0 ? 'stat stat-zero' : 'stat')}>
-                                <span className='stat-name'>Attack</span>
-                                <span className='stat-value'>{equipment.ring.goldring.atk_bonus}</span>
-                            </p>
-                            <p className={(equipment.ring.goldring.str_bonus === 0 ? 'stat stat-zero' : 'stat')}>
-                                <span className='stat-name'>Strength</span>
-                                <span className='stat-value'>{equipment.ring.goldring.str_bonus}</span>
-                            </p>
-                            <p className={(equipment.ring.goldring.def_bonus === 0 ? 'stat stat-zero' : 'stat')}>
-                                <span className='stat-name'>Defence</span>
-                                <span className='stat-value'>{equipment.ring.goldring.def_bonus}</span>
-                            </p>
-                            <p className={(equipment.ring.goldring.rngd_bonus === 0 ? 'stat stat-zero' : 'stat')}>
-                                <span className='stat-name'>Ranged</span>
-                                <span className='stat-value'>{equipment.ring.goldring.rngd_bonus}</span>
-                            </p>
-                            <p className={(equipment.ring.goldring.mage_bonus === 0 ? 'stat stat-zero' : 'stat')}>
-                                <span className='stat-name'>Magic</span>
-                                <span className='stat-value'>{equipment.ring.goldring.mage_bonus}</span>
-                            </p>
-                            <p className={(equipment.ring.goldring.income === 0 ? 'stat stat-zero' : 'stat')}>
-                                <span className='stat-name'>Income</span>
-                                <span className='stat-value'>{equipment.ring.goldring.income}</span>
-                            </p>
-                        </div>
+                    <img src={item.img} alt={item.name} />
+                </div>
+                <div className='shop-column-2'>
+                    <span className='itemName'>{item.name}</span>
+                    <div className='itemStats'>
+                        {this.renderStats(item)}
                     </div>
                 </div>
+            </div>
+            );
+        });
+
+        return(
+            <div id='itemShop'>
+                {allItems}
             </div>
         )
     }
