@@ -18,7 +18,7 @@ import Equipment from './Equipment.js';
 import Skills from './Skills.js';
 
 const multiplier = 1;
-const exp_multiplier = 10;
+const exp_multiplier = 50;
 
 const firstMonster = monsters.chicken;
 
@@ -185,18 +185,20 @@ class IdleOSRS extends Component {
 			passiveIncome -= equipmentList.shield.woodenshield.def_bonus * defmultiplier;
 		}
 
-		return Math.floor(passiveIncome * multiplier > 0 ? passiveIncome * multiplier : 0);
+		return Math.floor(passiveIncome * multiplier);
 
 	}
 
 	givePassiveIncome(intervalms) {
 		const passiveIncome = this.calculatePassiveIncome();
 		
-		let newstate = this.state;
-		newstate.income = passiveIncome;
-		newstate.coins += passiveIncome * (intervalms / 1000);
+		if (passiveIncome > 0) {
+			let newstate = this.state;
+			newstate.income = passiveIncome;
+			newstate.coins += passiveIncome * (intervalms / 1000);
 
-		this.setState(newstate);
+			this.setState(newstate);
+		}
 	}
 
 	createHitSplat(Xcoord, Ycoord, damage) {

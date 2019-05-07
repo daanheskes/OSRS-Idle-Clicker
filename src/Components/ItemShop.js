@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import coinImages from './Data/CoinImages';
 import equipment from './Data/EquipmentList';
 
+const allStats = [
+    {name: "Attack", namekey: "atk_bonus"},
+    {name: "Strength", namekey: "str_bonus"},
+    {name: "Defence", namekey: "def_bonus"},
+    {name: "Ranged", namekey: "rngd_bonus"},
+    {name: "Magic", namekey: "mage_bonus"},
+    {name: "Income", namekey: "income"}
+];
+
 class ItemShop extends Component {
 
     returnCoinImage(amount) {
@@ -23,17 +32,6 @@ class ItemShop extends Component {
         return items;
     }
 
-    allStats() {
-        return [
-            {name: "Attack", namekey: "atk_bonus"},
-            {name: "Strength", namekey: "str_bonus"},
-            {name: "Defence", namekey: "def_bonus"},
-            {name: "Ranged", namekey: "rngd_bonus"},
-            {name: "Magic", namekey: "mage_bonus"},
-            {name: "Income", namekey: "income"}
-        ];
-    }
-
     calculateStatDifference(compareItem, stat) {
         const currentItem = this.props.equipment[compareItem.slot];
         if (currentItem !== null) {
@@ -50,7 +48,6 @@ class ItemShop extends Component {
     }
 
     renderStats(item) {
-        let allStats = this.allStats();
         let stats = [];
 
         allStats.forEach((stat) => {
