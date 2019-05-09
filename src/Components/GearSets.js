@@ -8,7 +8,7 @@ class GearSets extends Component {
 
         Object.entries(gearsets).forEach((gearset) => {
             if (typeof(gearset[1]) === 'object') {
-                gearsetDivs.push(<h3 className='gearsetName'>{gearset[0]}</h3>);
+                gearsetDivs.push(<h3 className='gearsetName' key={gearset[0]}>{gearset[0]}</h3>);
                 const currentGearset = gearset[1];
                 
                 let slotlist = [];
@@ -23,7 +23,7 @@ class GearSets extends Component {
                     
                 });
 
-                gearsetDivs.push(<div className='slot-wrapper' key={gearset[0]}>{slotlist}</div>);
+                gearsetDivs.push(<div className='slot-wrapper' key={'slotwrap-' + gearset[0]}>{slotlist}</div>);
             }
         });
 

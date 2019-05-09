@@ -64,7 +64,7 @@ class ItemShop extends Component {
                 
             }
             stats.push(
-                <p className={(item[stat.namekey] === 0 ? 'stat stat-zero' : 'stat')}>
+                <p className={(item[stat.namekey] === 0 ? 'stat stat-zero' : 'stat')} key={item + stat.namekey}>
                     <span className='stat-name'>{stat.name}</span>
                     <span className='stat-value'>{item[stat.namekey]}</span>
                     {statDifference}
