@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import coinImages from './Data/CoinImages.js';
 
 class CoinDisplay extends Component {
@@ -10,13 +9,13 @@ class CoinDisplay extends Component {
         });
     }
 
-    convertToLetters(amount, round) {
+    convertToLetters(amount) {
         if (amount >= 100000 && amount < 10000000) {
-            return (Math.floor(amount / 1000) + "K").toLocaleString();
+            return (Math.floor(amount / 1000) + "K");
         } else if (amount >= 10000000) {
-            return (Math.floor(amount / 1000000) + "M").toLocaleString();
+            return (Math.floor(amount / 1000000) + "M");
         }
-        return (Math.floor(amount)).toLocaleString();
+        return (Math.floor(amount));
     }
 
     render() {
@@ -40,10 +39,10 @@ class CoinDisplay extends Component {
                     <div className='coin-img-wrapper'>
                         <img src={coinImage} alt='Coins' />
                     </div>
-                    <span id='coinAmount'>{this.convertToLetters(this.props.coins)}</span>
+                    <span id='coinAmount'>{this.convertToLetters(this.props.coins).toLocaleString()}</span>
                 </div>
                 <div className='income-wrapper'>
-                    <span id='income-amount-wrapper'>Income<div className='income-img-wrapper'><img src={incomeImage} alt='Coins' /></div><span id='incomeAmount'>{this.convertToLetters(income)}</span></span>
+                    <span id='income-amount-wrapper'>Income<div className='income-img-wrapper'><img src={incomeImage} alt='Coins' /></div><span id='incomeAmount'>{this.convertToLetters(income).toLocaleString()}</span></span>
                 </div>
             </div>
         );
