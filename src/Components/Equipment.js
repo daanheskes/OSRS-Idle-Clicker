@@ -10,15 +10,12 @@ class Equipment extends Component {
                         {
                         Object.entries(equipment).map((slot) => {
                             let hasItemInSlot = (slot[1] !== null && slot[1].constructor === Object && Object.entries(slot[1]).length > 0);
-                            if (hasItemInSlot) {
-                                return(
-                                    <div id={'equipment-' + slot[0]} className={'equipment-item hasItem'} key={slot[0]}>
-                                        <img src={slot[1].img} alt={slot[0]} />
-                                    </div>
-                                );
-                            } else {
-                                return false;
-                            }
+                            if (!hasItemInSlot) return false;
+                            return(
+                                <div id={'equipment-' + slot[0]} className={'equipment-item hasItem'} key={slot[0]}>
+                                    <img src={slot[1].img} alt={slot[0]} />
+                                </div>
+                            );
                         })
                         }                   
                     </div>

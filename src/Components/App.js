@@ -20,7 +20,7 @@ import Skills from './Skills.js';
 const MULTIPLIER = 1;
 const EXP_MULTIPLIER = 10;
 
-const firstMonster = monsters.chicken;
+const FIRST_MONSTER = monsters.chicken;
 
 class IdleOSRS extends Component {
 	constructor(props) {
@@ -132,12 +132,12 @@ class IdleOSRS extends Component {
 				}
 			},
 			currentMonster: {
-				name: firstMonster.name,
-				combatlevel: firstMonster.combatlevel,
-				max_hp: firstMonster.hitpoints,
-				current_hp: firstMonster.hitpoints,
-				img: firstMonster.img,
-				bones: firstMonster.bones
+				name: FIRST_MONSTER.name,
+				combatlevel: FIRST_MONSTER.combatlevel,
+				max_hp: FIRST_MONSTER.hitpoints,
+				current_hp: FIRST_MONSTER.hitpoints,
+				img: FIRST_MONSTER.img,
+				bones: FIRST_MONSTER.bones
 			}
 		}
 	}
@@ -301,11 +301,11 @@ class IdleOSRS extends Component {
 		const equipment = this.state.gearsets[this.state.gearsets.worn];
 		let statBonus = 0;
 
-		Object.values(equipment).forEach(function(item) {
+		for (let item of Object.values(equipment)) {
 			if (item != null) {
 				statBonus += item[stat];
 			}
-		});
+		}
 		
 		return statBonus;
 	}
@@ -334,11 +334,11 @@ class IdleOSRS extends Component {
 		const magicLevel = this.state.stats.magic.level;
 		let bestSpell = magicSpells.windstrike;
 
-		Object.values(magicSpells).forEach((spell) => {
+		for (let spell of Object.values(magicSpells)) {
 			if (magicLevel >= spell.level) {
 				bestSpell = spell;
 			}
-		});
+		};
 
 		return bestSpell;
 	}
@@ -445,11 +445,11 @@ class IdleOSRS extends Component {
 		const combatLevel = this.state.stats.combat.level;
 		let monsterList = [];
 
-		Object.entries(monsters).forEach(monster => {
-			if (combatLevel >= monster[1].combatlevel && combatLevel <= ((monster[1].combatlevel * 2) + 2)) {
-				monsterList.push(monster[0]);
+		for (let [key, value] of Object.entries(monsters)) {
+			if (combatLevel >= value.combatlevel && combatLevel <= ((value.combatlevel * 2) + 2)) {
+				monsterList.push(key);
 			}
-		});
+		};
 		if (!monsterList.length) {
 			console.log("UwU Oopsie Woopsie: No monster available on combat level " + combatLevel);
 			monsterList = ['hillgiant'];

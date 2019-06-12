@@ -16,16 +16,17 @@ class ItemShop extends Component {
     returnCoinImage(amount) {
         let coinImage = coinImages[1].img;
 
-        Object.values(coinImages).forEach(coin => {
+        for (let coin of Object.values(coinImages)) {
             if (amount >= coin.amount) {
                 coinImage = coin.img;
             }
-        });
+        }
 
         return coinImage;
     }
 
     chooseItems() {
+        // What items do we want to show in the shop? What logic do we use?
         let items = [];
         items.push(equipment.ring.goldring);
         items.push(equipment.weapon.bronzescimitar);
@@ -87,7 +88,9 @@ class ItemShop extends Component {
                             </div>
                         <span className='itemCost'>{item.cost}</span>
                     </div>
-                    <img src={item.img} alt={item.name} />
+                    <div className='imageWrapper'>
+                        <img src={item.img} alt={item.name} />
+                    </div>
                 </div>
                 <div className='shop-column-2'>
                     <span className='itemName'>{item.name}</span>

@@ -4,9 +4,10 @@ import coinImages from './Data/CoinImages.js';
 class CoinDisplay extends Component {
 
     componentDidMount() {
-        Object.values(coinImages).forEach((image) => {
+        // Preload
+        for (let image of Object.values(coinImages)) {
             new Image().src = image.img;
-        });
+        }
     }
 
     convertToLetters(amount) {

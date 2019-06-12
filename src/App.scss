@@ -334,6 +334,33 @@ nav {
     background-color: rgba(0,0,0,0.35);
 	z-index: -1;
 
+	.shop-column-1 {
+		max-width:140px;
+
+		.itemPrice {
+			width: 108px;
+			margin: 8px 6px;
+			padding: 4px 8px;
+			height: 28px;
+			background-color:rgba(255, 255, 255, 0.08);
+			display:flex;
+			align-items:center;
+
+			.itemPrice-icon-wrapper {
+				display:flex;
+				justify-content: center;
+				align-items: center;
+				width: 31px; 
+				height: 29px;
+			}
+		}
+
+		.imageWrapper {
+			width: 124px;
+			background-color: rgba(0, 0, 0, 0.08)
+		}
+	}
+
 	.shopItem {
 		position:relative;
 		border-bottom: 1px solid rgb(0,0,0);
@@ -350,8 +377,15 @@ nav {
 			height: 1px;
 			background-color: rgba(255, 255, 255, 0.05);
 		}
-	
+		
+		.itemName {
+			display: block;
+			margin-top: 14px;
+			color: white;
+		}
+
 		.itemCost {
+			padding-left: 6px;
 			color: rgb(255, 255, 255);
 			font-weight: 700;
 		}

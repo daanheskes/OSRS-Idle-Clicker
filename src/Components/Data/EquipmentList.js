@@ -16,13 +16,7 @@ function createShortName(name) {
     return name.toLowerCase().replace(/\s/g, '');
 }
 
-function addItem(slot, name, cost, img, income, atk_bonus, str_bonus, def_bonus, rngd_bonus, mage_bonus) {
-    if (typeof income === 'undefined') income = 0;
-    if (typeof atk_bonus === 'undefined') atk_bonus = 0;
-    if (typeof str_bonus === 'undefined') str_bonus = 0;
-    if (typeof def_bonus === 'undefined') def_bonus = 0;
-    if (typeof rngd_bonus === 'undefined') rngd_bonus = 0;
-    if (typeof mage_bonus === 'undefined') mage_bonus = 0;
+function addItem(slot, name, cost, img, income=0, atk_bonus=0, str_bonus=0, def_bonus=0, rngd_bonus=0, mage_bonus=0) {
 
     let newItem = {
         slot: slot,
