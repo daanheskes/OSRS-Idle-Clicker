@@ -21,4 +21,4 @@ All images and copyrights belong to their original owners. No copyright infringe
 All images are from the Old School Runescape Wiki (https://oldschool.runescape.wiki/) and/or from the Old School Runescape Twitter (https://twitter.com/oldschoolrs/).
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/daanheskes/OSRS-Idle-Clicker/blob/master/LICENSE)
