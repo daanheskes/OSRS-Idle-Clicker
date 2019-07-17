@@ -4,10 +4,9 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/daanheskes/OSRS-Idle-Clicker/pulls)
 [![License](https://img.shields.io/github/license/daanheskes/OSRS-Idle-Clicker.svg)](https://github.com/daanheskes/OSRS-Idle-Clicker/blob/master/LICENSE)
 
+An Idle Clicker game based on the game Old School Runescape (https://oldschool.runescape.com/).
 
-
-
-An Idle Clicker game built with ReactJS and based on the game Old School Runescape (https://oldschool.runescape.com/).
+OSRS Idle Clicker is built with ReactJS and initialized with [create-react-app](https://github.com/facebook/create-react-app).
 
 ## Play game
 
