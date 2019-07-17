@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import '../App.scss';
 
 // Data files
-import monsters from './Data/MonsterList.js';
-import equipmentList from './Data/EquipmentList.js';
-import prayerExperience from './Data/PrayerExperience.js';
-import magicSpells from './Data/MagicSpellsList.js';
+import monsters from './data/MonsterList.js';
+import equipmentList from './data/EquipmentList.js';
+import prayerExperience from './data/PrayerExperience.js';
+import magicSpells from './data/MagicSpellsList.js';
 
 // Components
 import Navbar from './Navbar.js';
