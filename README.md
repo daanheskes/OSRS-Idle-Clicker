@@ -1,8 +1,10 @@
 ﻿## OSRS Idle Clicker
  
 [![Build Status](https://img.shields.io/travis/daanheskes/OSRS-Idle-Clicker/master.svg)](https://travis-ci.org/daanheskes/OSRS-Idle-Clicker)
-[![PRs Welcome](https://github.com/daanheskes/OSRS-Idle-Clicker/pulls)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/daanheskes/OSRS-Idle-Clicker/pulls)
 [![License](https://img.shields.io/github/license/daanheskes/OSRS-Idle-Clicker.svg)](https://github.com/daanheskes/OSRS-Idle-Clicker/blob/master/LICENSE)
+
+
 
 
 An Idle Clicker game built with ReactJS and based on the game Old School Runescape (https://oldschool.runescape.com/).
