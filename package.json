@@ -1,8 +1,10 @@
 {
   "name": "OSRS-Idle-Clicker",
+  "repository": "https://github.com/daanheskes/OSRS-Idle-Clicker/",
   "homepage": "./",
   "version": "0.2.1",
   "private": false,
+  "license": "MIT",
   "dependencies": {
     "node-sass": "^4.11.0",
     "react": "^16.8.6",
