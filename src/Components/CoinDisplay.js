@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import coinImages from './data/CoinImages.js';
+import coinImages from './Data/CoinImages.js';
 
 class CoinDisplay extends Component {
 

@@ -1,4 +1,4 @@
-import CoinDisplay from '../components/CoinDisplay';
+import CoinDisplay from '../Components/CoinDisplay';
 
 describe('convertToLetters', () => {
     it('converts amount to K(ilo)', () => {
