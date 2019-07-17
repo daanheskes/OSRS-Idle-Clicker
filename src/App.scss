@@ -31,7 +31,7 @@ nav {
 	position:absolute;
 	width:100%;
 	height: $navbarheight;
-	background-color: #080d17;
+	background-color: #1e272e;
 	box-shadow: 0px 1px 7px 1px rgba(0,0,0,0.65);
 	margin-bottom: $navbarheight;
 }
@@ -41,31 +41,21 @@ nav {
 	height:calc(100% - #{$navbarheight});
 }
 
-#column-1 {
+#column-left {
 	display: flex;
 	flex-direction: column;
 	width: 25%;
 	z-index: 4;
 }
 
-#column-2 {
+#column-right {
+	position:relative;
 	display:flex;
 	flex-direction:row;
 	flex-wrap:wrap;
 	align-content: flex-start;
-	width: 71%;
+	width: 75%;
 	z-index: 3;
-}
-
-#column-3 {
-	width: 4%;
-	min-width:75px;
-	z-index: 1;
-}
-
-.skills-wrap {
-	display:flex;
-	flex-wrap:wrap;
 }
 
 @keyframes moveLeft {
@@ -257,13 +247,13 @@ nav {
 	}
 }
 
-#attackMethod {
-	background-color: rgba(0,0,0,0.4);
+#attackStyles {
     width: 100%;
-	height: 50%;
-	display: flex;
-    justify-content: center;
-    align-items: center;
+	height: 15%;
+	
+	#attackMethod {
+		margin-left: 75px;
+	}
 }
 
 #coinDisplay {
@@ -339,7 +329,6 @@ nav {
 
 		.itemPrice {
 			width: 108px;
-			margin: 8px 6px;
 			padding: 4px 8px;
 			height: 28px;
 			background-color:rgba(255, 255, 255, 0.08);
@@ -366,6 +355,7 @@ nav {
 		border-bottom: 1px solid rgb(0,0,0);
 		display: flex;
 		flex-direction: row;
+		margin: 12px;
 
 		&::after {
 			content: "";
@@ -394,7 +384,7 @@ nav {
 			position:relative;
 			border-right: 1px solid rgb(0,0,0);
 			padding: 12px 0;
-			padding-right:36px;
+			padding-right:32px;
 
 			&::after {
 				content: "";
@@ -423,7 +413,7 @@ nav {
 		.stat-name {
 			display: inline-block;
 			text-align:right;
-			width:100px;
+			width:70px;
 		}
 
 		.stat-value {
@@ -450,12 +440,11 @@ nav {
 }
 
 #equipmentDisplay {
-	width: 30%;
+	width: 100%;
 	height: 35%;
 	display: flex;
     align-items: center;
     justify-content: center;
-	background-color: rgba(0, 0, 0, 0.15);
 	
 	.equipment-wrapper {
 		display: flex;
@@ -625,66 +614,76 @@ nav {
 	}
 }
 
-.skill {
-	display: flex;
-    position: relative;
-    align-items: center;
-    width: 100%;
-    height: 58px;
-    box-sizing: border-box;
-    background-color: #353f4c;
-    text-align: center;
-    padding: 0px 6px;
-	border: 1px solid #191e24;
-	border-top:none;
+.skills-wrap {
+	height: calc(100% - 58px);
+	position:absolute;
+	bottom:0;
+	right:0;
+	width: 10%;
+	height: calc(100% - 58px);
+	z-index: -1;
 
-	&:first-of-type {
-		border-top:1px;
-	}
-
-	&.selectable:not(.selected) {
-		cursor:pointer;
-	}
-
-	&.selected {
-		background-color: #516074;
-	}
-
-	&:hover:not(.selected) {
-		background-color: #4a586a;
-	}
-
-	.skillImg-wrap {
-		width:50%;
-	}
-
-	.skillLevel {
-		width:50%;
-		font-weight:400;
-		color:white;
-	}
-
-	.skillProgress {
-		position: absolute;
+	.skill {
+		display: flex;
+		position: relative;
+		align-items: center;
 		width: 100%;
-		height: 2px;
-		left: 0;
-		bottom: 0;
-		background-color: #fff;
-		opacity:1;
-		transition:background-color 0.075s ease-in, opacity 0.075s ease-in;
-		overflow:hidden;
+		height: 10%;
+		box-sizing: border-box;
+		background-color: #353f4c;
+		text-align: center;
+		padding: 0px 6px;
+		border: 1px solid #191e24;
+		border-top:none;
 
-		.skillProgressBar {
-			position:absolute;
-			left:0;
-			height:100%;
-			background-color:#e67e22;
-			transition: width 0.075s ease-in;
+		&:first-of-type {
+			border-top:1px;
 		}
-	}  
 
-	&:hover .skillProgress {
-		opacity:1;
+		&.selectable:not(.selected) {
+			cursor:pointer;
+		}
+
+		&.selected {
+			background-color: #516074;
+		}
+
+		&:hover:not(.selected) {
+			background-color: #4a586a;
+		}
+
+		.skillImg-wrap {
+			width:50%;
+		}
+
+		.skillLevel {
+			width:50%;
+			font-weight:400;
+			color:white;
+		}
+
+		.skillProgress {
+			position: absolute;
+			width: 100%;
+			height: 2px;
+			left: 0;
+			bottom: 0;
+			background-color: #fff;
+			opacity:1;
+			transition:background-color 0.075s ease-in, opacity 0.075s ease-in;
+			overflow:hidden;
+
+			.skillProgressBar {
+				position:absolute;
+				left:0;
+				height:100%;
+				background-color:#e67e22;
+				transition: width 0.075s ease-in;
+			}
+		}  
+
+		&:hover .skillProgress {
+			opacity:1;
+		}
 	}
 }

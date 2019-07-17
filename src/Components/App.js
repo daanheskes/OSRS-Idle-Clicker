@@ -567,17 +567,15 @@ class IdleOSRS extends Component {
 
 			<div className='wrap'>
 				<Navbar />
-				<div id='column-1' className='column'>
+				<div id='column-left' className='column'>
 					<Monster clickMonster={this.clickMonster} currentMonster={this.state.currentMonster} />
+					<Equipment equipment={this.state.gearsets[this.state.gearsets.worn]} itemstats={itemBonusses} />
 					<AttackStyle attackMethod={this.state.attackmethod} />
 				</div>
-				<div id='column-2' className='column'>
+				<div id='column-right' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />
 					<ItemShop equipment={this.state.gearsets[this.state.gearsets.worn]} />
-					<Equipment equipment={this.state.gearsets[this.state.gearsets.worn]} itemstats={itemBonusses} />
 					<GearSets gearsets={this.state.gearsets} />
-				</div>
-				<div id='column-3' className='column'>
 					<Skills stats={this.state.stats} />
 				</div>
 			</div>

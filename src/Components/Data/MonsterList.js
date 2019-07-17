@@ -4,7 +4,7 @@ export default {
 	chicken: {
 		name: "Chicken",
 		combatlevel: 1,
-		img: "https://oldschool.runescape.wiki/images/thumb/a/a3/Chicken.png/" + pxsize + "px-Chicken.png",
+		img: "https://oldschool.runescape.wiki/images/thumb/a/a3/Chicken_%281%29.png/" + pxsize + "px-Chicken_%281%29.png",
 		hitpoints: 3,
 		bones: "Bones"
 	},
@@ -26,7 +26,7 @@ export default {
 		name: "Cow",
 		combatlevel: 2,
 		hitpoints: 8,
-		img: "https://oldschool.runescape.wiki/images/thumb/8/84/Cow.png/" + pxsize + "px-Cow.png",
+		img: "https://oldschool.runescape.wiki/images/thumb/2/21/Cow_%281%29.png/" + pxsize + "px-Cow_%281%29.png",
 		bones: "Bones"
 	},
 	highwayman: {
