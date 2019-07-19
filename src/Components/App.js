@@ -231,15 +231,19 @@ class IdleOSRS extends Component {
 	clickMonster(currentMonster, Xcoord, Ycoord) {
 		let damage = this.calculateDamage();
 		let newState = this.state;
+
 		if (damage > currentMonster.current_hp) {
 			damage = currentMonster.current_hp;
 		}
+
 		newState.currentMonster.current_hp = currentMonster.current_hp - damage;
 		
 		this.createHitSplat(Xcoord, Ycoord, damage);
+
 		if (newState.currentMonster.current_hp < 0) {
 			newState.currentMonster.current_hp = 0;
 		}
+
 		this.grantCombatExperience(damage);
 		this.grantExperience('hitpoints', damage * 1.33);
 		if (newState.currentMonster.current_hp <= 0) {
@@ -265,29 +269,37 @@ class IdleOSRS extends Component {
 		}
 	}
 
-	getPrayerBonus() {
-		const prayerLevel = this.state.stats.prayer.level;
-		let meleeBonusMultiplier = 1;
+	getPrayerMeleeDamageMultiplier(prayerLevel = this.state.stats.prayer.level) {
+		let damageMultiplier = 1;
+
 		if (prayerLevel >= 4) {
-			meleeBonusMultiplier = 1.05;
+			damageMultiplier = 1.05;
 		}
 		if (prayerLevel >= 13) {
-			meleeBonusMultiplier = 1.1;
+			damageMultiplier = 1.1;
 		}
 		if (prayerLevel >= 31) {
-			meleeBonusMultiplier = 1.15;
+			damageMultiplier = 1.15;
 		}
 		if (prayerLevel >= 60) {
-			meleeBonusMultiplier = 1.18;
+			damageMultiplier = 1.18;
 		}
 		if (prayerLevel >= 70) {
-			meleeBonusMultiplier = 1.23;
+			damageMultiplier = 1.23;
 		}
-		return meleeBonusMultiplier;
+
+		return damageMultiplier;
 	}
 
-	calculateDamage() {
-		const attackStyle = this.state.attackstyle;
+	getPrayerRangedDamageMultiplier(prayerLevel = this.state.stats.prayer.level) {
+		return 1;
+	}
+
+	getPrayerMagicDamageMultiplier(prayerLevel = this.state.stats.prayer.level) {
+		return 1;
+	}
+
+	calculateDamage(attackStyle = this.state.attackstyle) {
 		if (attackStyle === "melee") {
 			return this.calculateMaxMeleeHit();
 		} else if (attackStyle === "ranged") {
@@ -295,6 +307,7 @@ class IdleOSRS extends Component {
 		} else if (attackStyle === "magic") {
 			return this.calculateMaxMagicHit();
 		}
+		return false;
 	}
 
 	calculateItemBonus(stat) {
@@ -306,18 +319,17 @@ class IdleOSRS extends Component {
 				statBonus += item[stat];
 			}
 		}
-		
+
 		return statBonus;
 	}
 
-	calculateMaxMeleeHit() {
+	calculateMaxMeleeHit(strengthLevel = this.state.stats.strength.level) {
 		const attackStyleBonus = this.getAttackStyleBonus();
 		const potionBonus = 0;
-		const prayerBonus = this.getPrayerBonus();
+		const prayerDamageMultiplier = this.getPrayerMeleeDamageMultiplier();
 		const strengthBonus = this.calculateItemBonus('str_bonus');
-		const strengthLevel = this.state.stats.strength.level;
 
-		let effectiveStrength = Math.floor((strengthLevel + potionBonus) * prayerBonus + attackStyleBonus);
+		let effectiveStrength = Math.floor((strengthLevel + potionBonus) * prayerDamageMultiplier + attackStyleBonus);
 		const baseDamage = 1.3 + (effectiveStrength / 10) + (strengthBonus / 80) + ((effectiveStrength * strengthBonus) / 640);
 		return Math.floor(baseDamage);
 	}
@@ -330,8 +342,7 @@ class IdleOSRS extends Component {
 		return this.getBestSpell().damage;
 	}
 
-	getBestSpell() {
-		const magicLevel = this.state.stats.magic.level;
+	getBestSpell(magicLevel = this.state.stats.magic.level) {
 		let bestSpell = magicSpells.windstrike;
 
 		for (let spell of Object.values(magicSpells)) {
@@ -441,8 +452,7 @@ class IdleOSRS extends Component {
 		return arr[Math.floor(Math.random() * arr.length)];
 	}
 
-	chooseNewMonster() {
-		const combatLevel = this.state.stats.combat.level;
+	chooseNewMonster(combatLevel = this.state.stats.combat.level) {
 		let monsterList = [];
 
 		for (let [key, value] of Object.entries(monsters)) {
