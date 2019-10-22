@@ -25,7 +25,10 @@ const FIRST_MONSTER = monsters.chicken;
 class IdleOSRS extends Component {
 	constructor(props) {
 		super(props);
+
 		this.clickMonster = this.clickMonster.bind(this);
+		this.equipItem = this.equipItem.bind(this);
+
 		this.state = {
 			attackstyle: 'melee',
 			attackmethod: 'controlled',
@@ -131,6 +134,19 @@ class IdleOSRS extends Component {
 					feet: null,
 					ring: null
 				}
+			},
+			boughtItems: {
+				head: null,
+				cape: null,
+				neck: null,
+				ammunition: null,
+				weapon: ['Bronze sword'],
+				body: null,
+				shield: ['Wooden shield'],
+				legs: null,
+				hand: null,
+				feet: null,
+				ring: null
 			},
 			currentMonster: {
 				name: FIRST_MONSTER.name,
@@ -574,6 +590,15 @@ class IdleOSRS extends Component {
 		return Math.floor(base + Math.max(melee, range, mage));
 	}
 
+	equipItem(item, slot) {
+
+		let newState = this.state;
+
+		newState.gearsets[newState.gearsets.worn][slot] = item;
+
+		this.setState(newState);
+	}
+
 	render() {
 
 		const itemBonusses = {
@@ -595,7 +620,7 @@ class IdleOSRS extends Component {
 				</div>
 				<div id='column-right' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />
-					<ItemShop shopSlot={this.state.shopSlot} equipment={this.state.gearsets[this.state.gearsets.worn]} />
+					<ItemShop boughtItems={this.state.boughtItems} shopSlot={this.state.shopSlot} gearsets={this.state.gearsets} equipItem={this.equipItem} />
 					<GearSets gearsets={this.state.gearsets} />
 					<Skills stats={this.state.stats} />
 				</div>
