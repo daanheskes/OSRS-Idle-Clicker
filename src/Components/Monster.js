@@ -10,9 +10,10 @@ class Monster extends Component {
 
 	handleClick(e) {
 		const element = document.getElementsByClassName('monster-image-wrap')[0];
+		const bounds = element.getBoundingClientRect();
 
-		const Xcoord = e.clientX - element.offsetLeft - 24;
-		const Ycoord = e.clientY - element.offsetTop - 178;
+		const Xcoord = e.clientX - bounds.left - 24;
+		const Ycoord = e.clientY - bounds.top - 23;
 
 		this.props.clickMonster(this.props.currentMonster, Xcoord, Ycoord);
 	}

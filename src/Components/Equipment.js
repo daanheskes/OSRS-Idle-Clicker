@@ -20,11 +20,26 @@ class Equipment extends Component {
                         }                   
                     </div>
                     <div className='equipment-stats'>
-                        <p><span className='equipment-skill-name'>Attack:</span><span className='equipment-skill-stat'>{this.props.itemstats.atk_bonus}</span></p>
-                        <p><span className='equipment-skill-name'>Defence:</span><span className='equipment-skill-stat'>{this.props.itemstats.def_bonus}</span></p>
-                        <p><span className='equipment-skill-name'>Strength:</span><span className='equipment-skill-stat'>{this.props.itemstats.str_bonus}</span></p>
-                        <p><span className='equipment-skill-name'>Ranged:</span><span className='equipment-skill-stat'>{this.props.itemstats.rngd_bonus}</span></p>
-                        <p><span className='equipment-skill-name'>Magic:</span><span className='equipment-skill-stat'>{this.props.itemstats.mage_bonus}</span></p>
+                        <div>
+                            <span className='equipment-skill-name'>Attack:</span>
+                            <span className='equipment-skill-stat'>{this.props.itemstats.atk_bonus}</span>
+                        </div>
+                        <div>
+                            <span className='equipment-skill-name'>Defence:</span>
+                            <span className='equipment-skill-stat'>{this.props.itemstats.def_bonus}</span>
+                        </div>
+                        <div>
+                            <span className='equipment-skill-name'>Strength:</span>
+                            <span className='equipment-skill-stat'>{this.props.itemstats.str_bonus}</span>
+                        </div>
+                        <div>
+                            <span className='equipment-skill-name'>Ranged:</span>
+                            <span className='equipment-skill-stat'>{this.props.itemstats.rngd_bonus}</span>
+                        </div>
+                        <div>
+                            <span className='equipment-skill-name'>Magic:</span>
+                            <span className='equipment-skill-stat'>{this.props.itemstats.mage_bonus}</span>
+                        </div>
                     </div>
                 </div>
             </div>

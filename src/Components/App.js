@@ -16,6 +16,7 @@ import ItemShop from './ItemShop.js';
 import GearSets from './GearSets.js';
 import Equipment from './Equipment.js';
 import Skills from './Skills.js';
+import { objectTypeSpreadProperty } from '@babel/types';
 
 const MULTIPLIER = 1;
 const EXP_MULTIPLIER = 10;
@@ -174,10 +175,17 @@ class IdleOSRS extends Component {
 	}
 
 	preloadImages() {
-		const images = ["https://oldschool.runescape.wiki/images/0/07/Red_hitsplat.png", "https://oldschool.runescape.wiki/images/4/48/Blue_hitsplat.png"];
+		const images = [
+			"https://oldschool.runescape.wiki/images/0/07/Red_hitsplat.png",
+			"https://oldschool.runescape.wiki/images/4/48/Blue_hitsplat.png",
+		];
 
-		images.forEach(image => {
-			new Image().src = image;
+		Object.values(monsters).forEach(monster => {
+			images.push(monster.img);
+		});
+
+		images.forEach(img => {
+			new Image().src = img;
 		});
 	}
 

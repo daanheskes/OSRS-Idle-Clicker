@@ -7,22 +7,27 @@ class GearSets extends Component {
         let gearsetDivs = [];
 
         Object.entries(gearsets).forEach((gearset) => {
-            if (typeof(gearset[1]) === 'object') {
-                gearsetDivs.push(<h3 className='gearsetName' key={gearset[0]}>{gearset[0]}</h3>);
-                const currentGearset = gearset[1];
+
+            const [gearsetKey, gearsetValue] = gearset;
+
+            if (typeof(gearsetValue) === 'object') {
+                gearsetDivs.push(<h3 className='gearsetName' key={gearsetKey}>{gearsetKey}</h3>);
+                const currentGearset = gearsetValue;
                 
                 let slotlist = [];
+                Object.entries(currentGearset).forEach((slot) => {
+                    
+                    const [slotKey, slotValue] = slot;
 
-                for (let slot of Object.entries(currentGearset)) {
-                    let hasItemInSlot = (slot[1] !== null && slot[1].constructor === Object && Object.entries(slot[1]).length > 0);
+                    let hasItemInSlot = (slotValue !== null && slotValue.constructor === Object && Object.entries(slotValue).length > 0);
                     if (hasItemInSlot) {
-                        slotlist.push(<div className={'slot hasItem slot-' + slot[0]} key={slot[0]}><img src={slot[1].img} alt={slot[1].name} /></div>);
+                        slotlist.push(<div className={'slot slot-notEmpty slot-' + slotKey} key={slotKey}><img src={slotValue.img} alt={slotValue.name} /></div>);
                     } else {
-                        slotlist.push(<div className={'slot slot-' + slot[0]} key={slot[0]}></div>);
+                        slotlist.push(<div className={'slot slot-' + slotKey} key={slotKey}></div>);
                     }
-                }
+                });
 
-                gearsetDivs.push(<div className='slot-wrapper' key={'slotwrap-' + gearset[0]}>{slotlist}</div>);
+                gearsetDivs.push(<div className='slot-wrapper' key={'slotwrap-' + gearsetKey}>{slotlist}</div>);
             }
         });
 
