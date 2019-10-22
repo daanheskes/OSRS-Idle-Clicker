@@ -25,11 +25,11 @@ class ItemShop extends Component {
         return coinImage;
     }
 
-    chooseItems() {
-        // What items do we want to show in the shop? What logic do we use?
-        let items = [];
-        items.push(equipment.ring.goldring);
-        items.push(equipment.weapon.bronzescimitar);
+    shopItems(slot) {
+        const items = Object.values(equipment[slot]).filter(item => {
+            return item.name !== "Bronze Sword" && item.name !== "Wooden Shield";
+        });
+
         return items;
     }
 
@@ -76,12 +76,12 @@ class ItemShop extends Component {
     }
 
     render() {
-        const showItems = this.chooseItems();
+        const shopItems = this.shopItems(this.props.shopSlot);
 
-        const allItems = showItems.map((item) => {
+        const allItems = Object.values(shopItems).map((item) => {
             return (
             <div className='shopItem' key={item.name}>
-                <div className='shop-column-1'>
+                <div className='shop-column shop-column-1'>
                     <div className='itemPrice'>
                         <div className='itemPrice-icon-wrapper'>
                             <img src={this.returnCoinImage(item.cost)} alt='Coins' />
@@ -92,7 +92,7 @@ class ItemShop extends Component {
                         <img src={item.img} alt={item.name} />
                     </div>
                 </div>
-                <div className='shop-column-2'>
+                <div className='shop-column shop-column-2'>
                     <span className='itemName'>{item.name}</span>
                     <div className='itemStats'>
                         {this.renderStats(item)}
@@ -101,6 +101,8 @@ class ItemShop extends Component {
             </div>
             );
         });
+
+        console.log(allItems);
 
         return(
             <div id='itemShop'>

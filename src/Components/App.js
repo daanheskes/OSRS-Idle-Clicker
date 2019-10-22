@@ -31,6 +31,7 @@ class IdleOSRS extends Component {
 			attackmethod: 'controlled',
 			coins: 0,
 			income: 0,
+			shopSlot: 'weapon',
 			stats: {
 				combat: {
 					name: 'Combat',
@@ -143,6 +144,8 @@ class IdleOSRS extends Component {
 	}
 
 	componentDidMount() {
+		this.preloadImages();
+
 		const INTERVAL_MS = 125;
 
 		this.interval = setInterval(() => {
@@ -152,6 +155,14 @@ class IdleOSRS extends Component {
 
 	componentWillUnmount() {
 		clearInterval(this.interval);
+	}
+
+	preloadImages() {
+		const images = ["https://oldschool.runescape.wiki/images/0/07/Red_hitsplat.png", "https://oldschool.runescape.wiki/images/4/48/Blue_hitsplat.png"];
+
+		images.forEach(image => {
+			new Image().src = image;
+		});
 	}
 
 	calculatePassiveIncome() {
@@ -461,7 +472,7 @@ class IdleOSRS extends Component {
 			}
 		};
 		if (!monsterList.length) {
-			console.log("UwU Oopsie Woopsie: No monster available on combat level " + combatLevel);
+			console.log("No monster available on combat level " + combatLevel);
 			monsterList = ['hillgiant'];
 		}
 		return this.returnRandom(monsterList);
@@ -584,7 +595,7 @@ class IdleOSRS extends Component {
 				</div>
 				<div id='column-right' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />
-					<ItemShop equipment={this.state.gearsets[this.state.gearsets.worn]} />
+					<ItemShop shopSlot={this.state.shopSlot} equipment={this.state.gearsets[this.state.gearsets.worn]} />
 					<GearSets gearsets={this.state.gearsets} />
 					<Skills stats={this.state.stats} />
 				</div>
