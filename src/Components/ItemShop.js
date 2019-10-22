@@ -98,14 +98,14 @@ class ItemShop extends Component {
 							</div>
 							<span className='itemCost'>{item.cost}</span>
 						</div>
-						<div className='imageWrapper'>
-							<img src={item.img} alt={item.name} />
-						</div>
 						<div className='shop-equip-button' onClick={this.props.equipItem.bind(this, item, slot)}>
 							<span>Equip</span>
 						</div>
 					</div>
 					<div className='shop-column shop-column-2'>
+						<div className='imageWrapper'>
+							<img src={item.img} alt={item.name} />
+						</div>
 						<span className='itemName'>{item.name}</span>
 						<div className='itemStats'>
 							{this.renderStats(item)}

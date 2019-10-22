@@ -20,11 +20,11 @@ class Equipment extends Component {
                         }                   
                     </div>
                     <div className='equipment-stats'>
-                        <p><span>Attack:</span>{this.props.itemstats.atk_bonus}</p>
-                        <p><span>Defence:</span>{this.props.itemstats.def_bonus}</p>
-                        <p><span>Strength:</span>{this.props.itemstats.str_bonus}</p>
-                        <p><span>Ranged:</span>{this.props.itemstats.rngd_bonus}</p>
-                        <p><span>Magic:</span>{this.props.itemstats.mage_bonus}</p>
+                        <p><span className='equipment-skill-name'>Attack:</span><span className='equipment-skill-stat'>{this.props.itemstats.atk_bonus}</span></p>
+                        <p><span className='equipment-skill-name'>Defence:</span><span className='equipment-skill-stat'>{this.props.itemstats.def_bonus}</span></p>
+                        <p><span className='equipment-skill-name'>Strength:</span><span className='equipment-skill-stat'>{this.props.itemstats.str_bonus}</span></p>
+                        <p><span className='equipment-skill-name'>Ranged:</span><span className='equipment-skill-stat'>{this.props.itemstats.rngd_bonus}</span></p>
+                        <p><span className='equipment-skill-name'>Magic:</span><span className='equipment-skill-stat'>{this.props.itemstats.mage_bonus}</span></p>
                     </div>
                 </div>
             </div>
