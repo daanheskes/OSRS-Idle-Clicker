@@ -36,7 +36,6 @@ nav {
 	height: $navbarheight;
 	background-color: #1e272e;
 	box-shadow: 0px 1px 7px 1px rgba(0, 0, 0, 0.65);
-	margin-bottom: $navbarheight;
 }
 
 .column {
@@ -47,6 +46,7 @@ nav {
 #column-left {
 	display: flex;
 	flex-direction: column;
+	min-width: 325px;
 	width: 25%;
 	z-index: 4;
 }
@@ -178,10 +178,10 @@ nav {
 		position: absolute;
 		width: 20vw;
 		height: 20vw;
-		min-width: 174px;
-		min-height: 174px;
-		max-width: 278px;
-		max-height: 278px;
+		min-width: 260px;
+		min-height: 260px;
+		max-width: 324px;
+		max-height: 324px;
 		top: 50%;
 		left: 50%;
 		border-radius: 50%;
