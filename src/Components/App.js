@@ -16,7 +16,6 @@ import ItemShop from './ItemShop.js';
 import GearSets from './GearSets.js';
 import Equipment from './Equipment.js';
 import Skills from './Skills.js';
-import { objectTypeSpreadProperty } from '@babel/types';
 
 const MULTIPLIER = 1;
 const EXP_MULTIPLIER = 10;
@@ -28,7 +27,9 @@ class IdleOSRS extends Component {
 		super(props);
 
 		this.clickMonster = this.clickMonster.bind(this);
+		this.buyItem = this.buyItem.bind(this);
 		this.equipItem = this.equipItem.bind(this);
+		this.hasEnoughMoney = this.hasEnoughMoney.bind(this);
 
 		this.state = {
 			attackstyle: 'melee',
@@ -175,7 +176,7 @@ class IdleOSRS extends Component {
 	}
 
 	preloadImages() {
-		const images = [
+		let images = [
 			"https://oldschool.runescape.wiki/images/0/07/Red_hitsplat.png",
 			"https://oldschool.runescape.wiki/images/4/48/Blue_hitsplat.png",
 		];
@@ -598,13 +599,28 @@ class IdleOSRS extends Component {
 		return Math.floor(base + Math.max(melee, range, mage));
 	}
 
+	hasEnoughMoney(cost) {
+		if (this.state.coins >= cost) {
+			return true;
+		}
+		return false;
+	}
+
 	equipItem(item, slot) {
-
 		let newState = this.state;
-
 		newState.gearsets[newState.gearsets.worn][slot] = item;
 
 		this.setState(newState);
+	}
+
+	buyItem(item, slot) {
+		if (this.hasEnoughMoney(item.cost)) {
+			let newState = this.state;
+			newState.boughtItems[slot].push(item.name);
+
+			newState.coins -= item.cost;
+			this.setState(newState);
+		}
 	}
 
 	render() {
@@ -628,7 +644,7 @@ class IdleOSRS extends Component {
 				</div>
 				<div id='column-right' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />
-					<ItemShop boughtItems={this.state.boughtItems} shopSlot={this.state.shopSlot} gearsets={this.state.gearsets} equipItem={this.equipItem} />
+					<ItemShop boughtItems={this.state.boughtItems} shopSlot={this.state.shopSlot} gearsets={this.state.gearsets} equipItem={this.equipItem} buyItem={this.buyItem} hasEnoughMoney={this.hasEnoughMoney} />
 					<GearSets gearsets={this.state.gearsets} />
 					<Skills stats={this.state.stats} />
 				</div>

@@ -89,6 +89,7 @@ class ItemShop extends Component {
 				itemClass += ' item-equipped';
 				itemEquipped = true;
 			}
+
 			return (
 				<div className={itemClass} key={item.name}>
 					<div className='shop-column shop-column-1'>
@@ -98,9 +99,20 @@ class ItemShop extends Component {
 							</div>
 							<span className='itemCost'>{item.cost}</span>
 						</div>
-						<div className='shop-equip-button' onClick={this.props.equipItem.bind(this, item, slot)}>
-							<span>Equip</span>
-						</div>
+						{
+							((!itemBought) &&
+								(<div className={(this.props.hasEnoughMoney(item.cost) ? 'shop-button shop-buy-button' : 'shop-button shop-buy-button shop-buy-button-disabled')} onClick={this.props.buyItem.bind(this, item, slot)}>
+									<span>Purchase</span>
+								</div>)
+							)
+						}
+						{
+							((!itemEquipped && itemBought) && 
+								(<div className='shop-button shop-equip-button' onClick={this.props.equipItem.bind(this, item, slot)}>
+									<span>Equip</span>
+								</div>)
+							)
+						}
 					</div>
 					<div className='shop-column shop-column-2'>
 						<div className='imageWrapper'>

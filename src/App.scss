@@ -8,6 +8,13 @@ $monsternameheight: 58px;
 	user-select: none;
 }
 
+img {
+	display:none !important;
+}
+* {
+	background-image:none !important;
+}
+
 body,
 html,
 #root {
@@ -327,10 +334,8 @@ nav {
 }
 
 #itemShop {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	white-space: nowrap;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(320px, 1fr));
 	width: 90%;
 	height: calc(100% - 348px);
 	background-color: rgba(0, 0, 0, 0.35);
@@ -349,12 +354,9 @@ nav {
 	}
 
 	.shopItem {
+		display: flex;
 		position: relative;
 		border-bottom: 1px solid rgb(0, 0, 0);
-		display: flex;
-		flex-direction: row;
-		min-width: 320px;
-		width: calc(50% - 1px);
 
 		&::after {
 			content: "";
@@ -376,7 +378,6 @@ nav {
 		}
 
 		&:nth-of-type(even) {
-
 			.shop-column-2 {
 				border-right: 0;
 
@@ -504,15 +505,27 @@ nav {
 			}
 		}
 
-		.shop-equip-button {
+		.shop-button {
 			display: inline-block;
 			cursor: pointer;
 			color: white;
 			padding: 6px 8px;
 			margin-top: 12px;
+			border-radius: 4px;
+			font-size: 12px;
+			transition: all 0.2s ease-in;
+			border: 1px solid rgba(255,255,255,0.7);
 
 			&:hover {
-				background-color: rgba(255,255,255,0.05);
+				background-color: rgba(255,255,255,0.1);
+			}
+
+			&.shop-buy-button-disabled {
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				color: rgba(255,255,255, 0.5);
+				&:hover {
+					background-color: transparent;
+				}
 			}
 		}
 	}
