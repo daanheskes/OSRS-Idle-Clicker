@@ -27,6 +27,7 @@ class IdleOSRS extends Component {
 		super(props);
 
 		this.clickMonster = this.clickMonster.bind(this);
+		this.changeShopSlot = this.changeShopSlot.bind(this);
 		this.buyItem = this.buyItem.bind(this);
 		this.equipItem = this.equipItem.bind(this);
 		this.hasEnoughMoney = this.hasEnoughMoney.bind(this);
@@ -138,17 +139,17 @@ class IdleOSRS extends Component {
 				}
 			},
 			boughtItems: {
-				head: null,
-				cape: null,
-				neck: null,
-				ammunition: null,
+				head: [],
+				cape: [],
+				neck: [],
+				ammunition: [],
 				weapon: ['Bronze sword'],
-				body: null,
+				body: [],
 				shield: ['Wooden shield'],
-				legs: null,
-				hand: null,
-				feet: null,
-				ring: null
+				legs: [],
+				hand: [],
+				feet: [],
+				ring: []
 			},
 			currentMonster: {
 				name: FIRST_MONSTER.name,
@@ -241,6 +242,7 @@ class IdleOSRS extends Component {
 		let hitsplat = document.createElement("div");
 		let random = Math.random();
 		const zeroDamageClass = (damage === 0 ? ' blockHitsplat' : '');
+
 		if (random >= 0 && random < 0.25) {
 			hitsplat.className = 'hitsplat travelLeft' + zeroDamageClass;
 		} else if (random >= 0.25 && random < 0.5) {
@@ -381,11 +383,11 @@ class IdleOSRS extends Component {
 	getBestSpell(magicLevel = this.state.stats.magic.level) {
 		let bestSpell = magicSpells.windstrike;
 
-		for (let spell of Object.values(magicSpells)) {
+		Object.values(magicSpells).forEach((spell) => {
 			if (magicLevel >= spell.level) {
 				bestSpell = spell;
 			}
-		};
+		});
 
 		return bestSpell;
 	}
@@ -401,6 +403,7 @@ class IdleOSRS extends Component {
 
 	grantExperience(skill, experience) {
 		let newState = this.state;
+
 		if (Array.isArray(skill)) {
 			skill.forEach(sk => {
 				newState.stats[sk].experience += (experience * MULTIPLIER * EXP_MULTIPLIER);
@@ -488,16 +491,17 @@ class IdleOSRS extends Component {
 		return arr[Math.floor(Math.random() * arr.length)];
 	}
 
-	chooseNewMonster(combatLevel = this.state.stats.combat.level) {
+	chooseNewMonster(slayerLevel = this.state.stats.slayer.level) {
 		let monsterList = [];
 
 		for (let [key, value] of Object.entries(monsters)) {
-			if (combatLevel >= value.combatlevel && combatLevel <= ((value.combatlevel * 2) + 2)) {
+			if (slayerLevel >= (value.combatlevel - 2) && slayerLevel <= ((value.combatlevel * 2) + 2)) {
 				monsterList.push(key);
 			}
 		};
+
 		if (!monsterList.length) {
-			console.log("No monster available on combat level " + combatLevel);
+			console.log("No monster available on combat level " + slayerLevel);
 			monsterList = ['hillgiant'];
 		}
 		return this.returnRandom(monsterList);
@@ -518,7 +522,7 @@ class IdleOSRS extends Component {
 	}
 
 	assignCoinDrop(monster) {
-		const combatMultiplier = 1 + this.state.stats.combat.level - 3 * 0.2;
+		const combatMultiplier = 1 + this.state.stats.combat.level - 3 * 0.1;
 		let newState = this.state;
 
 		newState.coins += monster.max_hp * 0.1 * combatMultiplier * MULTIPLIER;
@@ -606,6 +610,11 @@ class IdleOSRS extends Component {
 		return false;
 	}
 
+	changeShopSlot(slot) {
+		console.log(slot[0]);
+		this.setState({shopSlot: slot[0]});
+	}
+
 	equipItem(item, slot) {
 		let newState = this.state;
 		newState.gearsets[newState.gearsets.worn][slot] = item;
@@ -644,7 +653,7 @@ class IdleOSRS extends Component {
 				</div>
 				<div id='column-right' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />
-					<ItemShop boughtItems={this.state.boughtItems} shopSlot={this.state.shopSlot} gearsets={this.state.gearsets} equipItem={this.equipItem} buyItem={this.buyItem} hasEnoughMoney={this.hasEnoughMoney} />
+					<ItemShop boughtItems={this.state.boughtItems} shopSlot={this.state.shopSlot} gearsets={this.state.gearsets} equipItem={this.equipItem} changeShopSlot={this.changeShopSlot} buyItem={this.buyItem} hasEnoughMoney={this.hasEnoughMoney} />
 					<GearSets gearsets={this.state.gearsets} />
 					<Skills stats={this.state.stats} />
 				</div>

@@ -327,30 +327,18 @@ nav {
 }
 
 #itemShop {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
 	width: 90%;
 	height: calc(100% - 348px);
 	background-color: rgba(0, 0, 0, 0.35);
 	z-index: -1;
-	overflow-y: auto;
-	overflow-x: hidden;
-	scrollbar-width: thin;
-	scrollbar-color: dark;
 
-	&::-webkit-scrollbar {
-		width: 8px;
-		background-color: #353f4c;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background-color: #4a586a;
-	}
-
-	.shopItem {
-		display: flex;
+	#shopFilter {
 		position: relative;
-		border-bottom: 1px solid rgb(0, 0, 0);
+		width: 100%;
+		height: 60px;
+		padding-left: 12px;
+		border-bottom: 1px solid black;
+		box-sizing: border-box;
 
 		&::after {
 			content: "";
@@ -363,191 +351,230 @@ nav {
 			background-color: rgba(255, 255, 255, 0.05);
 		}
 
-		&:last-of-type {
-			border-bottom: none;
+		#slotList {
+			width: 100%;
+			height: 100%;
+			align-items: center;
+		}
+	}
+	
+	#shopItems {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+		grid-template-rows: 192px;
+		width: 100%;
+		height: calc(100% - 60px);
+		overflow-y: auto;
+		overflow-x: hidden;
+		scrollbar-width: thin;
+		scrollbar-color: dark;
 
-			&::after {
-				content: none;
-			}
+		&::-webkit-scrollbar {
+			width: 8px;
+			background-color: #353f4c;
 		}
 
-		.shop-column {
+		&::-webkit-scrollbar-thumb {
+			background-color: #4a586a;
+		}
+
+		.shopItem {
+			display: flex;
 			position: relative;
-			padding: 12px;
-		}
-
-		.shop-column-1 {
-
-			.itemPrice {
-				width: 108px;
-				padding: 4px 8px;
-				height: 36px;
-				box-sizing: border-box;
-				background-color: rgba(255, 255, 255, 0.08);
-				display: flex;
-				align-items: center;
-
-				.itemPrice-icon-wrapper {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					width: 31px;
-					height: 29px;
-				}
-			}
-
-			.itemStatus {
-				width: 108px;
-				height: 36px;
-				box-sizing: border-box;
-				display: flex;
-				align-items: center;
-			
-
-				.tooltip {
-					position: relative;
-
-					+ .tooltip {
-						margin-left: 6px;
-					}
-					&:after {
-						content: attr(data-tooltip);
-						display: none;
-						position: absolute;
-						color: #fff;
-						background-color: #212429;
-						box-shadow: 2px 2px 4px rgba(0,0,0,0.15);
-						padding: 4px 6px;
-						border-radius: 4px;
-						font-size: 14px;
-						letter-spacing: 0.02em;
-					}
-
-					&:hover:after {
-						display: block;
-					}
-				}
-
-				svg.item-bought {
-					fill: green;
-				}
-
-				svg.item-equipped {
-					fill: #864720;
-				}
-			}
-
-		}
-
-		.shop-column-2 {
-			padding-left: 0;
-			position: relative;
-			width: calc(100% - 108px);
-			border-right: 1px solid rgb(0, 0, 0);
+			border-bottom: 1px solid rgb(0, 0, 0);
 
 			&::after {
 				content: "";
 				display: block;
 				position: absolute;
-				top: 0px;
-				right: -2px;
-				width: 1px;
-				height: 100%;
+				bottom: -2px;
+				left: 0;
+				width: 100%;
+				height: 1px;
 				background-color: rgba(255, 255, 255, 0.05);
 			}
 
-			.imageWrapper {
-				margin-top: 2px;
-				width: 42px;
+			.shop-column {
+				position: relative;
+				padding: 12px;
+			}
+
+			.shop-column-1 {
+
+				.itemPrice {
+					width: 108px;
+					border-radius: 4px;
+					padding: 4px 8px;
+					height: 36px;
+					box-sizing: border-box;
+					background-color: rgba(255, 255, 255, 0.08);
+					display: flex;
+					align-items: center;
+
+					.itemPrice-icon-wrapper {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						width: 31px;
+						height: 29px;
+					}
+				}
+
+				.itemStatus {
+					width: 108px;
+					height: 36px;
+					box-sizing: border-box;
+					display: flex;
+					align-items: center;
+				
+
+					.tooltip {
+						position: relative;
+
+						+ .tooltip {
+							margin-left: 6px;
+						}
+						&:after {
+							content: attr(data-tooltip);
+							display: none;
+							position: absolute;
+							color: #fff;
+							background-color: #212429;
+							border: 1px solid rgba(0,0,0,0.4);
+							box-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+							padding: 4px 6px;
+							border-radius: 4px;
+							font-size: 14px;
+							letter-spacing: 0.02em;
+							box-sizing: border-box;
+						}
+
+						&:hover:after {
+							display: block;
+						}
+					}
+
+					svg.item-bought {
+						fill: green;
+					}
+
+					svg.item-equipped {
+						fill: #864720;
+					}
+				}
+
+			}
+
+			.shop-column-2 {
+				padding-left: 0;
+				position: relative;
+				width: calc(100% - 108px);
+				border-right: 1px solid rgb(0, 0, 0);
+
+				&::after {
+					content: "";
+					display: block;
+					position: absolute;
+					top: 0px;
+					right: -2px;
+					width: 1px;
+					height: 100%;
+					background-color: rgba(255, 255, 255, 0.05);
+				}
+
+				.imageWrapper {
+					margin-top: 2px;
+					width: 42px;
+					display: inline-block;
+				}
+			}
+
+			.itemName {
 				display: inline-block;
+				vertical-align: top;
+				color: #fff;
+				line-height: 36px;
 			}
-		}
 
-		.itemName {
-			display: inline-block;
-			vertical-align: top;
-			color: #fff;
-			line-height: 36px;
-		}
-
-		.itemCost {
-			padding-left: 6px;
-			color: rgb(255, 255, 255);
-			font-weight: 700;
-		}
-
-		.itemStats {
-			position: relative;
-			padding: 12px 0;
-			margin-left: 42px;
-		}
-
-		.stat {
-			margin: 0;
-			font-size: 13px;
-			line-height: 18px;
-			font-weight: 300;
-			color: rgba(255, 255, 255, 0.7);
-
-			&.stat-zero {
-				color: rgba(255, 255, 255, 0.25);
+			.itemCost {
+				padding-left: 6px;
+				color: rgb(255, 255, 255);
+				font-weight: 700;
 			}
-		}
 
-		.stat-name {
-			display: inline-block;
-			text-align: right;
-			width: 52px;
-		}
+			.itemStats {
+				position: relative;
+				padding: 12px 0;
+				margin-left: 42px;
+			}
 
-		.stat-value {
-			display: inline-block;
-			width: 25px;
-			text-align: right;
-			margin-left: 8px;
-			font-weight: 400;
-		}
+			.stat {
+				margin: 0;
+				font-size: 13px;
+				line-height: 18px;
+				font-weight: 300;
+				color: rgba(255, 255, 255, 0.7);
 
-		.stat-difference {
-			display: inline-block;
-			text-align: right;
-			width: 42px;
-			padding-left: 6px;
-
-			.stat-difference-value {
-				padding: 0 2px;
-
-				&.positive-difference {
-					color: #27ae60;
-				}
-
-				&.negative-difference {
-					color: #c0392b;
+				&.stat-zero {
+					color: rgba(255, 255, 255, 0.25);
 				}
 			}
-		}
 
-		.shop-button {
-			display: inline-block;
-			cursor: pointer;
-			color: white;
-			padding: 6px 8px;
-			border-radius: 4px;
-			margin-top: 12px;
-			font-size: 12px;
-			transition: all 0.2s ease-in;
-			border: 1px solid rgba(255,255,255,0.7);
-
-			&:hover {
-				background-color: rgba(255,255,255,0.1);
+			.stat-name {
+				display: inline-block;
+				text-align: right;
+				width: 52px;
 			}
 
-			&.shop-buy-button-disabled {
-				cursor: auto;
-				border: 1px solid rgba(255, 255, 255, 0.1);
-				color: rgba(255,255,255, 0.5);
+			.stat-value {
+				display: inline-block;
+				width: 25px;
+				text-align: right;
+				margin-left: 8px;
+				font-weight: 400;
+			}
+
+			.stat-difference {
+				display: inline-block;
+				text-align: right;
+				width: 42px;
+				padding-left: 6px;
+
+				.stat-difference-value {
+					padding: 0 2px;
+
+					&.positive-difference {
+						color: #27ae60;
+					}
+
+					&.negative-difference {
+						color: #c0392b;
+					}
+				}
+			}
+
+			.shop-button {
+				display: inline-block;
+				cursor: pointer;
+				color: white;
+				padding: 6px 8px;
+				border-radius: 4px;
+				margin-top: 12px;
+				font-size: 12px;
+				transition: all 0.2s ease-in;
+				border: 1px solid rgba(255,255,255,0.7);
+
 				&:hover {
-					background-color: transparent;
+					background-color: rgba(255,255,255,0.1);
+				}
+
+				&.shop-buy-button-disabled {
+					cursor: auto;
+					border: 1px solid rgba(255, 255, 255, 0.1);
+					color: rgba(255,255,255, 0.5);
+					&:hover {
+						background-color: transparent;
+					}
 				}
 			}
 		}
@@ -690,56 +717,69 @@ nav {
 			margin-top: 0;
 		}
 	}
-	.slot-wrapper {
-		display: flex;
-		flex-direction: row;
-	}
-	.slot {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
-		width: 36px;
-		height: 36px;
-		margin: 0px 6px 0 0;
+}
 
-		&.slot-notEmpty {
-			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjlDRTI4OTk1Q0ZDMTFFOUJCOThFQzA1RTQxODA5RDUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjlDRTI4OUE1Q0ZDMTFFOUJCOThFQzA1RTQxODA5RDUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyOUNFMjg5NzVDRkMxMUU5QkI5OEVDMDVFNDE4MDlENSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyOUNFMjg5ODVDRkMxMUU5QkI5OEVDMDVFNDE4MDlENSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PrVlCCAAAAdLSURBVHjaxJjZjuNE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");
-		}
+.slot-wrapper {
+	display: flex;
+	flex-direction: row;
+}
+
+.slot {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	margin: 0px 6px 0 0;
+
+	&.slot-notEmpty {
+		background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjlDRTI4OTk1Q0ZDMTFFOUJCOThFQzA1RTQxODA5RDUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjlDRTI4OUE1Q0ZDMTFFOUJCOThFQzA1RTQxODA5RDUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyOUNFMjg5NzVDRkMxMUU5QkI5OEVDMDVFNDE4MDlENSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyOUNFMjg5ODVDRkMxMUU5QkI5OEVDMDVFNDE4MDlENSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PrVlCCAAAAdLSURBVHjaxJjZjuNE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");
 	}
-	.slot-head {
-		background-image: url("https://oldschool.runescape.wiki/images/3/35/Head_slot.png");
-	}
-	.slot-cape {
-		background-image: url("https://oldschool.runescape.wiki/images/b/ba/Cape_slot.png");
-	}
-	.slot-neck {
-		background-image: url("https://oldschool.runescape.wiki/images/b/b4/Neck_slot.png");
-	}
-	.slot-ammunition {
-		background-image: url("https://oldschool.runescape.wiki/images/6/64/Ammo_slot.png");
-	}
-	.slot-weapon {
-		background-image: url("https://oldschool.runescape.wiki/images/d/d1/Weapon_slot.png");
-	}
-	.slot-body {
-		background-image: url("https://oldschool.runescape.wiki/images/9/9f/Body_slot.png");
-	}
-	.slot-shield {
-		background-image: url("https://oldschool.runescape.wiki/images/d/d9/Shield_slot.png");
-	}
-	.slot-legs {
-		background-image: url("https://oldschool.runescape.wiki/images/2/25/Legs_slot.png");
-	}
-	.slot-hand {
-		background-image: url("https://oldschool.runescape.wiki/images/6/69/Gloves_slot.png");
-	}
-	.slot-feet {
-		background-image: url("https://oldschool.runescape.wiki/images/b/b0/Boots_slot.png");
-	}
-	.slot-ring {
-		background-image: url("https://oldschool.runescape.wiki/images/9/9f/Ring_slot.png");
-	}
+}
+
+.slot-head {
+	background-image: url("https://oldschool.runescape.wiki/images/3/35/Head_slot.png");
+}
+
+.slot-cape {
+	background-image: url("https://oldschool.runescape.wiki/images/b/ba/Cape_slot.png");
+}
+
+.slot-neck {
+	background-image: url("https://oldschool.runescape.wiki/images/b/b4/Neck_slot.png");
+}
+
+.slot-ammunition {
+	background-image: url("https://oldschool.runescape.wiki/images/6/64/Ammo_slot.png");
+}
+
+.slot-weapon {
+	background-image: url("https://oldschool.runescape.wiki/images/d/d1/Weapon_slot.png");
+}
+
+.slot-body {
+	background-image: url("https://oldschool.runescape.wiki/images/9/9f/Body_slot.png");
+}
+
+.slot-shield {
+	background-image: url("https://oldschool.runescape.wiki/images/d/d9/Shield_slot.png");
+}
+
+.slot-legs {
+	background-image: url("https://oldschool.runescape.wiki/images/2/25/Legs_slot.png");
+}
+
+.slot-hand {
+	background-image: url("https://oldschool.runescape.wiki/images/6/69/Gloves_slot.png");
+}
+
+.slot-feet {
+	background-image: url("https://oldschool.runescape.wiki/images/b/b0/Boots_slot.png");
+}
+
+.slot-ring {
+	background-image: url("https://oldschool.runescape.wiki/images/9/9f/Ring_slot.png");
 }
 
 .skills-wrap {

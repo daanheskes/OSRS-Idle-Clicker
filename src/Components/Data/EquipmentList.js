@@ -57,9 +57,11 @@ addItem(currentSlot, "Bronze sword", 26, "https://oldschool.runescape.wiki/image
 addItem(currentSlot, "Bronze scimitar", 32, "https://oldschool.runescape.wiki/images/f/f7/Bronze_scimitar.png", 0, 7, 6, 1);
 addItem(currentSlot, "Iron scimitar", 112, "https://oldschool.runescape.wiki/images/b/b3/Iron_scimitar.png", 0, 10, 9, 1);
 addItem(currentSlot, "Steel scimitar", 400, "https://oldschool.runescape.wiki/images/7/78/Steel_scimitar.png", 0, 15, 14, 1);
+addItem(currentSlot, "Black scimitar", 768, "https://oldschool.runescape.wiki/images/5/53/Black_scimitar.png", 0, 19, 14, 1);
 addItem(currentSlot, "Mithril scimitar", 1040, "https://oldschool.runescape.wiki/images/0/04/Mithril_scimitar.png", 0, 21, 20, 1);
-addItem(currentSlot, "Adamant scimitar", 2536, "https://oldschool.runescape.wiki/images/b/be/Adamant_scimitar.png", 0, 29, 28, 1);
-addItem(currentSlot, "Rune scimitar", 15360, "https://oldschool.runescape.wiki/images/d/d9/Rune_scimitar.png", 0, 45, 44, 1);
+addItem(currentSlot, "Adamant scimitar", 2560, "https://oldschool.runescape.wiki/images/b/be/Adamant_scimitar.png", 0, 29, 28, 1);
+addItem(currentSlot, "Rune scimitar", 25600, "https://oldschool.runescape.wiki/images/d/d9/Rune_scimitar.png", 0, 45, 44, 1);
+addItem(currentSlot, "Dragon scimitar", 100000, "https://oldschool.runescape.wiki/images/8/8b/Dragon_scimitar.png", 0, 67, 66, 1);
 
 currentSlot = 'body';
 addItem(currentSlot, "Bronze chainbody", 60, "https://oldschool.runescape.wiki/images/8/85/Bronze_chainbody.png", 0, 0, 0, 0);

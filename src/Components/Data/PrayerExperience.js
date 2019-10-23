@@ -1,5 +1,5 @@
 export default {
-    "Bones": 4.5,
+  "Bones": 4.5,
 	"Big bones": 15,
 	"Baby dragon bones": 30,
 	"Dragon bones": 72,

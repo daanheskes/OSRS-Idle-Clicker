@@ -72,8 +72,15 @@ class ItemShop extends Component {
 	}
 
 	render() {
+
 		const slot = this.props.shopSlot;
 		const shopItems = this.shopItems(slot);
+
+		let slotlist = [];
+
+    Object.entries(equipment).forEach((slot) => {
+        slotlist.push(<div className={'slot slot-' + slot[0]} key={slot[0]} onClick={this.props.changeShopSlot.bind(this, slot)}></div>);
+		});
 
 		const allItems = Object.values(shopItems).map((item) => {
 			let itemClass = 'shopItem';
@@ -81,13 +88,17 @@ class ItemShop extends Component {
 			let itemBought = false;
 			let itemEquipped = false;
 
-			if (this.props.boughtItems[slot].includes(item.name)) {
-				itemClass += ' item-bought';
-				itemBought = true;
+			if (this.props.boughtItems[slot] !== null) {
+				if (this.props.boughtItems[slot].includes(item.name)) {
+					itemClass += ' item-bought';
+					itemBought = true;
+				}
 			}
-			if (this.props.gearsets[this.props.gearsets.worn][slot].name === item.name) {
-				itemClass += ' item-equipped';
-				itemEquipped = true;
+			if (this.props.gearsets[this.props.gearsets.worn][slot] !== null) {
+				if (this.props.gearsets[this.props.gearsets.worn][slot].name === item.name) {
+					itemClass += ' item-equipped';
+					itemEquipped = true;
+				}
 			}
 
 			return (
@@ -106,12 +117,12 @@ class ItemShop extends Component {
 								: (
 									<div className='itemStatus'>
 										<div className='tooltip' data-tooltip='Owned'>
-											<svg className='item-bought' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-2.3-8.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z"/></svg>
+											<svg className='item-bought' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-2.3-8.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z"/></svg>
 										</div>
 										{
 											((itemEquipped) &&
 												<div className='tooltip' data-tooltip='Equipped'>
-													<svg className="item-equipped" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M9 12A5 5 0 1 1 9 2a5 5 0 0 1 0 10zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8 11a1 1 0 0 1-2 0v-2a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v2a1 1 0 0 1-2 0v-2a5 5 0 0 1 5-5h5a5 5 0 0 1 5 5v2zm-1.3-10.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z"/></svg>
+													<svg className="item-equipped" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M9 12A5 5 0 1 1 9 2a5 5 0 0 1 0 10zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8 11a1 1 0 0 1-2 0v-2a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v2a1 1 0 0 1-2 0v-2a5 5 0 0 1 5-5h5a5 5 0 0 1 5 5v2zm-1.3-10.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z"/></svg>
 												</div>
 											)
 										}
@@ -151,7 +162,14 @@ class ItemShop extends Component {
 
 		return (
 			<div id='itemShop'>
-				{allItems}
+				<div id='shopFilter'>
+					<div id='slotList' className='slot-wrapper'>
+						{slotlist}
+					</div>
+				</div>
+				<div id='shopItems'>
+					{allItems}
+				</div>
 			</div>
 		)
 	}
