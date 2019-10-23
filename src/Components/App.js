@@ -18,7 +18,7 @@ import Equipment from './Equipment.js';
 import Skills from './Skills.js';
 
 const MULTIPLIER = 1;
-const EXP_MULTIPLIER = 10;
+const EXP_MULTIPLIER = 1;
 
 const FIRST_MONSTER = monsters.chicken;
 

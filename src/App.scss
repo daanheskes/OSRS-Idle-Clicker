@@ -8,13 +8,6 @@ $monsternameheight: 58px;
 	user-select: none;
 }
 
-img {
-	display:none !important;
-}
-* {
-	background-image:none !important;
-}
-
 body,
 html,
 #root {
@@ -335,12 +328,13 @@ nav {
 
 #itemShop {
 	display: grid;
-	grid-template-columns: repeat(2, minmax(320px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
 	width: 90%;
 	height: calc(100% - 348px);
 	background-color: rgba(0, 0, 0, 0.35);
 	z-index: -1;
 	overflow-y: auto;
+	overflow-x: hidden;
 	scrollbar-width: thin;
 	scrollbar-color: dark;
 
@@ -377,24 +371,12 @@ nav {
 			}
 		}
 
-		&:nth-of-type(even) {
-			.shop-column-2 {
-				border-right: 0;
-
-				&:after {
-					content: none;
-				}
-			}
-		}
-
 		.shop-column {
 			position: relative;
 			padding: 12px;
 		}
 
 		.shop-column-1 {
-			width: 108px;
-			max-width: 108px;
 
 			.itemPrice {
 				width: 108px;
@@ -413,14 +395,54 @@ nav {
 					height: 29px;
 				}
 			}
+
+			.itemStatus {
+				width: 108px;
+				height: 36px;
+				box-sizing: border-box;
+				display: flex;
+				align-items: center;
+			
+
+				.tooltip {
+					position: relative;
+
+					+ .tooltip {
+						margin-left: 6px;
+					}
+					&:after {
+						content: attr(data-tooltip);
+						display: none;
+						position: absolute;
+						color: #fff;
+						background-color: #212429;
+						box-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+						padding: 4px 6px;
+						border-radius: 4px;
+						font-size: 14px;
+						letter-spacing: 0.02em;
+					}
+
+					&:hover:after {
+						display: block;
+					}
+				}
+
+				svg.item-bought {
+					fill: green;
+				}
+
+				svg.item-equipped {
+					fill: #864720;
+				}
+			}
+
 		}
 
 		.shop-column-2 {
 			padding-left: 0;
 			position: relative;
 			width: calc(100% - 108px);
-			min-width: 175px;
-			max-width: 550px;
 			border-right: 1px solid rgb(0, 0, 0);
 
 			&::after {
@@ -510,8 +532,8 @@ nav {
 			cursor: pointer;
 			color: white;
 			padding: 6px 8px;
-			margin-top: 12px;
 			border-radius: 4px;
+			margin-top: 12px;
 			font-size: 12px;
 			transition: all 0.2s ease-in;
 			border: 1px solid rgba(255,255,255,0.7);
@@ -521,6 +543,7 @@ nav {
 			}
 
 			&.shop-buy-button-disabled {
+				cursor: auto;
 				border: 1px solid rgba(255, 255, 255, 0.1);
 				color: rgba(255,255,255, 0.5);
 				&:hover {
