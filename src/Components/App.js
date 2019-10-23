@@ -611,8 +611,7 @@ class IdleOSRS extends Component {
 	}
 
 	changeShopSlot(slot) {
-		console.log(slot[0]);
-		this.setState({shopSlot: slot[0]});
+		this.setState({shopSlot: slot});
 	}
 
 	equipItem(item, slot) {

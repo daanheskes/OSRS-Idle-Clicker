@@ -25,7 +25,8 @@ class ItemShop extends Component {
 		return coinImage;
 	}
 
-	shopItems(slot) {
+	allShopItems(slot) {
+		console.log('slot:' + slot);
 		return Object.values(equipment[slot]);
 	}
 
@@ -73,29 +74,34 @@ class ItemShop extends Component {
 
 	render() {
 
-		const slot = this.props.shopSlot;
-		const shopItems = this.shopItems(slot);
+		const shopSlot = this.props.shopSlot;
+		const allShopItems = this.allShopItems(shopSlot);
 
 		let slotlist = [];
 
-    Object.entries(equipment).forEach((slot) => {
-        slotlist.push(<div className={'slot slot-' + slot[0]} key={slot[0]} onClick={this.props.changeShopSlot.bind(this, slot)}></div>);
+    Object.keys(equipment).forEach((slot) => {
+			let slotClassName = 'slot slot-' + slot;
+
+			if (slot === shopSlot) {
+				slotClassName += ' slot-selected';
+			}
+      slotlist.push(<div className={slotClassName} key={slot} onClick={this.props.changeShopSlot.bind(this, slot)}></div>);
 		});
 
-		const allItems = Object.values(shopItems).map((item) => {
+		const allItems = Object.values(allShopItems).map((item) => {
 			let itemClass = 'shopItem';
 
 			let itemBought = false;
 			let itemEquipped = false;
 
-			if (this.props.boughtItems[slot] !== null) {
-				if (this.props.boughtItems[slot].includes(item.name)) {
+			if (this.props.boughtItems[shopSlot] !== null) {
+				if (this.props.boughtItems[shopSlot].includes(item.name)) {
 					itemClass += ' item-bought';
 					itemBought = true;
 				}
 			}
-			if (this.props.gearsets[this.props.gearsets.worn][slot] !== null) {
-				if (this.props.gearsets[this.props.gearsets.worn][slot].name === item.name) {
+			if (this.props.gearsets[this.props.gearsets.worn][shopSlot] !== null) {
+				if (this.props.gearsets[this.props.gearsets.worn][shopSlot].name === item.name) {
 					itemClass += ' item-equipped';
 					itemEquipped = true;
 				}
@@ -134,14 +140,14 @@ class ItemShop extends Component {
 						
 						{
 							((!itemBought) &&
-								(<div className={(this.props.hasEnoughMoney(item.cost) ? 'shop-button shop-buy-button' : 'shop-button shop-buy-button shop-buy-button-disabled')} onClick={this.props.buyItem.bind(this, item, slot)}>
+								(<div className={(this.props.hasEnoughMoney(item.cost) ? 'shop-button shop-buy-button' : 'shop-button shop-buy-button shop-buy-button-disabled')} onClick={this.props.buyItem.bind(this, item, shopSlot)}>
 									<span>Purchase</span>
 								</div>)
 							)
 						}
 						{
 							((!itemEquipped && itemBought) && 
-								(<div className='shop-button shop-equip-button' onClick={this.props.equipItem.bind(this, item, slot)}>
+								(<div className='shop-button shop-equip-button' onClick={this.props.equipItem.bind(this, item, shopSlot)}>
 									<span>Equip</span>
 								</div>)
 							)
