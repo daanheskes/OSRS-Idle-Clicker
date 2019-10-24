@@ -19,7 +19,6 @@ class CoinDisplay extends Component {
         let incomeImage = coinImages[1].img;
 
         Object.values(coinImages).forEach(coin => {
-            console.log(coin.img);
             if (coins >= coin.amount) {
                 coinImage = coin.img;
             }

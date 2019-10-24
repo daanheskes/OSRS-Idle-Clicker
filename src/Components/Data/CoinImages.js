@@ -12,42 +12,42 @@ import coinImage10000 from './../../assets/coins/Coins_10000.png';
 export default {
     1: {
         amount: 1,
-        img: {coinImage1}
+        img: coinImage1
     },
     2: {
         amount: 2,
-        img: {coinImage2}
+        img: coinImage2
     },
     3: {
         amount: 3,
-        img: {coinImage3}
+        img: coinImage3
     },
     4: {
         amount: 4,
-        img: {coinImage4}
+        img: coinImage4
     },
     5: {
         amount: 5,
-        img: {coinImage5}
+        img: coinImage5
     },
     25: {
         amount: 25,
-        img: {coinImage25}
+        img: coinImage25
     },
     100: {
         amount: 100,
-        img: {coinImage100}
+        img: coinImage100
     },
     250: {
         amount: 250,
-        img: {coinImage250}
+        img: coinImage250
     },
     1000: {
         amount: 1000,
-        img: {coinImage1000}
+        img: coinImage1000
     },
     10000: {
         amount: 10000,
-        img: {coinImage10000}
+        img: coinImage10000
     }
 }
