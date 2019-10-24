@@ -3,13 +3,6 @@ import coinImages from './Data/CoinImages.js';
 
 class CoinDisplay extends Component {
 
-    componentDidMount() {
-        // Preload
-        for (let image of Object.values(coinImages)) {
-            new Image().src = image.img;
-        }
-    }
-
     convertToLetters(amount) {
         if (amount >= 100000 && amount < 10000000) {
             return (Math.floor(amount / 1000) + "K");

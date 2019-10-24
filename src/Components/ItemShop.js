@@ -26,7 +26,6 @@ class ItemShop extends Component {
 	}
 
 	allShopItems(slot) {
-		console.log('slot:' + slot);
 		return Object.values(equipment[slot]);
 	}
 

@@ -19,6 +19,7 @@ import Skills from './Skills.js';
 
 const MULTIPLIER = 1;
 const EXP_MULTIPLIER = 1;
+const GP_MULTIPLIER = 1;
 
 const FIRST_MONSTER = monsters.chicken;
 
@@ -115,8 +116,8 @@ class IdleOSRS extends Component {
 					head: null,
 					cape: null,
 					neck: null,
-					ammunition: null,
-					weapon: null,
+					ammunition: equipmentList.ammunition.bronzearrow,
+					weapon: equipmentList.weapon.shortbow,
 					body: null,
 					shield: null,
 					legs: null,
@@ -182,6 +183,10 @@ class IdleOSRS extends Component {
 			"https://oldschool.runescape.wiki/images/4/48/Blue_hitsplat.png",
 		];
 
+		Object.values(CoinDisplay).forEach(coinAmount => {
+
+		}); 
+
 		Object.values(monsters).forEach(monster => {
 			images.push(monster.img);
 		});
@@ -232,7 +237,7 @@ class IdleOSRS extends Component {
 		if (passiveIncome > 0) {
 			let newState = this.state;
 			newState.income = passiveIncome;
-			newState.coins += passiveIncome * (intervalms / 1000);
+			newState.coins += (passiveIncome * (intervalms / 1000)) * GP_MULTIPLIER;
 
 			this.setState(newState);
 		}
@@ -525,7 +530,7 @@ class IdleOSRS extends Component {
 		const combatMultiplier = 1 + this.state.stats.combat.level - 3 * 0.1;
 		let newState = this.state;
 
-		newState.coins += monster.max_hp * 0.1 * combatMultiplier * MULTIPLIER;
+		newState.coins += (monster.max_hp * 0.1 * combatMultiplier) * MULTIPLIER * GP_MULTIPLIER;
 
 		this.setState(newState);
 	}
