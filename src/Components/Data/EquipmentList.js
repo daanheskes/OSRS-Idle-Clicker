@@ -1,3 +1,13 @@
+function importAll(r) {
+    let images = {};
+    r.keys().map((item, index) => {
+        return images[item.replace('./', '')] = r(item);
+    });
+    return images;
+}
+
+const images = importAll(require.context('./../../assets/items', false, /\.png$/));
+
 let equipment = {
     head: {},
     cape: {},
@@ -35,10 +45,10 @@ function addItem(slot, name, cost, img, income=0, atk_bonus=0, str_bonus=0, def_
 }
 
 let currentSlot = 'head';
-addItem(currentSlot, "Bronze med helm", 24, "https://oldschool.runescape.wiki/images/5/52/Bronze_med_helm.png", 0, 0, 0, 4);
+addItem(currentSlot, "Bronze med helm", 24, images['Bronze_med_helm.png'], 0, 0, 0, 4);
 
 currentSlot = 'cape';
-addItem(currentSlot, "Red cape", 2, "https://oldschool.runescape.wiki/images/4/46/Red_cape.png", 0, 0, 0, 2);
+addItem(currentSlot, "Red cape", 2, images['Red_cape.png'], 0, 0, 0, 2);
 
 currentSlot = 'neck';
 addItem(currentSlot, "Amulet of accuracy", 1100, "https://oldschool.runescape.wiki/images/1/1b/Amulet_of_accuracy.png", 0, 4, 0, 0);

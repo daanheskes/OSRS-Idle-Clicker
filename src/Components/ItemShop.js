@@ -113,9 +113,7 @@ class ItemShop extends Component {
 							((!itemBought
 								? (
 								<div className='itemPrice'>
-									<div className='itemPrice-icon-wrapper'>
-										<img src={this.returnCoinImage(item.cost)} alt='Coins' />
-									</div>
+									<img src={this.returnCoinImage(item.cost)} alt='Coins' />
 									<span className='itemCost'>{item.cost}</span>
 								</div> 
 								)

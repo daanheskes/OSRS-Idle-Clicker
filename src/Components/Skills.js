@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
 
+function importAll(r) {
+	let images = {};
+	r.keys().map((item, index) => {
+		return images[item.replace('./', '')] = r(item);
+	});
+	return images;
+}
+
+const images = importAll(require.context('./../assets/skills', false, /\.png$/));
+
 class Skills extends Component {
 
 	constructor(props) {
 		super(props);
 		const skillIcons = {
-			combat: "https://oldschool.runescape.wiki/images/8/8f/Combat_icon.png",
-			attack: "https://oldschool.runescape.wiki/images/f/fe/Attack_icon.png",
-			strength: "https://oldschool.runescape.wiki/images/1/1b/Strength_icon.png",
-			defence: "https://oldschool.runescape.wiki/images/b/b7/Defence_icon.png",
-			ranged: "https://oldschool.runescape.wiki/images/1/19/Ranged_icon.png",
-			magic: "https://oldschool.runescape.wiki/images/5/5c/Magic_icon.png",
-			hitpoints: "https://oldschool.runescape.wiki/images/9/96/Hitpoints_icon.png",
-			prayer: "https://oldschool.runescape.wiki/images/f/f2/Prayer_icon.png",
-			slayer: "https://oldschool.runescape.wiki/images/2/28/Slayer_icon.png",
-			total: "https://oldschool.runescape.wiki/images/b/bd/Stats_icon.png"
+			combat: images['Combat.png'],
+			attack: images['Attack.png'],
+			strength: images['Strength.png'],
+			defence: images['Defence.png'],
+			ranged: images['Ranged.png'],
+			magic: images['Magic.png'],
+			hitpoints: images['Hitpoints.png'],
+			prayer: images['Prayer.png'],
+			slayer: images['Slayer.png'],
+			total: images['Total.png'],
 		}
 		this.skillIcons = skillIcons;
 	}
