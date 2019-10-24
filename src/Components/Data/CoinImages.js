@@ -1,42 +1,53 @@
+import coinImage1 from './../../assets/coins/Coins_1.png';
+import coinImage2 from './../../assets/coins/Coins_2.png';
+import coinImage3 from './../../assets/coins/Coins_3.png';
+import coinImage4 from './../../assets/coins/Coins_4.png';
+import coinImage5 from './../../assets/coins/Coins_5.png';
+import coinImage25 from './../../assets/coins/Coins_25.png';
+import coinImage100 from './../../assets/coins/Coins_100.png';
+import coinImage250 from './../../assets/coins/Coins_250.png';
+import coinImage1000 from './../../assets/coins/Coins_1000.png';
+import coinImage10000 from './../../assets/coins/Coins_10000.png';
+
 export default {
     1: {
         amount: 1,
-        img: "https://oldschool.runescape.wiki/images/4/44/Coins_1.png"
+        img: {coinImage1}
     },
     2: {
         amount: 2,
-        img: "https://oldschool.runescape.wiki/images/b/b9/Coins_2.png"
+        img: {coinImage2}
     },
     3: {
         amount: 3,
-        img: "https://oldschool.runescape.wiki/images/6/69/Coins_3.png"
+        img: {coinImage3}
     },
     4: {
         amount: 4,
-        img: "https://oldschool.runescape.wiki/images/b/ba/Coins_4.png"
+        img: {coinImage4}
     },
     5: {
         amount: 5,
-        img: "https://oldschool.runescape.wiki/images/0/00/Coins_5.png"
+        img: {coinImage5}
     },
     25: {
         amount: 25,
-        img: "https://oldschool.runescape.wiki/images/6/65/Coins_25.png"
+        img: {coinImage25}
     },
     100: {
         amount: 100,
-        img: "https://oldschool.runescape.wiki/images/b/b6/Coins_100.png"
+        img: {coinImage100}
     },
     250: {
         amount: 250,
-        img: "https://oldschool.runescape.wiki/images/d/d5/Coins_250.png"
+        img: {coinImage250}
     },
     1000: {
         amount: 1000,
-        img: "https://oldschool.runescape.wiki/images/a/af/Coins_1000.png"
+        img: {coinImage1000}
     },
     10000: {
         amount: 10000,
-        img: "https://oldschool.runescape.wiki/images/3/30/Coins_10000.png"
+        img: {coinImage10000}
     }
 }

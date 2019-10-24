@@ -184,7 +184,7 @@ class IdleOSRS extends Component {
 		];
 
 		Object.values(CoinDisplay).forEach(coinAmount => {
-
+			console.log(coinAmount);
 		}); 
 
 		Object.values(monsters).forEach(monster => {
