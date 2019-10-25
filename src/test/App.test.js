@@ -30,7 +30,3 @@ describe('getBestSpell()', () => {
     expect(App.prototype.getBestSpell(50)).toBeDefined();
   })
 });
-
-describe('chooseNewMonster()', () => {
-
-});

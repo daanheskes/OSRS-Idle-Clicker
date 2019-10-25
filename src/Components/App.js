@@ -38,7 +38,7 @@ class IdleOSRS extends Component {
 			attackmethod: 'controlled',
 			coins: 0,
 			income: 0,
-			shopSlot: 'weapon',
+			shopSlot: 'head',
 			stats: {
 				combat: {
 					name: 'Combat',
