@@ -164,8 +164,6 @@ class IdleOSRS extends Component {
 	}
 
 	componentDidMount() {
-		this.preloadImages();
-
 		const INTERVAL_MS = 125;
 
 		this.interval = setInterval(() => {
@@ -175,25 +173,6 @@ class IdleOSRS extends Component {
 
 	componentWillUnmount() {
 		clearInterval(this.interval);
-	}
-
-	preloadImages() {
-		let images = [
-			"https://oldschool.runescape.wiki/images/0/07/Red_hitsplat.png",
-			"https://oldschool.runescape.wiki/images/4/48/Blue_hitsplat.png",
-		];
-
-		Object.values(CoinDisplay).forEach(coinAmount => {
-			console.log(coinAmount);
-		}); 
-
-		Object.values(monsters).forEach(monster => {
-			images.push(monster.img);
-		});
-
-		images.forEach(img => {
-			new Image().src = img;
-		});
 	}
 
 	calculatePassiveIncome() {
@@ -535,7 +514,6 @@ class IdleOSRS extends Component {
 		
 		newState.coins += (monster.max_hp * 0.35 * combatMultiplier) * MULTIPLIER * GP_MULTIPLIER;
 
-		console.log({combat: this.state.stats.combat.level, hp: monster.max_hp, combatMultiplier, perhp: ((monster.max_hp * 0.35 * combatMultiplier) * MULTIPLIER * GP_MULTIPLIER / monster.max_hp), total: (monster.max_hp * 0.35 * combatMultiplier) * MULTIPLIER * GP_MULTIPLIER});
 		this.setState(newState);
 	}
 

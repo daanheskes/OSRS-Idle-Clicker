@@ -44,6 +44,15 @@ class ItemShop extends Component {
 		return '+' + compareItem[stat];
 	}
 
+	convertToLetters(amount) {
+		if (amount >= 100000 && amount < 10000000) {
+			return (Math.floor(amount / 1000) + "K");
+		} else if (amount >= 10000000) {
+			return (Math.floor(amount / 1000000) + "M");
+		}
+		return (Math.floor(amount));
+	}
+
 	renderStats(item) {
 		let stats = [];
 
@@ -92,10 +101,16 @@ class ItemShop extends Component {
 
 			let itemBought = false;
 			let itemEquipped = false;
+			let itemBuyable = true;
+
+			if (item.cost === 0) {
+				itemClass += ' item-unbuyable';
+				itemBuyable = false;
+			}
 
 			if (this.props.boughtItems[shopSlot] !== null) {
 				if (this.props.boughtItems[shopSlot].includes(item.name)) {
-					itemClass += ' item-bought';
+					itemClass += ' item-owned';
 					itemBought = true;
 				}
 			}
@@ -110,17 +125,26 @@ class ItemShop extends Component {
 				<div className={itemClass} key={item.name}>
 					<div className='shop-column shop-column-1'>
 						{
-							((!itemBought
+							((!itemBought)
 								? (
-								<div className='itemPrice'>
-									<img src={this.returnCoinImage(item.cost)} alt='Coins' />
-									<span className='itemCost'>{item.cost}</span>
-								</div> 
+									((itemBuyable)
+									? (
+										<div className='itemPrice'>
+											<img src={this.returnCoinImage(item.cost)} alt='Coins' />
+											<span className='itemCost'>{this.convertToLetters(item.cost).toLocaleString()}</span>
+										</div>
+										)
+									: (
+										<div className='itemPrice'>
+											<span className='itemCost item-unbuyable'>Drop Only</span>
+										</div>
+										)
+									)
 								)
 								: (
 									<div className='itemStatus'>
 										<div className='tooltip' data-tooltip='Owned'>
-											<svg className='item-bought' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-2.3-8.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z"/></svg>
+											<svg className='item-owned' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-2.3-8.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z"/></svg>
 										</div>
 										{
 											((itemEquipped) &&
@@ -132,12 +156,11 @@ class ItemShop extends Component {
 									</div>
 								)
 							)
-							)
 						}
 						
 						{
-							((!itemBought) &&
-								(<div className={(this.props.hasEnoughMoney(item.cost) ? 'shop-button shop-buy-button' : 'shop-button shop-buy-button shop-buy-button-disabled')} onClick={this.props.buyItem.bind(this, item, shopSlot)}>
+							((!itemBought && itemBuyable) &&
+								(<div className={(this.props.hasEnoughMoney(item.cost) ? 'shop-button shop-buy-button' : 'shop-button shop-buy-button shop-button-disabled')} onClick={this.props.buyItem.bind(this, item, shopSlot)}>
 									<span>Purchase</span>
 								</div>)
 							)
