@@ -71,20 +71,21 @@ class ItemShop extends Component {
 
 	renderStats(item) {
 		let stats = [];
-
 		allStats.forEach((stat) => {
 			let statDifference = null;
-			if (item[stat.namekey] !== 0) {
+
+			if (item.hasOwnProperty(stat.namekey)) {
 				let statDifferenceValue = this.calculateStatDifference(item, stat.namekey);
+
 				if (statDifferenceValue !== false) {
 					if (statDifferenceValue > 0) {
 						statDifference = <span className='stat-difference'>(<span className='stat-difference-value positive-difference'>{statDifferenceValue}</span>)</span>;
-					} else {
+					} else if (statDifferenceValue < 0) {
 						statDifference = <span className='stat-difference'>(<span className='stat-difference-value negative-difference'>{statDifferenceValue}</span>)</span>;
 					}
 				}
-
 			}
+
 			stats.push(
 				<p className={(item[stat.namekey] === 0 ? 'stat stat-zero' : 'stat')} key={item + stat.namekey}>
 					<span className='stat-name'>{stat.name}</span>
