@@ -37,7 +37,7 @@ class IdleOSRS extends Component {
 		this.state = {
 			attackstyle: 'melee',
 			attackmethod: 'controlled',
-			coins: 10000,
+			coins: 0,
 			income: 0,
 			shopSlot: 'head',
 			stats: {
