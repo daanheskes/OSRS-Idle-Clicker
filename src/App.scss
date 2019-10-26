@@ -446,7 +446,7 @@ nav {
 			}
 
 			.shop-column-1 {
-				min-width: 136px;
+				width: 136px;
 				box-sizing: border-box;
 
 				.itemPrice {
@@ -512,7 +512,7 @@ nav {
 			.shop-column-2 {
 				padding-left: 0;
 				position: relative;
-				width: calc(100% - 108px);
+				width: calc(100% - 136px);
 				border-right: 1px solid rgb(0, 0, 0);
 
 				&::after {
@@ -607,6 +607,11 @@ nav {
 				font-size: 12px;
 				transition: all 0.2s ease-in;
 				border: 1px solid rgba(255,255,255,0.7);
+				text-transform: capitalize;
+
+				& + .shop-button {
+					margin-top: 6px;
+				}
 
 				&:hover {
 					background-color: rgba(255,255,255,0.1);

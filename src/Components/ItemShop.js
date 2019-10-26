@@ -16,11 +16,11 @@ class ItemShop extends Component {
 	returnCoinImage(amount) {
 		let coinImage = coinImages[1].img;
 
-		for (let coin of Object.values(coinImages)) {
+		Object.values(coinImages).forEach((coin) => {
 			if (amount >= coin.amount) {
 				coinImage = coin.img;
 			}
-		}
+		});
 
 		return coinImage;
 	}
@@ -51,6 +51,22 @@ class ItemShop extends Component {
 			return (Math.floor(amount / 1000000) + "M");
 		}
 		return (Math.floor(amount));
+	}
+
+	requirementButtons(item) {
+		let buttonsHolder = [];
+
+		Object.entries(item.requirements).forEach((requirement) => {
+			const [ requirementName, requirementValue ] = requirement;
+
+			buttonsHolder.push(
+								<div className='shop-button shop-requirement-button shop-button-disabled' key={item.name + "-" + requirement}>
+									<span>{requirementValue + " " + requirementName}</span>
+								</div>
+			);
+		});
+
+		return buttonsHolder;
 	}
 
 	renderStats(item) {
@@ -102,11 +118,17 @@ class ItemShop extends Component {
 			let itemBought = false;
 			let itemEquipped = false;
 			let itemBuyable = true;
+			let itemHasRequirements = false;
 
 			if (item.cost === 0) {
 				itemClass += ' item-unbuyable';
 				itemBuyable = false;
 			}
+
+			if (!(Object.entries(item.requirements).length === 0 && item.requirements.constructor === Object)) {
+				itemHasRequirements = true;
+			}
+
 
 			if (this.props.boughtItems[shopSlot] !== null) {
 				if (this.props.boughtItems[shopSlot].includes(item.name)) {
@@ -119,6 +141,9 @@ class ItemShop extends Component {
 					itemClass += ' item-equipped';
 					itemEquipped = true;
 				}
+			}
+			if (this.props.meetsRequirements(item.requirements)) {
+				itemClass += ' item-meets-requirements';
 			}
 
 			return (
@@ -167,9 +192,23 @@ class ItemShop extends Component {
 						}
 						{
 							((!itemEquipped && itemBought) && 
-								(<div className='shop-button shop-equip-button' onClick={this.props.equipItem.bind(this, item, shopSlot)}>
-									<span>Equip</span>
-								</div>)
+								((this.props.meetsRequirements(item.requirements))
+									? (
+										<div className='shop-button shop-equip-button' onClick={this.props.equipItem.bind(this, item, shopSlot)}>
+											<span>Equip</span>
+										</div>
+										)
+									: (
+										<div className='shop-button shop-equip-button shop-button-disabled' onClick={this.props.equipItem.bind(this, item, shopSlot)}>
+											<span>Equip</span>
+										</div>
+										)
+								)
+							)
+						}
+						{
+							((itemHasRequirements && (!this.props.meetsRequirements(item.requirements))) &&
+								this.requirementButtons(item)
 							)
 						}
 					</div>

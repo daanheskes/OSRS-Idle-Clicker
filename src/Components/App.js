@@ -32,6 +32,7 @@ class IdleOSRS extends Component {
 		this.buyItem = this.buyItem.bind(this);
 		this.equipItem = this.equipItem.bind(this);
 		this.hasEnoughMoney = this.hasEnoughMoney.bind(this);
+		this.meetsRequirements = this.meetsRequirements.bind(this);
 
 		this.state = {
 			attackstyle: 'melee',
@@ -116,8 +117,8 @@ class IdleOSRS extends Component {
 					head: null,
 					cape: null,
 					neck: null,
-					ammunition: equipmentList.ammunition.bronzearrow,
-					weapon: equipmentList.weapon.shortbow,
+					ammunition: null,
+					weapon: null,
 					body: null,
 					shield: null,
 					legs: null,
@@ -178,31 +179,7 @@ class IdleOSRS extends Component {
 	calculatePassiveIncome() {
 		let passiveIncome = 0;
 
-		const ATK_MULTIPLIER = 0.03;
-		const STR_MULTIPLIER = 0.02;
-		const DEF_MULTIPLIER = 0.06;
-		const RNGD_MULTIPLIER = 0.05;
-		const MAGE_MULTIPLIER = 0.05;
-
-		const CB_MULTIPLIER = 0.05;
-		const HP_MULTIPLIER = 0.01;
-		const PRAY_MULTIPLIER = 0.01;
-		const SLAY_MULTIPLIER = 0.01;
-
-		passiveIncome += (this.state.stats.combat.level - 3) * CB_MULTIPLIER + ((this.state.stats.combat.level - 3) * 0.075);
-		passiveIncome += (this.state.stats.hitpoints.level - 10) * (HP_MULTIPLIER / 2);
-		passiveIncome += (this.state.stats.attack.level - 1) * (ATK_MULTIPLIER / 2);
-		passiveIncome += (this.state.stats.strength.level - 1) * (STR_MULTIPLIER / 2);
-		passiveIncome += (this.state.stats.defence.level - 1) * (DEF_MULTIPLIER / 2);
-		passiveIncome += (this.state.stats.ranged.level -1) * (RNGD_MULTIPLIER / 2);
-		passiveIncome += (this.state.stats.magic.level -1) * (MAGE_MULTIPLIER / 2);
-		passiveIncome += (this.state.stats.prayer.level - 1) * (PRAY_MULTIPLIER / 2);
-		passiveIncome += (this.state.stats.slayer.level - 1) * (SLAY_MULTIPLIER / 2);
-		passiveIncome += this.calculateItemBonus('atk_bonus') * ATK_MULTIPLIER;
-		passiveIncome += this.calculateItemBonus('str_bonus') * STR_MULTIPLIER;
-		passiveIncome += this.calculateItemBonus('def_bonus') * DEF_MULTIPLIER;
-		passiveIncome += this.calculateItemBonus('rngd_bonus') * RNGD_MULTIPLIER;
-		passiveIncome += this.calculateItemBonus('mage_bonus') * MAGE_MULTIPLIER;
+		passiveIncome += Math.floor(this.calculateItemBonus('def_bonus') / 10);
 		passiveIncome += this.calculateItemBonus('income');
 
 		return Math.floor(passiveIncome * MULTIPLIER);
@@ -337,7 +314,7 @@ class IdleOSRS extends Component {
 
 		Object.values(equipment).forEach((item) => {
 			if (item !== null) {
-				if(((item.name).indexOf("arrow") < 0) && ((item.name).indexOf("Bronze sword") < 0) && ((item.name).indexOf("Wooden shield") < 0)) {
+				if((item.name).indexOf("arrow") < 0) {
 					statBonus += item[stat];
 				}
 			}
@@ -582,10 +559,10 @@ class IdleOSRS extends Component {
 		const hitpoints = this.state.stats.hitpoints.level;
 		const prayer = this.state.stats.prayer.level;
 
-		const base = 0.25 * (defence + hitpoints + Math.floor(prayer/2));
+		const base = 0.25 * (defence + hitpoints + Math.floor(prayer / 2));
 		const melee = 0.325 * (attack + strength);
-		const range = 0.325 * (Math.floor(3*ranged/2));
-		const mage = 0.325 * (Math.floor(3*magic/2));
+		const range = 0.325 * (Math.floor(3 * ranged / 2));
+		const mage = 0.325 * (Math.floor(3 * magic / 2));
 
 		return Math.floor(base + Math.max(melee, range, mage));
 	}
@@ -601,11 +578,30 @@ class IdleOSRS extends Component {
 		this.setState({shopSlot: slot});
 	}
 
-	equipItem(item, slot) {
-		let newState = this.state;
-		newState.gearsets[newState.gearsets.worn][slot] = item;
+	meetsRequirements(requirements) {
 
-		this.setState(newState);
+		let requirementsMet = true;
+
+		Object.entries(requirements).forEach((requirement) => {
+			const [ requirementName, requirementValue ] = requirement;
+			if (requirementName === "attack" || requirementName === "strength" || requirementName === "defence" || requirementName === "ranged"
+			|| requirementName === "magic" || requirementName === "hitpoints" || requirementName === "slayer" || requirementName === "prayer") {
+					if (this.state.stats[requirementName].level < requirementValue) {
+						requirementsMet = false;
+					}
+			}
+		});
+
+		return requirementsMet;
+	}
+
+	equipItem(item, slot) {
+		if (this.meetsRequirements(item.requirements)) {
+			let newState = this.state;
+			newState.gearsets[newState.gearsets.worn][slot] = item;
+
+			this.setState(newState);
+		}
 	}
 
 	buyItem(item, slot) {
@@ -639,7 +635,7 @@ class IdleOSRS extends Component {
 				</div>
 				<div id='column-right' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />
-					<ItemShop boughtItems={this.state.boughtItems} shopSlot={this.state.shopSlot} gearsets={this.state.gearsets} equipItem={this.equipItem} changeShopSlot={this.changeShopSlot} buyItem={this.buyItem} hasEnoughMoney={this.hasEnoughMoney} />
+					<ItemShop boughtItems={this.state.boughtItems} shopSlot={this.state.shopSlot} gearsets={this.state.gearsets} equipItem={this.equipItem} changeShopSlot={this.changeShopSlot} buyItem={this.buyItem} hasEnoughMoney={this.hasEnoughMoney} meetsRequirements={this.meetsRequirements} />
 					<GearSets gearsets={this.state.gearsets} />
 					<Skills stats={this.state.stats} />
 				</div>
