@@ -368,16 +368,14 @@ class IdleOSRS extends Component {
 
 		if (Array.isArray(skill)) {
 			skill.forEach(sk => {
-				let newLevel = this.checkLevelUp(newState.stats[sk].level, newState.stats[sk].experience);
 				newState.stats[sk].experience += (experience * MULTIPLIER * EXP_MULTIPLIER);
-				newState.stats[sk].percentage = (newLevel === 99 ? 100 : this.calculateNextLevelPercentage(newState.stats[sk].experience));
-				newState.stats[sk].level = newLevel;
+				newState.stats[sk].percentage = (this.checkLevelUp(newState.stats[sk].level, newState.stats[sk].experience) === 99 ? 100 : this.calculateNextLevelPercentage(newState.stats[sk].experience));
+				newState.stats[sk].level = this.checkLevelUp(newState.stats[sk].level, newState.stats[sk].experience);
 			});
 		} else {
-			let newLevel = this.checkLevelUp(newState.stats[skill].level, newState.stats[skill].experience);
 			newState.stats[skill].experience += (experience * MULTIPLIER * EXP_MULTIPLIER);
-			newState.stats[skill].percentage = (newLevel === 99 ? 100 : this.calculateNextLevelPercentage(newState.stats[skill].experience));
-			newState.stats[skill].level = newLevel;
+			newState.stats[skill].percentage = (this.checkLevelUp(newState.stats[skill].level, newState.stats[skill].experience) === 99 ? 100 : this.calculateNextLevelPercentage(newState.stats[skill].experience));
+			newState.stats[skill].level = this.checkLevelUp(newState.stats[skill].level, newState.stats[skill].experience);
 		}
 		this.setState(newState);
 		this.updateCombat();
