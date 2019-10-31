@@ -359,7 +359,6 @@ class IdleOSRS extends Component {
 		if (attackRoll > defenceRoll) {
 			const hitChance = 1 - (defenceRoll + 2) / (2 * (attackRoll + 1));
 			const didHit = (hitChance >= Math.random());
-			console.log(didHit);
 
 			if (didHit) {
 				/* Source: https://twitter.com/JagexAsh/status/591321214771077120 */
@@ -560,7 +559,7 @@ class IdleOSRS extends Component {
 		const combatMultiplier = 1 + ((this.state.stats.combat.level - 3) * 0.1);
 		let newState = this.state;
 		
-		newState.coins += (monster.max_hp * 0.35 * combatMultiplier) * MULTIPLIER * GP_MULTIPLIER;
+		newState.coins += (monster.max_hp * 0.5 * combatMultiplier) * MULTIPLIER * GP_MULTIPLIER;
 
 		this.setState(newState);
 	}
@@ -686,8 +685,6 @@ class IdleOSRS extends Component {
 	}
 
 	render() {
-
-		this.meleeHitRoll(this.calculateMaxMeleeHit());
 
 		const itemBonusses = {
 			atk_bonus: this.calculateItemBonus('atk_bonus'),
