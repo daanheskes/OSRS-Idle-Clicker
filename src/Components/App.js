@@ -341,10 +341,10 @@ class IdleOSRS extends Component {
 	calculateDefenceRoll() {
 		// Based upon: https://www.osrsbox.com/blog/2019/01/22/calculating-melee-dps-in-osrs/#4-calculating-hit-chance
 		const combatStyleBonus = 0;
-		const defenceLevel = 0; // Currently not added to the monsters
+		const defenceLevel = 0; 
 		const potionMultiplier = 1;
 		const prayerMultiplier = 1;
-		const defenceBonus = 0;
+		const defenceBonus = -21; // Currently not added to the monsters
 
 		const effectiveLevel = (defenceLevel * potionMultiplier * prayerMultiplier) + combatStyleBonus + 8;
 		return effectiveLevel * (defenceBonus + 64);
@@ -359,6 +359,7 @@ class IdleOSRS extends Component {
 		if (attackRoll > defenceRoll) {
 			const hitChance = 1 - (defenceRoll + 2) / (2 * (attackRoll + 1));
 			const didHit = (hitChance >= Math.random());
+			console.log(didHit);
 
 			if (didHit) {
 				/* Source: https://twitter.com/JagexAsh/status/591321214771077120 */
