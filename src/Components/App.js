@@ -257,36 +257,64 @@ class IdleOSRS extends Component {
 		}
 	}
 
-	getAttackStyleBonus() {
-		if (this.state.combatstyle === 'attack') {
-			return 1;
-		} else if (this.state.combatstyle === 'strength') {
-			return 3;
-		} else {
+	getCombatStyleBonus(stat) {
+		if (stat === "attack") {
+			if (this.state.attackmethod === 'accurate') {
+				return 3;
+			} else if (this.state.attackmethod === 'controlled') {
+				return 1;
+			}
+			return 0;
+		}
+		if (stat === "strength") {
+			if (this.state.attackstyle === 'attack') {
+				return 1;
+			} else if (this.state.attackstyle === 'strength') {
+				return 3;
+			}
 			return 0;
 		}
 	}
 
-	getPrayerMeleeDamageMultiplier(prayerLevel = this.state.stats.prayer.level) {
-		let damageMultiplier = 1;
+	getPrayerMultiplier(stat) {
+		const prayerLevel = this.state.stats.prayer.level;
+		let multiplier = 1;
+		if (stat === 'attack') {
+			if (prayerLevel >= 7) {
+				multiplier = 1.05;
+			}
+			if (prayerLevel >= 16) {
+				multiplier = 1.1;
+			}
+			if (prayerLevel >= 34) {
+				multiplier = 1.15;
+			}
+			if (prayerLevel >= 60) {
+				multiplier = 1.15;
+			}
+			if (prayerLevel >= 70) {
+				multiplier = 1.20;
+			}
+		}
+		if (stat === 'strength') {
+			if (prayerLevel >= 4) {
+				multiplier = 1.05;
+			}
+			if (prayerLevel >= 13) {
+				multiplier = 1.1;
+			}
+			if (prayerLevel >= 31) {
+				multiplier = 1.15;
+			}
+			if (prayerLevel >= 60) {
+				multiplier = 1.18;
+			}
+			if (prayerLevel >= 70) {
+				multiplier = 1.23;
+			}
+		}
 
-		if (prayerLevel >= 4) {
-			damageMultiplier = 1.05;
-		}
-		if (prayerLevel >= 13) {
-			damageMultiplier = 1.1;
-		}
-		if (prayerLevel >= 31) {
-			damageMultiplier = 1.15;
-		}
-		if (prayerLevel >= 60) {
-			damageMultiplier = 1.18;
-		}
-		if (prayerLevel >= 70) {
-			damageMultiplier = 1.23;
-		}
-
-		return damageMultiplier;
+		return multiplier;
 	}
 
 	getPrayerRangedDamageMultiplier(prayerLevel = this.state.stats.prayer.level) {
@@ -297,9 +325,52 @@ class IdleOSRS extends Component {
 		return 1;
 	}
 
+	calculateAttackRoll() {
+		// Based upon: https://www.osrsbox.com/blog/2019/01/22/calculating-melee-dps-in-osrs/#4-calculating-hit-chance
+
+		const combatStyleBonus = this.getCombatStyleBonus('attack');
+		const attackLevel = this.state.stats.attack.level;
+		const potionMultiplier = 1; // Potions are not currently added
+		const prayerMultiplier = this.getPrayerMultiplier('attack');
+		const attackBonus = this.calculateItemBonus('atk_bonus');
+
+		const effectiveLevel = (attackLevel * potionMultiplier * prayerMultiplier) + combatStyleBonus + 8 + 1; // +1 for NPCs
+		return effectiveLevel * (attackBonus + 64);
+	}
+
+	calculateDefenceRoll() {
+		// Based upon: https://www.osrsbox.com/blog/2019/01/22/calculating-melee-dps-in-osrs/#4-calculating-hit-chance
+		const combatStyleBonus = 0;
+		const defenceLevel = 0; // Currently not added to the monsters
+		const potionMultiplier = 1;
+		const prayerMultiplier = 1;
+		const defenceBonus = 0;
+
+		const effectiveLevel = (defenceLevel * potionMultiplier * prayerMultiplier) + combatStyleBonus + 8;
+		return effectiveLevel * (defenceBonus + 64);
+	}
+
+	meleeHitRoll(maxHit) {
+		// Based upon: https://www.osrsbox.com/blog/2019/01/22/calculating-melee-dps-in-osrs/#4-calculating-hit-chance
+
+		let attackRoll = this.calculateAttackRoll();
+		let defenceRoll = this.calculateDefenceRoll();
+
+		if (attackRoll > defenceRoll) {
+			const hitChance = 1 - (defenceRoll + 2) / (2 * (attackRoll + 1));
+			const didHit = (hitChance >= Math.random());
+
+			if (didHit) {
+				/* Source: https://twitter.com/JagexAsh/status/591321214771077120 */
+				return Math.round(Math.random() * maxHit);
+			}
+		}
+		return 0;
+	}
+
 	calculateDamage(attackStyle = this.state.attackstyle) {
 		if (attackStyle === "melee") {
-			return this.calculateMaxMeleeHit();
+			return this.meleeHitRoll(this.calculateMaxMeleeHit());
 		} else if (attackStyle === "ranged") {
 			return this.calculateMaxRangedHit();
 		} else if (attackStyle === "magic") {
@@ -324,13 +395,14 @@ class IdleOSRS extends Component {
 	}
 
 	calculateMaxMeleeHit(strengthLevel = this.state.stats.strength.level) {
-		const attackStyleBonus = this.getAttackStyleBonus();
+		/* Source: https://oldschool.runescape.wiki/w/Maximum_melee_hit */
+		const combatStyleBonus = this.getCombatStyleBonus('strength');
 		const potionBonus = 0;
-		const prayerDamageMultiplier = this.getPrayerMeleeDamageMultiplier();
+		const prayerDamageMultiplier = this.getPrayerMultiplier('strength');
 		const strengthBonus = this.calculateItemBonus('str_bonus');
 
-		let effectiveStrength = Math.floor((strengthLevel + potionBonus) * prayerDamageMultiplier + attackStyleBonus);
-		const baseDamage = 1.3 + (effectiveStrength / 10) + (strengthBonus / 80) + ((effectiveStrength * strengthBonus) / 640);
+		let effectiveLevel = Math.floor((strengthLevel + potionBonus) * prayerDamageMultiplier + combatStyleBonus);
+		const baseDamage = 1.3 + (effectiveLevel / 10) + (strengthBonus / 80) + ((effectiveLevel * strengthBonus) / 640);
 		return Math.floor(baseDamage);
 	}
 
@@ -613,6 +685,8 @@ class IdleOSRS extends Component {
 	}
 
 	render() {
+
+		this.meleeHitRoll(this.calculateMaxMeleeHit());
 
 		const itemBonusses = {
 			atk_bonus: this.calculateItemBonus('atk_bonus'),
