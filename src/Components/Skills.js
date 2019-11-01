@@ -1,30 +1,31 @@
 import React, { Component } from 'react';
 
-function importAll(r) {
-	let images = {};
-	r.keys().map((item, index) => {
-		return images[item.replace('./', '')] = r(item);
-	});
-	return images;
-}
-
-const images = importAll(require.context('./../assets/skills', false, /\.png$/));
+import combatImage from './../assets/skills/Combat.png';
+import attackImage from './../assets/skills/Attack.png';
+import strengthImage from './../assets/skills/Strength.png';
+import defenceImage from './../assets/skills/Defence.png';
+import rangedImage from './../assets/skills/Ranged.png';
+import magicImage from './../assets/skills/Magic.png';
+import hitpointsImage from './../assets/skills/Hitpoints.png';
+import prayerImage from './../assets/skills/Prayer.png';
+import slayerImage from './../assets/skills/Slayer.png';
+import totalImage from './../assets/skills/Total.png';
 
 class Skills extends Component {
 
 	constructor(props) {
 		super(props);
 		const skillIcons = {
-			combat: images['Combat.png'],
-			attack: images['Attack.png'],
-			strength: images['Strength.png'],
-			defence: images['Defence.png'],
-			ranged: images['Ranged.png'],
-			magic: images['Magic.png'],
-			hitpoints: images['Hitpoints.png'],
-			prayer: images['Prayer.png'],
-			slayer: images['Slayer.png'],
-			total: images['Total.png'],
+			combat: combatImage,
+			attack: attackImage,
+			strength: strengthImage,
+			defence: defenceImage,
+			ranged: rangedImage,
+			magic: magicImage,
+			hitpoints: hitpointsImage,
+			prayer: prayerImage,
+			slayer: slayerImage,
+			total: totalImage,
 		}
 		this.skillIcons = skillIcons;
 	}
