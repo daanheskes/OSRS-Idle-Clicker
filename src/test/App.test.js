@@ -8,13 +8,15 @@ test('renders without crashing', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 
-describe('Calculate prayer damage multiplier', () => {
+describe('Calculate prayer multiplier', () => {
   test('Melee', () => {
-    expect(App.prototype.getPrayerMeleeDamageMultiplier(1)).toBe(1);
-    expect(App.prototype.getPrayerMeleeDamageMultiplier(15)).toBe(1.1);
-    expect(App.prototype.getPrayerMeleeDamageMultiplier(70)).toBe(1.23);
-    expect(App.prototype.getPrayerMeleeDamageMultiplier(80)).toBe(1.23);
-    expect(App.prototype.getPrayerMeleeDamageMultiplier(99)).toBe(1.23);
+    test('strength', () => {
+      expect(App.prototype.getPrayerMultiplier('strength', 1)).toBe(1);
+      expect(App.prototype.getPrayerMultiplier('strength', 15)).toBe(1.1);
+      expect(App.prototype.getPrayerMultiplier('strength', 70)).toBe(1.23);
+      expect(App.prototype.getPrayerMultiplier('strength', 80)).toBe(1.23);
+      expect(App.prototype.getPrayerMultiplier('strength', 99)).toBe(1.23);
+    });
   });
 });
 
