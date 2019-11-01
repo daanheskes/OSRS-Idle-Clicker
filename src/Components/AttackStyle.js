@@ -6,7 +6,7 @@ class AttackStyle extends Component {
 		let attackStyleDivs = attackStyleNames.map((attackStyleName) => {
 			let attackStyle = attackStyles[attackStyleName];
 			return (
-				<div class='attack-style'>
+				<div className='attack-style' key={attackStyle.name}>
 					<img src={attackStyle.img} alt={attackStyle.name} />
 				</div>
 			);
@@ -17,7 +17,6 @@ class AttackStyle extends Component {
 
 	render() {
 
-		console.log(attackStyles['sword-stab']);
 		return (
 			<div id='attackStyles'>
 				<div id='attackMethods'>
