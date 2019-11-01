@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import '../App.scss';
 
 // Data files
-import monsters from './Data/MonsterList.js';
-import equipmentList from './Data/EquipmentList.js';
-import prayerExperience from './Data/PrayerExperience.js';
-import magicSpells from './Data/MagicSpellsList.js';
+import monsters from './../Data/MonsterList.js';
+import equipmentList from './../Data/EquipmentList.js';
+import prayerExperience from './../Data/PrayerExperience.js';
+import magicSpells from './../Data/MagicSpellsList.js';
 
 // Components
 import Navbar from './Navbar.js';
@@ -39,6 +39,7 @@ class IdleOSRS extends Component {
 			attackmethod: 'controlled',
 			coins: 0,
 			income: 0,
+			clicksPer5: 20,
 			shopSlot: 'head',
 			stats: {
 				combat: {
@@ -166,9 +167,28 @@ class IdleOSRS extends Component {
 
 	componentDidMount() {
 		const INTERVAL_MS = 125;
+		let lastClick = 0;
+		let clickInterval = 5000 / this.state.clicksPer5;
+		let allRandoms = [];
 
 		this.interval = setInterval(() => {
 			this.givePassiveIncome(INTERVAL_MS);
+
+			lastClick += INTERVAL_MS;
+			if (lastClick >= clickInterval) {
+				const element = document.getElementById('monster-hitsplats');
+				const bounds = element.getBoundingClientRect();
+				
+				let randomX = Math.floor((bounds.width - 24) * Math.random());
+				let randomY = Math.floor((bounds.height - 24) * Math.random());
+				allRandoms.push(randomX);
+				allRandoms.push(randomY);
+				console.log(Math.min(...allRandoms));
+				console.log(Math.max(...allRandoms));
+
+				this.clickMonster(this.state.currentMonster, randomX, randomY);
+				lastClick = 0;
+			}
 		}, INTERVAL_MS);
 	}
 
@@ -180,6 +200,9 @@ class IdleOSRS extends Component {
 		let passiveIncome = 0;
 
 		passiveIncome += Math.floor(this.calculateItemBonus('def_bonus') / 10);
+		passiveIncome += (Math.floor(this.calculateItemBonus('def_bonus') / 50) * 2);
+		passiveIncome += (Math.floor(this.calculateItemBonus('def_bonus') / 100) * 3);
+		passiveIncome += (Math.floor(this.calculateItemBonus('def_bonus') / 250) * 5);
 		passiveIncome += this.calculateItemBonus('income');
 
 		return Math.floor(passiveIncome * MULTIPLIER);
@@ -526,15 +549,17 @@ class IdleOSRS extends Component {
 
 	chooseNewMonster(slayerLevel = this.state.stats.slayer.level) {
 		let monsterList = [];
-
-		for (let [key, value] of Object.entries(monsters)) {
+		
+		Object.entries(monsters).forEach((monster) => {
+			const [ key, value ] = monster;
+	
 			if (slayerLevel >= (value.combatlevel - 2) && slayerLevel <= ((value.combatlevel * 2) + 2)) {
 				monsterList.push(key);
 			}
-		};
+		});
 
 		if (!monsterList.length) {
-			console.log("No monster available on combat level " + slayerLevel);
+			console.log("No monster available on slayer level " + slayerLevel);
 			monsterList = ['hillgiant'];
 		}
 		return this.returnRandom(monsterList);
@@ -555,11 +580,10 @@ class IdleOSRS extends Component {
 	}
 
 	assignCoinDrop(monster) {
-		const combatMultiplier = 1 + ((this.state.stats.combat.level - 3) * 0.1);
 		let newState = this.state;
-		
-		newState.coins += (monster.max_hp * 0.5 * combatMultiplier) * MULTIPLIER * GP_MULTIPLIER;
 
+		const combatMultiplier = 1 + ((this.state.stats.combat.level - 3) * 0.0275);
+		newState.coins += (monster.max_hp * 0.65 * combatMultiplier) * MULTIPLIER * GP_MULTIPLIER;
 		this.setState(newState);
 	}
 

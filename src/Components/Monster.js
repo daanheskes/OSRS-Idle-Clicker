@@ -9,7 +9,7 @@ class Monster extends Component {
 	}
 
 	handleClick(e) {
-		const element = document.getElementsByClassName('monster-image-wrap')[0];
+		const element = document.getElementById('monster-hitsplats');
 		const bounds = element.getBoundingClientRect();
 
 		const Xcoord = e.clientX - bounds.left - 24;
