@@ -207,7 +207,7 @@ class IdleOSRS extends Component {
 
 	componentWillUnmount() {
 		clearInterval(this.interval);
-		window.removeEventListener("beforeunload");
+		window.removeEventListener("beforeunload", this.saveGame());
 	}
 
 	calculatePassiveIncome() {
