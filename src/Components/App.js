@@ -186,7 +186,6 @@ class IdleOSRS extends Component {
 		const INTERVAL_MS = 125;
 		let lastClick = 0;
 		let clickInterval = 5000 / this.state.clicksPer5;
-		let allRandoms = [];
 
 		this.interval = setInterval(() => {
 			this.givePassiveIncome(INTERVAL_MS);
@@ -198,8 +197,6 @@ class IdleOSRS extends Component {
 				
 				let randomX = Math.floor((bounds.width - 24) * Math.random());
 				let randomY = Math.floor((bounds.height - 24) * Math.random());
-				allRandoms.push(randomX);
-				allRandoms.push(randomY);
 
 				this.clickMonster(this.state.currentMonster, randomX, randomY);
 				lastClick = 0;
