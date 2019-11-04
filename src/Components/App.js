@@ -39,7 +39,7 @@ class IdleOSRS extends Component {
 			attackmethod: 'controlled',
 			coins: 0,
 			income: 0,
-			clicksPer5: 20,
+			clicksPer5: 3,
 			shopSlot: 'head',
 			stats: {
 				combat: {
@@ -165,7 +165,21 @@ class IdleOSRS extends Component {
 		}
 	}
 
+	saveGame() {
+		localStorage.setItem('savedGame', JSON.stringify(this.state));
+	}
+
+	loadGame() {
+		return JSON.parse(localStorage.getItem('savedGame'));
+	}
+
 	componentDidMount() {
+		const loadedGame = this.loadGame();
+		console.log(loadedGame);
+		if (loadedGame !== null) {
+			this.setState(loadedGame);
+		}
+
 		const INTERVAL_MS = 125;
 		let lastClick = 0;
 		let clickInterval = 5000 / this.state.clicksPer5;
@@ -183,17 +197,17 @@ class IdleOSRS extends Component {
 				let randomY = Math.floor((bounds.height - 24) * Math.random());
 				allRandoms.push(randomX);
 				allRandoms.push(randomY);
-				console.log(Math.min(...allRandoms));
-				console.log(Math.max(...allRandoms));
 
 				this.clickMonster(this.state.currentMonster, randomX, randomY);
 				lastClick = 0;
 			}
 		}, INTERVAL_MS);
+		window.addEventListener("beforeunload", this.saveGame());
 	}
 
 	componentWillUnmount() {
 		clearInterval(this.interval);
+		window.removeEventListener("beforeunload");
 	}
 
 	calculatePassiveIncome() {
