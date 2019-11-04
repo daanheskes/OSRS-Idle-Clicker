@@ -170,13 +170,16 @@ class IdleOSRS extends Component {
 	}
 
 	loadGame() {
-		return JSON.parse(localStorage.getItem('savedGame'));
+		if (localStorage.getItem('savedGame') !== null) {
+			return JSON.parse(localStorage.getItem('savedGame'));
+		}
+		return false;
 	}
 
 	componentDidMount() {
 		const loadedGame = this.loadGame();
 		console.log(loadedGame);
-		if (loadedGame !== null) {
+		if (loadedGame) {
 			this.setState(loadedGame);
 		}
 
