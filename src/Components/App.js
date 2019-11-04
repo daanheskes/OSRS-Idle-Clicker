@@ -178,7 +178,7 @@ class IdleOSRS extends Component {
 
 	componentDidMount() {
 		const loadedGame = this.loadGame();
-		console.log(loadedGame);
+
 		if (loadedGame) {
 			this.setState(loadedGame);
 		}
