@@ -33,7 +33,7 @@ class IdleOSRS extends Component {
 		this.equipItem = this.equipItem.bind(this);
 		this.hasEnoughMoney = this.hasEnoughMoney.bind(this);
 		this.meetsRequirements = this.meetsRequirements.bind(this);
-		this.saveGame = this.saveGame.bind(this);
+		this.onUnload = this.onUnload.bind(this);
 
 		this.state = {
 			attackstyle: 'melee',
@@ -166,6 +166,10 @@ class IdleOSRS extends Component {
 		}
 	}
 
+	onUnload() {
+		this.saveGame();
+	}
+
 	saveGame() {
 		localStorage.setItem('savedGame', JSON.stringify(this.state));
 	}
@@ -203,12 +207,12 @@ class IdleOSRS extends Component {
 				lastClick = 0;
 			}
 		}, INTERVAL_MS);
-		window.addEventListener("beforeunload", this.saveGame());
+		window.addEventListener("beforeunload", this.onUnload);
 	}
 
 	componentWillUnmount() {
 		clearInterval(this.interval);
-		window.removeEventListener("beforeunload", this.saveGame());
+		window.removeEventListener("beforeunload", this.onUnload);
 	}
 
 	calculatePassiveIncome() {
