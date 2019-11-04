@@ -33,6 +33,7 @@ class IdleOSRS extends Component {
 		this.equipItem = this.equipItem.bind(this);
 		this.hasEnoughMoney = this.hasEnoughMoney.bind(this);
 		this.meetsRequirements = this.meetsRequirements.bind(this);
+		this.saveGame = this.saveGame.bind(this);
 
 		this.state = {
 			attackstyle: 'melee',
