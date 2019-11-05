@@ -4,7 +4,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/daanheskes/OSRS-Idle-Clicker/pulls)
 [![License](https://img.shields.io/github/license/daanheskes/OSRS-Idle-Clicker.svg)](https://github.com/daanheskes/OSRS-Idle-Clicker/blob/master/LICENSE)
 
-An Idle Clicker game based on the game Old School Runescape (https://oldschool.runescape.com/).
+An incremental game based on the game [Old School Runescape](https://oldschool.runescape.com/).
 
 ## Play game
 
@@ -20,7 +20,7 @@ Please make sure to update tests as appropriate
 
 All images and copyrights belong to their original owners. No copyright infringement intended.
 
-All images are taken from the Old School Runescape Wiki (https://oldschool.runescape.wiki/) and/or from the Old School Runescape Twitter (https://twitter.com/oldschoolrs/).
+All images are taken from the [Old School Runescape Wiki](https://oldschool.runescape.wiki/) (licensed under [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)) and/or from the [Old School Runescape Twitter](https://twitter.com/oldschoolrs/).
 
 ## License
 [MIT](https://github.com/daanheskes/OSRS-Idle-Clicker/blob/master/LICENSE)
