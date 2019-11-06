@@ -33,6 +33,7 @@ class IdleOSRS extends Component {
 		this.equipItem = this.equipItem.bind(this);
 		this.hasEnoughMoney = this.hasEnoughMoney.bind(this);
 		this.meetsRequirements = this.meetsRequirements.bind(this);
+		this.equipGearSet = this.equipGearSet.bind(this);
 		this.onUnload = this.onUnload.bind(this);
 
 		this.state = {
@@ -690,6 +691,13 @@ class IdleOSRS extends Component {
 		this.setState({shopSlot: slot});
 	}
 
+	equipGearSet(gearset) {
+		let newState = this.state;
+		newState.gearsets.worn = gearset;
+
+		this.setState(newState);
+	}
+
 	meetsRequirements(requirements) {
 
 		let requirementsMet = true;
@@ -748,7 +756,7 @@ class IdleOSRS extends Component {
 				<div id='column-right' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />
 					<ItemShop boughtItems={this.state.boughtItems} shopSlot={this.state.shopSlot} gearsets={this.state.gearsets} equipItem={this.equipItem} changeShopSlot={this.changeShopSlot} buyItem={this.buyItem} hasEnoughMoney={this.hasEnoughMoney} meetsRequirements={this.meetsRequirements} />
-					<GearSets gearsets={this.state.gearsets} />
+					<GearSets gearsets={this.state.gearsets} equipGearSet={this.equipGearSet}/>
 					<Skills stats={this.state.stats} />
 				</div>
 			</div>

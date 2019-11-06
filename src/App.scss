@@ -377,6 +377,41 @@ nav {
 	}
 }
 
+.tooltip {
+position: relative;
+display: inline-block;
+
+	+ .tooltip {
+		margin-left: 6px;
+	}
+
+	&:after {
+		content: attr(data-tooltip);
+		display: none;
+		position: absolute;
+		color: #fff;
+		background-color: #212429;
+		border: 1px solid rgba(0,0,0,0.4);
+		box-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+		padding: 4px 6px;
+		border-radius: 4px;
+		font-size: 14px;
+		letter-spacing: 0.02em;
+		box-sizing: border-box;
+	}
+
+	&:hover:after {
+		display: block;
+	}
+}
+
+svg.owned {
+	fill: green;
+}
+svg.equipped {
+	fill: #864720;
+}
+
 #itemShop {
 	width: 90%;
 	height: calc(100% - 348px);
@@ -448,7 +483,7 @@ nav {
 			position: relative;
 			border-bottom: 1px solid rgb(0, 0, 0);
 
-			&.item-unbuyable {
+			&.unbuyable {
 				background-color: rgba(255, 0, 0, 0.05);
 			}
 
@@ -493,43 +528,7 @@ nav {
 					box-sizing: border-box;
 					display: flex;
 					align-items: center;
-				
-
-					.tooltip {
-						position: relative;
-
-						+ .tooltip {
-							margin-left: 6px;
-						}
-						&:after {
-							content: attr(data-tooltip);
-							display: none;
-							position: absolute;
-							color: #fff;
-							background-color: #212429;
-							border: 1px solid rgba(0,0,0,0.4);
-							box-shadow: 2px 2px 4px rgba(0,0,0,0.15);
-							padding: 4px 6px;
-							border-radius: 4px;
-							font-size: 14px;
-							letter-spacing: 0.02em;
-							box-sizing: border-box;
-						}
-
-						&:hover:after {
-							display: block;
-						}
-					}
-
-					svg.item-owned {
-						fill: green;
-					}
-
-					svg.item-equipped {
-						fill: #864720;
-					}
 				}
-
 			}
 
 			.shop-column-2 {
@@ -619,36 +618,33 @@ nav {
 					}
 				}
 			}
+		}
+	}
+}
 
-			.shop-button {
-				display: inline-block;
-				cursor: pointer;
-				color: white;
-				padding: 6px 8px;
-				border-radius: 4px;
-				margin-top: 12px;
-				font-size: 12px;
-				transition: all 0.2s ease-in;
-				border: 1px solid rgba(255,255,255,0.7);
-				text-transform: capitalize;
-
-				& + .shop-button {
-					margin-top: 6px;
-				}
-
-				&:hover {
-					background-color: rgba(255,255,255,0.1);
-				}
-
-				&.shop-button-disabled {
-					cursor: auto;
-					border: 1px solid rgba(255, 255, 255, 0.1);
-					color: rgba(255,255,255, 0.5);
-					&:hover {
-						background-color: transparent;
-					}
-				}
-			}
+.button {
+	display: inline-block;
+	cursor: pointer;
+	color: white;
+	padding: 6px 8px;
+	border-radius: 4px;
+	margin-top: 12px;
+	font-size: 12px;
+	transition: all 0.2s ease-in;
+	border: 1px solid rgba(255,255,255,0.7);
+	text-transform: capitalize;
+	& + .button {
+		margin-top: 6px;
+	}
+	&:hover {
+		background-color: rgba(255,255,255,0.1);
+	}
+	&.button-disabled {
+		cursor: auto;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		color: rgba(255,255,255, 0.5);
+		&:hover {
+			background-color: transparent;
 		}
 	}
 }

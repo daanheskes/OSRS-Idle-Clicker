@@ -35,7 +35,7 @@ class Monster extends Component {
 					<div className='monster-current_hitpoints' style={{width: this.calculateHitpointsPercentage(currentMonster.current_hp, currentMonster.max_hp)}} ></div>
 				</div>
 				<div className='monster-background'>
-					<div className='monster-image-wrap' onClick={this.onClick}>
+					<div className='monster-image-wrap' onClick={() => this.onClick}>
 						<div id='monster-hitsplats'></div>
 						<img className='monster-image' src={currentMonster.img} alt={currentMonster.name} />
 					</div>
