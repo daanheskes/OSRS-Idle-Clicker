@@ -131,8 +131,8 @@ class ItemShop extends Component {
 			}
 
 
-			if (this.props.boughtItems[shopSlot] !== null) {
-				if (this.props.boughtItems[shopSlot].includes(item.name)) {
+			if (this.props.ownedItems[shopSlot] !== null) {
+				if (this.props.ownedItems[shopSlot].includes(item.name)) {
 					itemClass += ' item-owned';
 					itemBought = true;
 				}

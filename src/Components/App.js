@@ -143,7 +143,7 @@ class IdleOSRS extends Component {
 					ring: null
 				}
 			},
-			boughtItems: {
+			ownedItems: {
 				head: [],
 				cape: [],
 				neck: [],
@@ -567,20 +567,52 @@ class IdleOSRS extends Component {
 		return arr[Math.floor(Math.random() * arr.length)];
 	}
 
+	percentageChanceToInteger(percentage) {
+		return (100 - percentage) / 100;
+	}
+
+	checkBossSpawns() {
+		const stats = this.state.stats;
+		let bossesRolled = [];
+
+		// Cyclops
+		if (!this.state.ownedItems.contains('Dragon defender')) {
+			if (stats.attack.level + stats.strength.level >= 130 || stats.attack.level === 99 || stats.strength.level === 99) {
+				if (Math.random() >= this.percentageChanceToInteger(20)) {
+					bossesRolled.push('cyclops');
+				}
+			}
+		}
+		// Jad
+		if (!this.state.ownedItems.contains('Fire cape')) {
+			if (stats.combat.level >= 70) {
+				if (Math.random() >= this.percentageChanceToInteger(0.5 + ((stats.combat.level - 70) * 0.05))) {
+					bossesRolled.push('jad');
+				}
+			}
+		}
+	
+		return bossesRolled;
+	}
+
 	chooseNewMonster(slayerLevel = this.state.stats.slayer.level) {
+		const bossesList = this.checkBossSpawns();
+		if (bossesList.length) return this.returnRandom(bossesList);
+
 		let monsterList = [];
 		
 		Object.entries(monsters).forEach((monster) => {
-			const [ key, value ] = monster;
-	
+			const [key, value] = monster;
+
 			if (slayerLevel >= (value.combatlevel - 2) && slayerLevel <= ((value.combatlevel * 2) + 2)) {
 				monsterList.push(key);
 			}
 		});
 
 		if (!monsterList.length) {
-			console.log("No monster available on slayer level " + slayerLevel);
-			monsterList = ['hillgiant'];
+			console.log("No monster available");
+			console.log(this.state.stats);
+			monsterList = ['mossgiant'];
 		}
 		return this.returnRandom(monsterList);
 	}
@@ -727,7 +759,7 @@ class IdleOSRS extends Component {
 	buyItem(item, slot) {
 		if (this.hasEnoughMoney(item.cost)) {
 			let newState = this.state;
-			newState.boughtItems[slot].push(item.name);
+			newState.ownedItems[slot].push(item.name);
 
 			newState.coins -= item.cost;
 			this.setState(newState);
@@ -755,7 +787,7 @@ class IdleOSRS extends Component {
 				</div>
 				<div id='column-right' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />
-					<ItemShop boughtItems={this.state.boughtItems} shopSlot={this.state.shopSlot} gearsets={this.state.gearsets} equipItem={this.equipItem} changeShopSlot={this.changeShopSlot} buyItem={this.buyItem} hasEnoughMoney={this.hasEnoughMoney} meetsRequirements={this.meetsRequirements} />
+					<ItemShop ownedItems={this.state.ownedItems} shopSlot={this.state.shopSlot} gearsets={this.state.gearsets} equipItem={this.equipItem} changeShopSlot={this.changeShopSlot} buyItem={this.buyItem} hasEnoughMoney={this.hasEnoughMoney} meetsRequirements={this.meetsRequirements} />
 					<GearSets gearsets={this.state.gearsets} equipGearSet={this.equipGearSet}/>
 					<Skills stats={this.state.stats} />
 				</div>
