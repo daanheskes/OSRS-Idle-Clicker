@@ -365,8 +365,7 @@ class IdleOSRS extends Component {
 		return 0;
 	}
 
-	getPrayerMultiplier(stat) {
-		const prayerLevel = this.state.stats.prayer.level
+	getPrayerMultiplier(stat, prayerLevel = this.state.stats.prayer.level) {
 		let multiplier = 1;
 
 		if (stat === 'attack') {
