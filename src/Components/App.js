@@ -3,7 +3,7 @@ import '../App.scss';
 
 // Data files
 import monsters from './../Data/MonsterList.js';
-import equipmentList from './../Data/EquipmentList.js';
+import attackStyles from './../Data/AttackStyles.js';
 import prayerExperience from './../Data/PrayerExperience.js';
 import magicSpells from './../Data/MagicSpellsList.js';
 
@@ -17,7 +17,7 @@ import GearSets from './GearSets.js';
 import Equipment from './Equipment.js';
 import Skills from './Skills.js';
 
-const MULTIPLIER = 1;
+const MULTIPLIER = 200;
 const EXP_MULTIPLIER = 1;
 const GP_MULTIPLIER = 1;
 
@@ -34,11 +34,17 @@ class IdleOSRS extends Component {
 		this.hasEnoughMoney = this.hasEnoughMoney.bind(this);
 		this.meetsRequirements = this.meetsRequirements.bind(this);
 		this.equipGearSet = this.equipGearSet.bind(this);
+		this.changeAttackMethod = this.changeAttackMethod.bind(this);
 		this.onUnload = this.onUnload.bind(this);
 
 		this.state = {
-			attackstyle: 'melee',
-			attackmethod: 'controlled',
+			attackMethod: {
+				shortname: 'unarmed-punch',
+				name: 'Punch',
+				experience: 'attack',
+				combatStyle: 'melee',
+				style: 'accurate'
+			},
 			coins: 0,
 			income: 0,
 			clicksPer5: 3,
@@ -108,9 +114,9 @@ class IdleOSRS extends Component {
 					cape: null,
 					neck: null,
 					ammunition: null,
-					weapon: equipmentList.weapon.bronzesword,
+					weapon: null,
 					body: null,
-					shield: equipmentList.shield.woodenshield,
+					shield: null,
 					legs: null,
 					hand: null,
 					feet: null,
@@ -143,19 +149,7 @@ class IdleOSRS extends Component {
 					ring: null
 				}
 			},
-			ownedItems: {
-				head: [],
-				cape: [],
-				neck: [],
-				ammunition: [],
-				weapon: ['Bronze sword'],
-				body: [],
-				shield: ['Wooden shield'],
-				legs: [],
-				hand: [],
-				feet: [],
-				ring: []
-			},
+			ownedItems: [],
 			currentMonster: {
 				name: FIRST_MONSTER.name,
 				combatlevel: FIRST_MONSTER.combatlevel,
@@ -176,9 +170,9 @@ class IdleOSRS extends Component {
 	}
 
 	loadGame() {
-		if (localStorage.getItem('savedGame') !== null) {
-			return JSON.parse(localStorage.getItem('savedGame'));
-		}
+		//if (localStorage.getItem('savedGame') !== null) {
+		//	return JSON.parse(localStorage.getItem('savedGame'));
+		//}
 		return false;
 	}
 
@@ -269,6 +263,37 @@ class IdleOSRS extends Component {
 		}, 1800);
 	}
 
+	hasItem(item) {
+		if (this.state.ownedItems.includes(item)) return true;
+		return false;
+	}
+
+	giveBossDrop(item) {
+		let newState = this.state;
+
+		if (item === "Defender") {
+			const defenders = ['Bronze defender', 'Iron defender', 'Steel defender', 'Black defender', 'Mithril defender', 'Adamant defender', 'Rune defender', 'Dragon defender'];
+			let nextDefender = null;
+			
+			for (let defender of defenders) {
+				if (!this.hasItem(defender)) {
+					nextDefender = defender;
+					break;
+				}
+			}
+			if (nextDefender !== null) {
+				newState.ownedItems.push(nextDefender);
+			}
+		} else {
+			if (!this.hasItem(item)) {
+				newState.ownedItems.push(item);
+			}
+		}
+		
+
+		this.setState(newState);
+	}
+
 	clickMonster(currentMonster, Xcoord, Ycoord) {
 		let damage = this.calculateDamage();
 		let newState = this.state;
@@ -291,6 +316,9 @@ class IdleOSRS extends Component {
 			this.grantPrayerExperience(currentMonster);
 			this.grantSlayerExperience(currentMonster);
 			this.assignCoinDrop(currentMonster);
+			if (currentMonster.drop) {
+				this.giveBossDrop(currentMonster.drop);
+			}
 			const that = this;
 			setTimeout(() => {
 				that.newMonster();
@@ -300,19 +328,28 @@ class IdleOSRS extends Component {
 		}
 	}
 
+	changeAttackMethod(attackmethod) {
+
+		let newState = this.state;
+
+		newState.attackMethod = attackmethod;
+
+		this.setState(newState);
+	}
+
 	getCombatStyleBonus(stat) {
 		if (stat === "attack") {
-			if (this.state.attackmethod === 'accurate') {
+			if (this.state.attackMethod.style === 'accurate') {
 				return 3;
-			} else if (this.state.attackmethod === 'controlled') {
+			} else if (this.state.attackMethod.style === 'controlled') {
 				return 1;
 			}
 			return 0;
 		}
 		if (stat === "strength") {
-			if (this.state.attackstyle === 'attack') {
+			if (this.state.attackMethod.style === 'attack') {
 				return 1;
-			} else if (this.state.attackstyle === 'strength') {
+			} else if (this.state.attackMethod.style === 'strength') {
 				return 3;
 			}
 			return 0;
@@ -410,12 +447,12 @@ class IdleOSRS extends Component {
 		return 0;
 	}
 
-	calculateDamage(attackStyle = this.state.attackstyle) {
-		if (attackStyle === "melee") {
+	calculateDamage(combatStyle = this.state.attackMethod.combatStyle) {
+		if (combatStyle === "melee") {
 			return this.meleeHitRoll(this.calculateMaxMeleeHit());
-		} else if (attackStyle === "ranged") {
+		} else if (combatStyle === "ranged") {
 			return this.calculateMaxRangedHit();
-		} else if (attackStyle === "magic") {
+		} else if (combatStyle === "magic") {
 			return this.calculateMaxMagicHit();
 		}
 		return false;
@@ -427,7 +464,7 @@ class IdleOSRS extends Component {
 
 		Object.values(equipment).forEach((item) => {
 			if (item !== null) {
-				if((item.name).indexOf("arrow") < 0) {
+				if ((item.name).indexOf("arrow") < 0) {
 					statBonus += item[stat];
 				}
 			}
@@ -496,66 +533,31 @@ class IdleOSRS extends Component {
 	}
 
 	grantCombatExperience(damage) {
-		const attackStyle = this.state.attackstyle;
-		const attackMethod = this.state.attackmethod;
+		const attackMethod = this.state.attackMethod;
 
-		switch(attackStyle) {
+		switch (attackMethod.style) {
 			default:
 			case 'melee':
-				switch(attackMethod) {
-					case 'accurate':
-						this.grantExperience('attack', damage * 4);
-					break;
-
-					case 'aggressive':
-						this.grantExperience('strength', damage * 4);
-					break;
-
-					case 'defensive':
-						this.grantExperience('defence', damage * 4);
-					break;
-
-					default:
-					case 'controlled':
-						this.grantExperience(['attack','strength','defence'], damage * 1.33);
-					break;
-				}
-			break;
-
 			case 'ranged':
-				switch(attackMethod) {
-					default:
-					case 'accurate':
-					case 'rapid':
-						this.grantExperience('ranged', damage * 4);
-					break;
-
-					case 'longrange':
-						this.grantExperience(['ranged','defence'], damage * 2);
-					break;
-				}
+				if (Array.isArray(attackMethod.experience)) {
+					this.grantExperience(attackMethod.experience, damage * (4 / attackMethod.experience.length));
+				} else {
+					this.grantExperience(attackMethod.experience, damage * 4);
+				}			
 			break;
 
 			case 'magic':
-				switch(attackMethod) {
-					default:
-					case 'spell':
-						let totalMagicExp = this.getBestSpell().experience + damage * 2;
-						this.grantExperience('magic', totalMagicExp);
-					break;
-
-					case 'defensivespell':
-						this.grantExperience('magic', this.getBestSpell().experience);
-						this.grantExperience(['magic','defence'], damage * 2);
-					break;
-				}
+				const spellExp = this.getBestSpell().experience;
+				this.grantExperience('magic', spellExp + damage * 4);
 			break;
 		}
 	}
 
 	grantPrayerExperience(currentMonster) {
-		const experienceAmount = prayerExperience[currentMonster.bones];
-		this.grantExperience('prayer', experienceAmount);
+		if (currentMonster.bones !== null) {
+			const experienceAmount = prayerExperience[currentMonster.bones];
+			this.grantExperience('prayer', experienceAmount);
+		}
 	}
 
 	grantSlayerExperience(currentMonster) {
@@ -576,7 +578,7 @@ class IdleOSRS extends Component {
 		let bossesRolled = [];
 
 		// Cyclops
-		if (!this.state.ownedItems.contains('Dragon defender')) {
+		if (!this.state.ownedItems.includes('Dragon defender')) {
 			if (stats.attack.level + stats.strength.level >= 130 || stats.attack.level === 99 || stats.strength.level === 99) {
 				if (Math.random() >= this.percentageChanceToInteger(20)) {
 					bossesRolled.push('cyclops');
@@ -584,10 +586,10 @@ class IdleOSRS extends Component {
 			}
 		}
 		// Jad
-		if (!this.state.ownedItems.contains('Fire cape')) {
+		if (!this.state.ownedItems.includes('Fire cape')) {
 			if (stats.combat.level >= 70) {
 				if (Math.random() >= this.percentageChanceToInteger(0.5 + ((stats.combat.level - 70) * 0.05))) {
-					bossesRolled.push('jad');
+					bossesRolled.push('tztokjad');
 				}
 			}
 		}
@@ -603,9 +605,10 @@ class IdleOSRS extends Component {
 		
 		Object.entries(monsters).forEach((monster) => {
 			const [key, value] = monster;
-
-			if (slayerLevel >= (value.combatlevel - 2) && slayerLevel <= ((value.combatlevel * 2) + 2)) {
-				monsterList.push(key);
+			if (!value.boss) {
+				if (slayerLevel >= (value.combatlevel - 2) && slayerLevel <= ((value.combatlevel * 2) + 2)) {
+					monsterList.push(key);
+				}
 			}
 		});
 
@@ -627,6 +630,11 @@ class IdleOSRS extends Component {
 		newState.currentMonster.current_hp = monsters[chosenMonster].hitpoints;
 		newState.currentMonster.img = monsters[chosenMonster].img;
 		newState.currentMonster.bones = monsters[chosenMonster].bones;
+		if (monsters[chosenMonster].drop) {
+			newState.currentMonster.drop = monsters[chosenMonster].drop
+		} else {
+			delete newState.currentMonster.drop;
+		}
 
 		this.setState(newState);
 	}
@@ -635,7 +643,7 @@ class IdleOSRS extends Component {
 		let newState = this.state;
 
 		const combatMultiplier = 1 + ((this.state.stats.combat.level - 3) * 0.0275);
-		newState.coins += (monster.max_hp * 0.65 * combatMultiplier) * MULTIPLIER * GP_MULTIPLIER;
+		newState.coins += (monster.max_hp * 0.9 * combatMultiplier) * MULTIPLIER * GP_MULTIPLIER;
 		this.setState(newState);
 	}
 
@@ -726,7 +734,11 @@ class IdleOSRS extends Component {
 	equipGearSet(gearset) {
 		let newState = this.state;
 		newState.gearsets.worn = gearset;
-
+		if (newState.gearsets[gearset].weapon !== null) {
+			newState.attackMethod = this.chooseAttackStyle(newState.gearsets[newState.gearsets.worn].weapon.attackstyles);
+		} else {
+			newState.attackMethod = this.chooseAttackStyle(['unarmed-punch', 'unarmed-kick', 'unarmed-block']);
+		}
 		this.setState(newState);
 	}
 
@@ -747,10 +759,70 @@ class IdleOSRS extends Component {
 		return requirementsMet;
 	}
 
+	chooseAttackStyle(itemAttackStyles) {
+		let attackStyle = false;
+		let currentAttackStyle = this.state.attackMethod.style;
+		let oldCombatStyle = this.state.attackMethod.combatStyle
+		let newCombatStyle = attackStyles[itemAttackStyles[0]].combatStyle;
+
+		if (oldCombatStyle !== newCombatStyle) {
+			if (oldCombatStyle === "melee" && newCombatStyle === "ranged") {
+				switch (currentAttackStyle) {
+					case 'aggressive':
+					case 'controlled':
+						currentAttackStyle = 'rapid';
+					break;
+					case 'defensive':
+						currentAttackStyle = 'longrange';
+					break;
+					default:
+					break;
+				}
+			}
+			if (oldCombatStyle === 'ranged' && newCombatStyle === 'melee') {
+				switch (currentAttackStyle) {
+					case 'rapid':
+						currentAttackStyle = 'aggressive';
+						break;
+					case 'longrange':
+						currentAttackStyle = 'defensive';
+						break;
+					default:
+						break;
+				}
+			}
+		}
+
+		itemAttackStyles.forEach((itemAttackStyle) => {
+			if (attackStyles[itemAttackStyle].style === currentAttackStyle) {
+				attackStyle = attackStyles[itemAttackStyle];
+			}
+		});
+
+		if (attackStyle === false) {
+			attackStyle = attackStyles[itemAttackStyles[0]];
+		}
+
+		return attackStyle;
+	}
+
 	equipItem(item, slot) {
 		if (this.meetsRequirements(item.requirements)) {
 			let newState = this.state;
 			newState.gearsets[newState.gearsets.worn][slot] = item;
+
+			if (slot === 'weapon') {
+				if (item.twoHanded) {
+					newState.gearsets[newState.gearsets.worn].shield = null
+				}
+				newState.attackMethod = this.chooseAttackStyle(item.attackstyles);
+			}
+			if (slot === 'shield') {
+				if (newState.gearsets[newState.gearsets.worn].weapon.twoHanded && newState.gearsets[newState.gearsets.worn].weapon !== null) {
+					newState.gearsets[newState.gearsets.worn].weapon = null
+					newState.attackMethod = this.chooseAttackStyle(['unarmed-punch', 'unarmed-kick', 'unarmed-block']);
+				}
+			}
 
 			this.setState(newState);
 		}
@@ -759,7 +831,7 @@ class IdleOSRS extends Component {
 	buyItem(item, slot) {
 		if (this.hasEnoughMoney(item.cost)) {
 			let newState = this.state;
-			newState.ownedItems[slot].push(item.name);
+			newState.ownedItems.push(item.name);
 
 			newState.coins -= item.cost;
 			this.setState(newState);
@@ -783,7 +855,7 @@ class IdleOSRS extends Component {
 				<div id='column-left' className='column'>
 					<Monster clickMonster={this.clickMonster} currentMonster={this.state.currentMonster} />
 					<Equipment equipment={this.state.gearsets[this.state.gearsets.worn]} itemstats={itemBonusses} />
-					<AttackStyle attackMethod={this.state.attackmethod} />
+					<AttackStyle attackMethod={this.state.attackMethod} equippedWeapon={this.state.gearsets[this.state.gearsets.worn].weapon} changeAttackMethod={this.changeAttackMethod}/>
 				</div>
 				<div id='column-right' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />

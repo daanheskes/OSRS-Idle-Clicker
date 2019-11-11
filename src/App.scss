@@ -483,7 +483,7 @@ svg.equipped {
 			position: relative;
 			border-bottom: 1px solid rgb(0, 0, 0);
 
-			&.unbuyable {
+			&.item-unbuyable:not(.item-owned) {
 				background-color: rgba(255, 0, 0, 0.05);
 			}
 

@@ -12,6 +12,8 @@ import scorpionImage from './../assets/monsters/Scorpion.png';
 import guardImage from './../assets/monsters/Guard.png';
 import hillgiantImage from './../assets/monsters/Hill_giant.png';
 import mossgiantImage from './../assets/monsters/Moss_giant.png';
+import cyclopsImage from './../assets/monsters/Cyclops.png';
+import tztokjadImage from './../assets/monsters/TzTok-Jad.png';
 
 export default {
 	chicken: {
@@ -111,5 +113,23 @@ export default {
 		hitpoints: 60,
 		img: mossgiantImage,
 		bones: "Big bones"
+	},
+	cyclops: {
+		name: "Cyclops",
+		combatlevel: 56,
+		hitpoints: 75,
+		img: cyclopsImage,
+		bones: "Big bones",
+		boss: true,
+		drop: "Defender"
+	},
+	tztokjad: {
+		name: "TzTok-Jad",
+		combatlevel: 56,
+		hitpoints: 75,
+		img: tztokjadImage,
+		bones: null,
+		boss: true,
+		drop: "Fire cape"
 	}
 }

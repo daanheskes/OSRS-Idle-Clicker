@@ -22,7 +22,6 @@ import mithrilarrow5Image from './../assets/items/Mithril_arrow_5.png';
 import adamantarrow5Image from './../assets/items/Adamant_arrow_5.png';
 import runearrow5Image from './../assets/items/Rune_arrow_5.png';
 import amethystarrow5Image from './../assets/items/Amethyst_arrow_5.png';
-import bronzeswordImage from './../assets/items/Bronze_sword.png';
 import bronzescimitarImage from './../assets/items/Bronze_scimitar.png';
 import ironscimitarImage from './../assets/items/Iron_scimitar.png';
 import steelscimitarImage from './../assets/items/Steel_scimitar.png';
@@ -40,7 +39,6 @@ import mithrilplatebodyImage from './../assets/items/Mithril_platebody.png';
 import adamantplatebodyImage from './../assets/items/Adamant_platebody.png';
 import runeplatebodyImage from './../assets/items/Rune_platebody.png';
 import fightertorsoImage from './../assets/items/Fighter_torso.png';
-import woodenShield from './../assets/items/Wooden_shield.png';
 import bronzekiteshieldImage from './../assets/items/Bronze_kiteshield.png';
 import ironkiteshieldImage from './../assets/items/Iron_kiteshield.png';
 import steelkiteshieldImage from './../assets/items/Steel_kiteshield.png';
@@ -65,41 +63,67 @@ import archersringImage from './../assets/items/Archers_ring.png';
 import berserkerringImage from './../assets/items/Berserker_ring.png';
 
 let equipment = {
-    head: {},
-    cape: {},
-    neck: {},
-    ammunition: {},
-    weapon: {},
-    body: {},
-    shield: {},
-    legs: {},
-    hand: {},
-    feet: {},
-    ring: {}
+	head: {},
+	cape: {},
+	neck: {},
+	ammunition: {},
+	weapon: {},
+	body: {},
+	shield: {},
+	legs: {},
+	hand: {},
+	feet: {},
+	ring: {}
 };
 
 function createShortName(name) {
-    return name.toLowerCase().replace(/\s/g, '');
+	return name.toLowerCase().replace(/\s/g, '');
 }
 
 function addItem(slot, name, requirements, cost, img, income=0, atk_bonus=0, str_bonus=0, def_bonus=0, rngd_bonus=0, mage_bonus=0, pray_bonus=0) {
 
-    let newItem = {
-        slot: slot,
-        name: name,
-        cost: cost,
-        requirements: requirements,
-        img: img,
-        income: income,
-        atk_bonus: atk_bonus,
-        str_bonus: str_bonus,
-        def_bonus: def_bonus,
-        rngd_bonus: rngd_bonus,
-        mage_bonus: mage_bonus,
-        pray_bonus: pray_bonus
-    }
+	let newItem = {
+		slot: slot,
+		name: name,
+		cost: cost,
+		requirements: requirements,
+		img: img,
+		income: income,
+		atk_bonus: atk_bonus,
+		str_bonus: str_bonus,
+		def_bonus: def_bonus,
+		rngd_bonus: rngd_bonus,
+		mage_bonus: mage_bonus,
+		pray_bonus: pray_bonus
+	}
 
-    equipment[slot][createShortName(name)] = newItem;
+	if (slot === 'weapon') {
+
+		switch (name) {
+			case 'Bronze sword':
+				newItem.attackstyles = ['sword-stab', 'sword-lunge-strength', 'sword-slash', 'sword-block'];
+			break;
+			case 'Bronze scimitar':
+			case 'Iron scimitar':
+			case 'Steel scimitar':
+			case 'Black scimitar':
+			case 'Mithril scimitar':
+			case 'Adamant scimitar':
+			case 'Rune scimitar':
+			case 'Dragon scimitar':
+				newItem.attackstyles = ['sword-chop', 'sword-slash', 'sword-lunge-shared', 'sword-block'];
+			break;
+			case 'Shortbow':
+				newItem.attackstyles = ['bow-accurate', 'bow-rapid', 'bow-longrange'];
+				newItem.twoHanded = true;
+			break;
+			default:
+				newItem.attackstyles = [];
+			break;
+		}
+	}
+
+	equipment[slot][createShortName(name)] = newItem;
 }
 
 let currentSlot = 'head';
@@ -136,7 +160,6 @@ addItem(currentSlot, "Amethyst arrow", {}, 300, amethystarrow5Image, 0, 0, 0, 0,
 
 currentSlot = 'weapon';
 // Melee
-addItem(currentSlot, "Bronze sword", {}, 26, bronzeswordImage, 0, 4, 5, 0);
 addItem(currentSlot, "Bronze scimitar", {}, 32, bronzescimitarImage, 0, 7, 6, 1);
 addItem(currentSlot, "Iron scimitar", {}, 112, ironscimitarImage, 0, 10, 9, 1);
 addItem(currentSlot, "Steel scimitar", { attack: 5 }, 400, steelscimitarImage, 0, 15, 14, 1);
@@ -146,7 +169,7 @@ addItem(currentSlot, "Adamant scimitar", { attack: 30 }, 2560, adamantscimitarIm
 addItem(currentSlot, "Rune scimitar", { attack: 40 }, 25600, runescimitarImage, 0, 45, 44, 1);
 addItem(currentSlot, "Dragon scimitar", { attack: 60 }, 100000, dragonscimitarImage, 0, 67, 66, 1);
 // Ranged
-addItem(currentSlot, "Shortbow", {}, 50, shortbowImage, 0, 0, 0, 0, 8)
+addItem(currentSlot, "Shortbow", {}, 50, shortbowImage, 0, 0, 0, 0, 8);
 
 currentSlot = 'body';
 addItem(currentSlot, "Bronze platebody", {}, 160, bronzeplatebodyImage, 0, 0, 0, 15);
@@ -159,7 +182,6 @@ addItem(currentSlot, "Rune platebody", { defence: 40 }, 65000, runeplatebodyImag
 addItem(currentSlot, "Fighter torso", { defence: 40 }, 0, fightertorsoImage, 0, 0, 4, 85);
 
 currentSlot = 'shield';
-addItem(currentSlot, "Wooden shield", {}, 20, woodenShield, 0, 0, 0, 5);
 addItem(currentSlot, "Bronze kiteshield", {}, 68, bronzekiteshieldImage, 0, 0, 0, 7);
 addItem(currentSlot, "Iron kiteshield", {}, 238, ironkiteshieldImage, 0, 0, 0, 10);
 addItem(currentSlot, "Steel kiteshield", { defence: 5 }, 850, steelkiteshieldImage, 0, 0, 0, 15);
