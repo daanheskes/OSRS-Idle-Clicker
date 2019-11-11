@@ -17,7 +17,7 @@ import GearSets from './GearSets.js';
 import Equipment from './Equipment.js';
 import Skills from './Skills.js';
 
-const MULTIPLIER = 200;
+const MULTIPLIER = 1;
 const EXP_MULTIPLIER = 1;
 const GP_MULTIPLIER = 1;
 
