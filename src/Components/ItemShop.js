@@ -109,7 +109,7 @@ class ItemShop extends Component {
 			if (slot === shopSlot) {
 				slotClassName += ' slot-selected';
 			}
-			slotlist.push(<div className={slotClassName} key={slot} onClick={() => this.props.changeShopSlot(this, slot)}></div>);
+			slotlist.push(<div className={slotClassName} key={slot} onClick={() => this.props.changeShopSlot(slot)}></div>);
 		});
 
 		const allItems = Object.values(allShopItems).map((item) => {

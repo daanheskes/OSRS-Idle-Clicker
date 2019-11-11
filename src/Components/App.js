@@ -911,8 +911,6 @@ class IdleOSRS extends Component {
 
 	render() {
 
-		console.log('render');
-
 		const itemBonusses = {
 			atk_bonus: this.calculateItemBonus('atk_bonus'),
 			str_bonus: this.calculateItemBonus('str_bonus'),
