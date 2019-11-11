@@ -268,8 +268,7 @@ class IdleOSRS extends Component {
 		return false;
 	}
 
-	giveBossDrop(item) {
-		let newState = this.state;
+	giveBossDrop(newState, item) {
 
 		if (item === "Defender") {
 			const defenders = ['Bronze defender', 'Iron defender', 'Steel defender', 'Black defender', 'Mithril defender', 'Adamant defender', 'Rune defender', 'Dragon defender'];
@@ -290,11 +289,11 @@ class IdleOSRS extends Component {
 			}
 		}
 		
-
-		this.setState(newState);
+		return newState;
 	}
 
 	clickMonster(currentMonster, Xcoord, Ycoord) {
+		// TO DO: Combine all setState functions to one update (optimization)
 		let damage = this.calculateDamage();
 		let newState = this.state;
 
@@ -310,22 +309,25 @@ class IdleOSRS extends Component {
 			newState.currentMonster.current_hp = 0;
 		}
 
-		this.grantCombatExperience(damage);
-		this.grantExperience('hitpoints', damage * 1.33);
+		newState = this.grantCombatExperience(newState, damage);
+		newState = this.grantExperience(newState, 'hitpoints', damage * 1.33);
+
 		if (newState.currentMonster.current_hp <= 0) {
-			this.grantPrayerExperience(currentMonster);
-			this.grantSlayerExperience(currentMonster);
-			this.assignCoinDrop(currentMonster);
+			newState = this.grantPrayerExperience(newState, currentMonster);
+			newState = this.grantSlayerExperience(newState, currentMonster);
+			newState = this.assignCoinDrop(newState, currentMonster);
 			if (currentMonster.drop) {
-				this.giveBossDrop(currentMonster.drop);
+				newState = this.giveBossDrop(newState, currentMonster.drop);
 			}
+			newState = this.updateCombat(newState);
+			
 			const that = this;
 			setTimeout(() => {
 				that.newMonster();
 			}, 75);
-		} else {
-			this.setState(newState);
 		}
+	
+		this.setState(newState);
 	}
 
 	changeAttackMethod(attackmethod) {
@@ -338,26 +340,35 @@ class IdleOSRS extends Component {
 	}
 
 	getCombatStyleBonus(stat) {
+		const attackStyle = this.state.attackMethod.style;
 		if (stat === "attack") {
-			if (this.state.attackMethod.style === 'accurate') {
+			if (attackStyle === 'accurate') {
 				return 3;
-			} else if (this.state.attackMethod.style === 'controlled') {
+			} else if (attackStyle === 'controlled') {
 				return 1;
 			}
-			return 0;
 		}
 		if (stat === "strength") {
-			if (this.state.attackMethod.style === 'attack') {
+			if (attackStyle === 'attack') {
 				return 1;
-			} else if (this.state.attackMethod.style === 'strength') {
+			} else if (attackStyle === 'strength') {
 				return 3;
 			}
-			return 0;
 		}
+		if (stat === 'ranged') {
+			if (attackStyle === 'accurate') {
+				return 3;
+			} else if (attackStyle === 'longrange') {
+				return 1;
+			}
+		}
+		return 0;
 	}
 
-	getPrayerMultiplier(stat, prayerLevel = this.state.stats.prayer.level) {
+	getPrayerMultiplier(stat) {
+		const prayerLevel = this.state.stats.prayer.level
 		let multiplier = 1;
+
 		if (stat === 'attack') {
 			if (prayerLevel >= 7) {
 				multiplier = 1.05;
@@ -392,6 +403,42 @@ class IdleOSRS extends Component {
 				multiplier = 1.23;
 			}
 		}
+		if (stat === 'defence') {
+			if (prayerLevel >= 1) {
+				multiplier = 1.05;
+			}
+			if (prayerLevel >= 10) {
+				multiplier = 1.10;
+			}
+			if (prayerLevel >= 28) {
+				multiplier = 1.15;
+			}
+			if (prayerLevel >= 60) {
+				multiplier = 1.20;
+			}
+			if (prayerLevel >= 70) {
+				multiplier = 1.25;
+			}
+		}
+		if (stat === 'ranged') {
+			if (prayerLevel >= 8) {
+				multiplier = 1.05;
+			}
+			if (prayerLevel >= 26) {
+				multiplier = 1.10;
+			}
+			if (prayerLevel >= 44) {
+				multiplier = 1.15;
+			}
+			if (prayerLevel >= 74) {
+				multiplier = 1.20;
+			}
+		}
+		if (stat === 'rangedstrength') {
+			if (prayerLevel >= 74) {
+				multiplier = 1.23;
+			}
+		}
 
 		return multiplier;
 	}
@@ -404,6 +451,14 @@ class IdleOSRS extends Component {
 		return 1;
 	}
 
+	calculateEffectiveLevel(level, potionMultiplier, prayerMultiplier, combatStyleBonus) {
+		return level * potionMultiplier * prayerMultiplier + combatStyleBonus;
+	}
+
+	calculateBaseDamage(effectiveLevel, strengthBonus) {
+		return Math.floor(1.3 + (effectiveLevel / 10) + (strengthBonus / 80) + ((effectiveLevel * strengthBonus) / 640));
+	}
+
 	calculateAttackRoll() {
 		// Based upon: https://www.osrsbox.com/blog/2019/01/22/calculating-melee-dps-in-osrs/#4-calculating-hit-chance
 
@@ -413,19 +468,19 @@ class IdleOSRS extends Component {
 		const prayerMultiplier = this.getPrayerMultiplier('attack');
 		const attackBonus = this.calculateItemBonus('atk_bonus');
 
-		const effectiveLevel = (attackLevel * potionMultiplier * prayerMultiplier) + combatStyleBonus + 8 + 1; // +1 for NPCs
+		const effectiveLevel = this.calculateEffectiveLevel(attackLevel, potionMultiplier, prayerMultiplier, combatStyleBonus) + 8 + 1;
 		return effectiveLevel * (attackBonus + 64);
 	}
 
 	calculateDefenceRoll() {
 		// Based upon: https://www.osrsbox.com/blog/2019/01/22/calculating-melee-dps-in-osrs/#4-calculating-hit-chance
 		const combatStyleBonus = 0;
-		const defenceLevel = 0; 
 		const potionMultiplier = 1;
 		const prayerMultiplier = 1;
+		const defenceLevel = 0; 
 		const defenceBonus = -21; // Currently not added to the monsters
 
-		const effectiveLevel = (defenceLevel * potionMultiplier * prayerMultiplier) + combatStyleBonus + 8;
+		const effectiveLevel = this.calculateEffectiveLevel(defenceLevel, potionMultiplier, prayerMultiplier, combatStyleBonus) + 8;
 		return effectiveLevel * (defenceBonus + 64);
 	}
 
@@ -447,7 +502,8 @@ class IdleOSRS extends Component {
 		return 0;
 	}
 
-	calculateDamage(combatStyle = this.state.attackMethod.combatStyle) {
+	calculateDamage() {
+		const combatStyle = this.state.attackMethod.combatStyle;
 		if (combatStyle === "melee") {
 			return this.meleeHitRoll(this.calculateMaxMeleeHit());
 		} else if (combatStyle === "ranged") {
@@ -464,29 +520,37 @@ class IdleOSRS extends Component {
 
 		Object.values(equipment).forEach((item) => {
 			if (item !== null) {
-				if ((item.name).indexOf("arrow") < 0) {
-					statBonus += item[stat];
-				}
+				statBonus += item[stat];
 			}
 		});
 
 		return statBonus;
 	}
 
-	calculateMaxMeleeHit(strengthLevel = this.state.stats.strength.level) {
+	calculateMaxMeleeHit() {
 		/* Source: https://oldschool.runescape.wiki/w/Maximum_melee_hit */
+		const strengthLevel = this.state.stats.strength.level
 		const combatStyleBonus = this.getCombatStyleBonus('strength');
-		const potionBonus = 0;
-		const prayerDamageMultiplier = this.getPrayerMultiplier('strength');
+		const potionMultiplier = 1;
+		const prayerMultiplier = this.getPrayerMultiplier('strength');
 		const strengthBonus = this.calculateItemBonus('str_bonus');
+		const effectiveLevel = this.calculateEffectiveLevel(strengthLevel, potionMultiplier, prayerMultiplier, combatStyleBonus);
 
-		let effectiveLevel = Math.floor((strengthLevel + potionBonus) * prayerDamageMultiplier + combatStyleBonus);
-		const baseDamage = 1.3 + (effectiveLevel / 10) + (strengthBonus / 80) + ((effectiveLevel * strengthBonus) / 640);
-		return Math.floor(baseDamage);
+		const baseDamage = this.calculateBaseDamage(effectiveLevel, strengthBonus);
+		return baseDamage;
 	}
 
 	calculateMaxRangedHit() {
-		return 1;
+		/* Source: https://oldschool.runescape.wiki/w/Maximum_ranged_hit */
+		const rangedLevel = this.state.stats.ranged.level;
+		const combatStyleBonus = this.getCombatStyleBonus('ranged');
+		const potionMultiplier = 1;
+		const prayerMultiplier = this.getPrayerMultiplier('ranged');
+		const rangedStrength = this.calculateItemBonus('rngd_strength');
+		const effectiveLevel = this.calculateEffectiveLevel(rangedLevel, potionMultiplier, prayerMultiplier, combatStyleBonus);
+
+		const baseDamage = this.calculateBaseDamage(effectiveLevel, rangedStrength);
+		return baseDamage;
 	}
 
 	calculateMaxMagicHit() {
@@ -514,8 +578,7 @@ class IdleOSRS extends Component {
 		return currentLevel;
 	}
 
-	grantExperience(skill, experience) {
-		let newState = this.state;
+	grantExperience(newState, skill, experience) {
 
 		if (Array.isArray(skill)) {
 			skill.forEach(sk => {
@@ -528,11 +591,10 @@ class IdleOSRS extends Component {
 			newState.stats[skill].percentage = (this.checkLevelUp(newState.stats[skill].level, newState.stats[skill].experience) === 99 ? 100 : this.calculateNextLevelPercentage(newState.stats[skill].experience));
 			newState.stats[skill].level = this.checkLevelUp(newState.stats[skill].level, newState.stats[skill].experience);
 		}
-		this.setState(newState);
-		this.updateCombat();
+		return newState;
 	}
 
-	grantCombatExperience(damage) {
+	grantCombatExperience(newState, damage) {
 		const attackMethod = this.state.attackMethod;
 
 		switch (attackMethod.style) {
@@ -540,29 +602,32 @@ class IdleOSRS extends Component {
 			case 'melee':
 			case 'ranged':
 				if (Array.isArray(attackMethod.experience)) {
-					this.grantExperience(attackMethod.experience, damage * (4 / attackMethod.experience.length));
+					newState = this.grantExperience(newState, attackMethod.experience, damage * (4 / attackMethod.experience.length));
 				} else {
-					this.grantExperience(attackMethod.experience, damage * 4);
+					newState = this.grantExperience(newState, attackMethod.experience, damage * 4);
 				}			
 			break;
 
 			case 'magic':
 				const spellExp = this.getBestSpell().experience;
-				this.grantExperience('magic', spellExp + damage * 4);
+				newState = this.grantExperience(newState, 'magic', spellExp + damage * 4);
 			break;
 		}
+		return newState;
 	}
 
-	grantPrayerExperience(currentMonster) {
+	grantPrayerExperience(newState, currentMonster) {
 		if (currentMonster.bones !== null) {
 			const experienceAmount = prayerExperience[currentMonster.bones];
-			this.grantExperience('prayer', experienceAmount);
+			newState = this.grantExperience(newState, 'prayer', experienceAmount);
 		}
+		return newState;
 	}
 
-	grantSlayerExperience(currentMonster) {
+	grantSlayerExperience(newState, currentMonster) {
 		const experienceAmount = currentMonster.max_hp;
-		this.grantExperience('slayer', experienceAmount);
+		newState = this.grantExperience(newState, 'slayer', experienceAmount);
+		return newState;
 	}
 
 	returnRandom(arr) {
@@ -597,7 +662,8 @@ class IdleOSRS extends Component {
 		return bossesRolled;
 	}
 
-	chooseNewMonster(slayerLevel = this.state.stats.slayer.level) {
+	chooseNewMonster() {
+		const slayerLevel = this.state.stats.slayer.level;
 		const bossesList = this.checkBossSpawns();
 		if (bossesList.length) return this.returnRandom(bossesList);
 
@@ -639,12 +705,11 @@ class IdleOSRS extends Component {
 		this.setState(newState);
 	}
 
-	assignCoinDrop(monster) {
-		let newState = this.state;
+	assignCoinDrop(newState, monster) {
 
 		const combatMultiplier = 1 + ((this.state.stats.combat.level - 3) * 0.0275);
 		newState.coins += (monster.max_hp * 0.9 * combatMultiplier) * MULTIPLIER * GP_MULTIPLIER;
-		this.setState(newState);
+		return newState;
 	}
 
 	calculateNextLevelPercentage(experience) {		
@@ -694,13 +759,12 @@ class IdleOSRS extends Component {
 		return userLevel;
 	}
 
-	updateCombat(stats) {
+	updateCombat(newState, stats) {
 		const combatLevel = this.calculateCombat(stats);
 
-		let newState = this.state;
 		newState.stats.combat.level = combatLevel;
 
-		this.setState(newState);
+		return newState;
 	}
 
 	calculateCombat(stats) {
@@ -734,11 +798,13 @@ class IdleOSRS extends Component {
 	equipGearSet(gearset) {
 		let newState = this.state;
 		newState.gearsets.worn = gearset;
+
 		if (newState.gearsets[gearset].weapon !== null) {
 			newState.attackMethod = this.chooseAttackStyle(newState.gearsets[newState.gearsets.worn].weapon.attackstyles);
 		} else {
 			newState.attackMethod = this.chooseAttackStyle(['unarmed-punch', 'unarmed-kick', 'unarmed-block']);
 		}
+
 		this.setState(newState);
 	}
 
@@ -753,6 +819,11 @@ class IdleOSRS extends Component {
 					if (this.state.stats[requirementName].level < requirementValue) {
 						requirementsMet = false;
 					}
+			}
+			if (requirementName === 'item') {
+				if (!this.state.ownedItems.includes(requirementValue)) {
+					requirementsMet = false;
+				}
 			}
 		});
 
@@ -840,16 +911,18 @@ class IdleOSRS extends Component {
 
 	render() {
 
+		console.log('render');
+
 		const itemBonusses = {
 			atk_bonus: this.calculateItemBonus('atk_bonus'),
 			str_bonus: this.calculateItemBonus('str_bonus'),
 			def_bonus: this.calculateItemBonus('def_bonus'),
 			rngd_bonus: this.calculateItemBonus('rngd_bonus'),
+			rngd_strength: this.calculateItemBonus('rngd_strength'),
 			mage_bonus: this.calculateItemBonus('mage_bonus')
 		}
 
 		return (
-
 			<div className='wrap'>
 				<Navbar />
 				<div id='column-left' className='column'>

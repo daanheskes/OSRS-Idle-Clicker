@@ -98,7 +98,6 @@ class ItemShop extends Component {
 	}
 
 	render() {
-
 		const shopSlot = this.props.shopSlot;
 		const allShopItems = this.allShopItems(shopSlot);
 
