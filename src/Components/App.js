@@ -17,7 +17,7 @@ import GearSets from './GearSets.js';
 import Equipment from './Equipment.js';
 import Skills from './Skills.js';
 
-const MULTIPLIER = 500;
+const MULTIPLIER = 1;
 const EXP_MULTIPLIER = 1;
 const GP_MULTIPLIER = 1;
 
@@ -45,9 +45,8 @@ class IdleOSRS extends Component {
 				combatStyle: 'melee',
 				style: 'accurate'
 			},
-			coins: 0,
-			income: 0,
 			clicksPer5: 3,
+			coins: 0,
 			shopSlot: 'head',
 			stats: {
 				combat: {
@@ -170,18 +169,24 @@ class IdleOSRS extends Component {
 	}
 
 	loadGame() {
-		//if (localStorage.getItem('savedGame') !== null) {
-		//	return JSON.parse(localStorage.getItem('savedGame'));
-		//}
-		return false;
+		let loadedGame = false;
+		if (localStorage.getItem('savedGame') !== null) {
+			loadedGame = JSON.parse(localStorage.getItem('savedGame'));
+		}
+		// Only load necessary properties
+		this.setState({
+			attackMethod: loadedGame.attackMethod,
+			coins: loadedGame.coins,
+			stats: loadedGame.stats,
+			shopSlot: loadedGame.shopSlot,
+			gearsets: loadedGame.gearsets,
+			ownedItems: loadedGame.ownedItems,
+			currentMonster: loadedGame.currentMonster
+		});
 	}
 
 	componentDidMount() {
-		const loadedGame = this.loadGame();
-
-		if (loadedGame) {
-			this.setState(loadedGame);
-		}
+		this.loadGame();
 
 		const INTERVAL_MS = 125;
 		let lastClick = 0;
@@ -220,7 +225,6 @@ class IdleOSRS extends Component {
 		passiveIncome += this.calculateItemBonus('income');
 
 		return Math.floor(passiveIncome * MULTIPLIER);
-
 	}
 
 	givePassiveIncome(intervalms) {
@@ -228,7 +232,6 @@ class IdleOSRS extends Component {
 		
 		if (passiveIncome > 0) {
 			let newState = this.state;
-			newState.income = passiveIncome;
 			newState.coins += (passiveIncome * (intervalms / 1000)) * GP_MULTIPLIER;
 
 			this.setState(newState);
@@ -643,7 +646,7 @@ class IdleOSRS extends Component {
 		let bossesRolled = [];
 
 		// Cyclops
-		if (!this.state.ownedItems.includes('Dragon defender')) {
+		if (!this.hasItem('Dragon defender')) {
 			if (stats.attack.level + stats.strength.level >= 130 || stats.attack.level === 99 || stats.strength.level === 99) {
 				if (Math.random() >= this.percentageChanceToInteger(5)) {
 					bossesRolled.push('cyclops');
@@ -651,10 +654,18 @@ class IdleOSRS extends Component {
 			}
 		}
 		// Jad
-		if (!this.state.ownedItems.includes('Fire cape')) {
+		if (!this.hasItem('Fire cape')) {
 			if (stats.combat.level >= 70) {
 				if (Math.random() >= this.percentageChanceToInteger(0.5 + ((stats.combat.level - 70) * 0.05))) {
 					bossesRolled.push('tztokjad');
+				}
+			}
+		}
+		// Penance Queen
+		if (!this.hasItem('Fighter torso')) {
+			if (stats.defence.level >= 40) {
+				if (Math.random() >= this.percentageChanceToInteger(1 + ((stats.combat.level - 20) * 0.05))) {
+					bossesRolled.push('penancequeen');
 				}
 			}
 		}
@@ -922,6 +933,8 @@ class IdleOSRS extends Component {
 			mage_bonus: this.calculateItemBonus('mage_bonus')
 		}
 
+		let income = this.calculatePassiveIncome();
+
 		return (
 			<div className='wrap'>
 				<Navbar />
@@ -931,7 +944,7 @@ class IdleOSRS extends Component {
 					<AttackStyle attackMethod={this.state.attackMethod} equippedWeapon={this.state.gearsets[this.state.gearsets.worn].weapon} changeAttackMethod={this.changeAttackMethod}/>
 				</div>
 				<div id='column-right' className='column'>
-					<CoinDisplay coins={this.state.coins} income={this.state.income} />
+					<CoinDisplay coins={this.state.coins} income={income} />
 					<ItemShop stats={this.state.stats} ownedItems={this.state.ownedItems} shopSlot={this.state.shopSlot} gearsets={this.state.gearsets} equipItem={this.equipItem} changeShopSlot={this.changeShopSlot} buyItem={this.buyItem} hasEnoughMoney={this.hasEnoughMoney} meetsRequirements={this.meetsRequirements} />
 					<GearSets gearsets={this.state.gearsets} equipGearSet={this.equipGearSet}/>
 					<Skills stats={this.state.stats} />
