@@ -39,10 +39,10 @@ nav {
 
 	.logo {
 		margin: 0 auto;
-    font-size: 20px;
-    line-height: 48px;
-    color: #c1cdd7;
-    text-align: center;
+		font-size: 20px;
+		line-height: 48px;
+		color: #c1cdd7;
+		text-align: center;
 	}
 
 	#github-icon {
@@ -202,13 +202,13 @@ nav {
 	}
 
 	.monster-image-wrap {
-    position: absolute;
-    width: 30vh;
-    height: 30vh;
-    min-width: 200px;
-    min-height: 200px;
-    max-width: 324px;
-    max-height: 324px;
+		position: absolute;
+		width: 32vh;
+		height: 32vh;
+		min-width: 200px;
+		min-height: 200px;
+		max-width: 324px;
+		max-height: 324px;
 		top: 50%;
 		left: 50%;
 		border-radius: 50%;
@@ -414,7 +414,7 @@ svg.equipped {
 
 #itemShop {
 	width: 90%;
-	height: calc(100% - 348px);
+	height: calc(100% - 310px);
 	background-color: rgba(0, 0, 0, 0.35);
 	z-index: -1;
 
@@ -461,7 +461,7 @@ svg.equipped {
 	#shopItems {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-		grid-template-rows: 192px;
+		grid-template-rows: repeat(auto-fill, 192px);
 		width: 100%;
 		height: calc(100% - 60px);
 		overflow-y: auto;
@@ -489,32 +489,32 @@ svg.equipped {
 
 			&::after {
 				content: "";
-				display: block;
 				position: absolute;
-				bottom: -2px;
 				left: 0;
+				bottom: -2px;
 				width: 100%;
-				height: 1px;
-				background-color: rgba(255, 255, 255, 0.05);
+				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 			}
 
 			.shop-column {
+				box-sizing: border-box;
 				position: relative;
 				padding: 12px;
 			}
 
 			.shop-column-1 {
-				width: 136px;
+				width: 152px;
 				box-sizing: border-box;
 
 				.itemPrice {
+					display: flex;
 					width: fit-content;
 					border-radius: 4px;
 					padding: 4px 8px;
 					height: 36px;
 					box-sizing: border-box;
 					background-color: #272b30;
-					display: flex;
+					
 					align-items: center;
 
 					img + span.itemCost {
@@ -534,18 +534,16 @@ svg.equipped {
 			.shop-column-2 {
 				padding-left: 0;
 				position: relative;
-				width: calc(100% - 136px);
+				width: calc(100% - 152px);
 				border-right: 1px solid rgb(0, 0, 0);
 
 				&::after {
 					content: "";
-					display: block;
 					position: absolute;
-					top: 0px;
+					top: 0;
 					right: -2px;
-					width: 1px;
 					height: 100%;
-					background-color: rgba(255, 255, 255, 0.05);
+					border-right: 1px solid rgba(255, 255, 255, 0.05);
 				}
 
 				.imageWrapper {
@@ -623,22 +621,25 @@ svg.equipped {
 }
 
 .button {
-	display: inline-block;
+	display: table;
 	cursor: pointer;
 	color: white;
 	padding: 6px 8px;
 	border-radius: 4px;
 	margin-top: 12px;
 	font-size: 12px;
-	transition: all 0.2s ease-in;
+	transition: background-color 0.2s ease-in, border-color 0.2s ease-in;
 	border: 1px solid rgba(255,255,255,0.7);
 	text-transform: capitalize;
+
 	& + .button {
 		margin-top: 6px;
 	}
+
 	&:hover {
 		background-color: rgba(255,255,255,0.1);
 	}
+
 	&.button-disabled {
 		cursor: auto;
 		border: 1px solid rgba(255, 255, 255, 0.1);
@@ -646,6 +647,11 @@ svg.equipped {
 		&:hover {
 			background-color: transparent;
 		}
+	}
+
+	&.shop-requirement-button {
+		color: hsl(357, 69%, 29%);
+		border: 1px solid rgba(255, 0, 0, 0.3);
 	}
 }
 
@@ -772,10 +778,16 @@ svg.equipped {
 }
 
 #gearsets {
-	padding: 30px 12px;
+	padding: 12px;
 	width: 90%;
 	box-sizing: border-box;
 	background-color: rgba(0, 0, 0, 0.1);
+
+	.gearsetHeader {
+		height: 40px;
+		display: flex;
+		align-items: center;
+	}
 
 	.gearsetName {
 		display: inline-block;
@@ -783,8 +795,15 @@ svg.equipped {
 		font-size: 18px;
 		color: rgba(255, 255, 255, 0.96);
 		margin: 16px 0 0 4px;
+
 		&:first-of-type {
 			margin-top: 0;
+		}
+
+		+ .button, + .tooltip {
+			margin-top: 0px;
+			margin-left: 12px;
+			display: inline-block;
 		}
 	}
 }

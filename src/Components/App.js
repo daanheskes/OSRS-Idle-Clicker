@@ -17,7 +17,7 @@ import GearSets from './GearSets.js';
 import Equipment from './Equipment.js';
 import Skills from './Skills.js';
 
-const MULTIPLIER = 1;
+const MULTIPLIER = 500;
 const EXP_MULTIPLIER = 1;
 const GP_MULTIPLIER = 1;
 
@@ -645,7 +645,7 @@ class IdleOSRS extends Component {
 		// Cyclops
 		if (!this.state.ownedItems.includes('Dragon defender')) {
 			if (stats.attack.level + stats.strength.level >= 130 || stats.attack.level === 99 || stats.strength.level === 99) {
-				if (Math.random() >= this.percentageChanceToInteger(20)) {
+				if (Math.random() >= this.percentageChanceToInteger(5)) {
 					bossesRolled.push('cyclops');
 				}
 			}
@@ -889,9 +889,11 @@ class IdleOSRS extends Component {
 				newState.attackMethod = this.chooseAttackStyle(item.attackstyles);
 			}
 			if (slot === 'shield') {
-				if (newState.gearsets[newState.gearsets.worn].weapon.twoHanded && newState.gearsets[newState.gearsets.worn].weapon !== null) {
-					newState.gearsets[newState.gearsets.worn].weapon = null
-					newState.attackMethod = this.chooseAttackStyle(['unarmed-punch', 'unarmed-kick', 'unarmed-block']);
+				if (newState.gearsets[newState.gearsets.worn].weapon !== null) {
+					if (newState.gearsets[newState.gearsets.worn].weapon.twoHanded) {
+						newState.gearsets[newState.gearsets.worn].weapon = null
+						newState.attackMethod = this.chooseAttackStyle(['unarmed-punch', 'unarmed-kick', 'unarmed-block']);
+					}
 				}
 			}
 
@@ -930,7 +932,7 @@ class IdleOSRS extends Component {
 				</div>
 				<div id='column-right' className='column'>
 					<CoinDisplay coins={this.state.coins} income={this.state.income} />
-					<ItemShop ownedItems={this.state.ownedItems} shopSlot={this.state.shopSlot} gearsets={this.state.gearsets} equipItem={this.equipItem} changeShopSlot={this.changeShopSlot} buyItem={this.buyItem} hasEnoughMoney={this.hasEnoughMoney} meetsRequirements={this.meetsRequirements} />
+					<ItemShop stats={this.state.stats} ownedItems={this.state.ownedItems} shopSlot={this.state.shopSlot} gearsets={this.state.gearsets} equipItem={this.equipItem} changeShopSlot={this.changeShopSlot} buyItem={this.buyItem} hasEnoughMoney={this.hasEnoughMoney} meetsRequirements={this.meetsRequirements} />
 					<GearSets gearsets={this.state.gearsets} equipGearSet={this.equipGearSet}/>
 					<Skills stats={this.state.stats} />
 				</div>
