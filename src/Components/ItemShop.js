@@ -25,8 +25,43 @@ class ItemShop extends Component {
 		return coinImage;
 	}
 
+	hasItem(item) {
+		if (this.props.ownedItems.includes(item)) return true;
+		return false;
+	}
+
+	getBestDefender() {
+		const defenders = ['Bronze defender', 'Iron defender', 'Steel defender', 'Black defender', 'Mithril defender', 'Adamant defender', 'Rune defender', 'Dragon defender', 'Avernic defender'];
+		let bestDefender = false;
+		
+		for (let defender of defenders) {
+			if (this.hasItem(defender)) {
+				bestDefender = defender;
+			}
+		}
+		return bestDefender;
+	}
+
 	allShopItems(slot) {
-		return Object.values(equipment[slot]);
+		return Object.values(equipment[slot]).filter((item) => {
+			if (item.name.includes('defender')) {
+				const bestDefender = this.getBestDefender();
+				if (this.props.stats.defence.level === 1 && bestDefender !== 'Bronze defender' && bestDefender !== false && item.name === 'Iron defender') {
+					return true;
+				}
+				if (bestDefender === false) {
+					if (item.name === 'Bronze defender') {
+						return true;
+					}
+				} else {
+					if (item.name === bestDefender || (bestDefender === 'Dragon defender' && item.name === 'Avernic defender')) {
+						return true;
+					}
+				}
+				return false;
+			}
+			return true;
+		});
 	}
 
 	calculateStatDifference(compareItem, stat) {
@@ -58,12 +93,35 @@ class ItemShop extends Component {
 
 		Object.entries(item.requirements).forEach((requirement) => {
 			const [ requirementName, requirementValue ] = requirement;
-
-			buttonsHolder.push(
-								<div className='button shop-requirement-button button-disabled' key={item.name + "-" + requirement}>
-									<span>{requirementValue + " " + requirementName}</span>
-								</div>
-			);
+			
+			let requirementsMet = true;
+			if (requirementName === "attack" || requirementName === "strength" || requirementName === "defence" || requirementName === "ranged"
+				|| requirementName === "magic" || requirementName === "hitpoints" || requirementName === "slayer" || requirementName === "prayer") {
+					if (this.props.stats[requirementName].level < requirementValue) {
+					requirementsMet = false;
+				}
+			}
+			if (requirementName === 'item') {
+				if (!this.props.ownedItems.includes(requirementValue)) {
+					requirementsMet = false;
+				}
+			}
+			if (!requirementsMet) {
+				if (requirementName === 'item') {
+					buttonsHolder.push(
+						<div className='button shop-requirement-button button-disabled' key={item.name + "-" + requirement}>
+							<span>{requirementValue}</span>
+						</div>
+					);
+				} else {
+					buttonsHolder.push(
+						<div className='button shop-requirement-button button-disabled' key={item.name + "-" + requirement}>
+							<span>{requirementValue + " " + requirementName}</span>
+						</div>
+					);
+				}
+				
+			}
 		});
 
 		return buttonsHolder;

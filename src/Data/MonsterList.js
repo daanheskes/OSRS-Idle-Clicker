@@ -14,6 +14,7 @@ import hillgiantImage from './../assets/monsters/Hill_giant.png';
 import mossgiantImage from './../assets/monsters/Moss_giant.png';
 import cyclopsImage from './../assets/monsters/Cyclops.png';
 import tztokjadImage from './../assets/monsters/TzTok-Jad.png';
+import penancequeenImage from './../assets/monsters/Penance_Queen.png';
 
 export default {
 	chicken: {
@@ -131,5 +132,14 @@ export default {
 		bones: null,
 		boss: true,
 		drop: "Fire cape"
+	},
+	penancequeen: {
+		name: "Penance Queen",
+		combatlevel: 209,
+		hitpoints: 250,
+		img: penancequeenImage,
+		bones: null,
+		boss: true,
+		drop: "Fighter torso"
 	}
 }
