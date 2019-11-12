@@ -66,17 +66,18 @@ class ItemShop extends Component {
 
 	calculateStatDifference(compareItem, stat) {
 		const currentItem = this.props.gearsets[this.props.gearsets.worn][compareItem.slot];
+		let compareItemStat = compareItem[stat];
+		let currentItemStat = 0;
 		if (currentItem !== null) {
-			if (compareItem[stat] === currentItem[stat]) {
-				return false;
-			}
-			if (compareItem[stat] - currentItem[stat] > 0) {
-				return '+' + (compareItem[stat] - currentItem[stat]);
-			}
-			return (compareItem[stat] - currentItem[stat]);
+			currentItemStat = currentItem[stat];
 		}
-
-		return '+' + compareItem[stat];
+		if (compareItemStat === currentItemStat) {
+			return false;
+		}
+		if (compareItemStat > currentItemStat) {
+			return '+' + (compareItemStat - currentItemStat);
+		}
+		return (compareItemStat - currentItemStat);
 	}
 
 	convertToLetters(amount) {

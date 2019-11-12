@@ -169,20 +169,20 @@ class IdleOSRS extends Component {
 	}
 
 	loadGame() {
-		let loadedGame = false;
-		if (localStorage.getItem('savedGame') !== null) {
-			loadedGame = JSON.parse(localStorage.getItem('savedGame'));
+		if (localStorage.getItem('savedGame')) {
+			let loadedGame = JSON.parse(localStorage.getItem('savedGame'));
+			let newState = this.state;
+			
+			Object.entries(loadedGame).forEach((loadedProp) => {
+				const [ propName, propValue ] = loadedProp;
+
+				if (newState.hasOwnProperty(propName)) {
+					newState.propName = propValue;
+				}
+			});
+
+			this.setState(newState);
 		}
-		// Only load necessary properties
-		this.setState({
-			attackMethod: loadedGame.attackMethod,
-			coins: loadedGame.coins,
-			stats: loadedGame.stats,
-			shopSlot: loadedGame.shopSlot,
-			gearsets: loadedGame.gearsets,
-			ownedItems: loadedGame.ownedItems,
-			currentMonster: loadedGame.currentMonster
-		});
 	}
 
 	componentDidMount() {
@@ -368,8 +368,7 @@ class IdleOSRS extends Component {
 		return 0;
 	}
 
-	getPrayerMultiplier(stat) {
-		const prayerLevel = this.state.stats.prayer.level
+	getPrayerMultiplier(stat, prayerLevel = this.state.stats.prayer.level) {
 		let multiplier = 1;
 
 		if (stat === 'attack') {
