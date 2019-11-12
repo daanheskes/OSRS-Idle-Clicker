@@ -177,7 +177,7 @@ class IdleOSRS extends Component {
 				const [ propName, propValue ] = loadedProp;
 
 				if (newState.hasOwnProperty(propName)) {
-					newState.propName = propValue;
+					newState[propName] = propValue;
 				}
 			});
 
