@@ -63,7 +63,16 @@ import mithrilplatelegsImage from './../assets/items/Mithril_platelegs.png';
 import adamantplatelegsImage from './../assets/items/Adamant_platelegs.png';
 import runeplatelegsImage from './../assets/items/Rune_platelegs.png';
 import leatherglovesImage from './../assets/items/Leather_gloves.png';
+import combatbraceletImage from './../assets/items/Combat_bracelet.png';
 import leatherbootsImage from './../assets/items/Leather_boots.png';
+import bronzebootsImage from './../assets/items/Bronze_boots.png';
+import ironbootsImage from './../assets/items/Iron_boots.png';
+import steelbootsImage from './../assets/items/Steel_boots.png';
+import blackbootsImage from './../assets/items/Black_boots.png';
+import mithrilbootsImage from './../assets/items/Mithril_boots.png';
+import adamantbootsImage from './../assets/items/Adamant_boots.png';
+import runebootsImage from './../assets/items/Rune_boots.png';
+import dragonbootsImage from './../assets/items/Dragon_boots.png';
 import goldringImage from './../assets/items/Gold_ring.png';
 import warriorringImage from './../assets/items/Warrior_ring.png';
 import seersringImage from './../assets/items/Seers_ring.png';
@@ -134,14 +143,14 @@ function addItem(slot, name, requirements, cost, img, income=0, atk_bonus=0, str
 	equipment[slot][createShortName(name)] = newItem;
 }
 
-addItem('head', 'Bronze full helm', {}, 44, bronzefullhelmImage, 0, 0, 0, 5);
-addItem('head', 'Iron full helm', {}, 154, ironfullhelmImage, 0, 0, 0, 7);
-addItem('head', 'Steel full helm', {defence: 5}, 550, steelfullhelmImage, 0, 0, 0, 10);
-addItem('head', 'Black full helm', {defence: 10}, 1056, blackfullhelmImage, 0, 0, 0, 13);
-addItem('head', 'Mithril full helm', {defence: 20}, 1430, mithrilfullhelmImage, 0, 0, 0, 14);
-addItem('head', 'Adamant full helm', {defence: 30}, 3520, adamantfullhelmImage, 0, 0, 0, 21);
-addItem('head', 'Rune full helm', {defence: 40}, 35200, runefullhelmImage, 0, 0, 0, 32);
-addItem('head', 'Berserker helm', {defence: 45}, 0, berserkerhelmImage, 0, 0, 3, 33);
+addItem('head', 'Bronze full helm', {}, 44, bronzefullhelmImage, 0, 0, 0, 5, -2, 0, -6);
+addItem('head', 'Iron full helm', {}, 154, ironfullhelmImage, 0, 0, 0, 7, -2, 0, -6);
+addItem('head', 'Steel full helm', {defence: 5}, 550, steelfullhelmImage, 0, 0, 0, 10, -2, 0, -6);
+addItem('head', 'Black full helm', {defence: 10}, 1056, blackfullhelmImage, 0, 0, 0, 13, -2, 0, -6);
+addItem('head', 'Mithril full helm', {defence: 20}, 1430, mithrilfullhelmImage, 0, 0, 0, 14, -2, 0, -6);
+addItem('head', 'Adamant full helm', {defence: 30}, 3520, adamantfullhelmImage, 0, 0, 0, 21, -2, 0, -6);
+addItem('head', 'Rune full helm', {defence: 40}, 35200, runefullhelmImage, 0, 0, 0, 32, -2, 0, -6);
+addItem('head', 'Berserker helm', {defence: 45}, 0, berserkerhelmImage, 0, 0, 3, 33, -5, 0, -5);
 
 addItem('cape', 'Red cape', {}, 2, redcapeImage, 0, 0, 0, 2);
 addItem('cape', 'Obsidian cape', {}, 60000, obsidiancapeImage, 0, 0, 0, 9);
@@ -174,43 +183,52 @@ addItem('weapon', 'Dragon scimitar', {attack: 60}, 100000, dragonscimitarImage, 
 // Ranged
 addItem('weapon', 'Shortbow', {}, 50, shortbowImage, 0, 0, 0, 0, 8);
 
-addItem('body', 'Bronze platebody', {}, 160, bronzeplatebodyImage, 0, 0, 0, 15);
-addItem('body', 'Iron platebody', {}, 560, ironplatebodyImage, 0, 0, 0, 21);
-addItem('body', 'Steel platebody', {defence: 5}, 2000, steelplatebodyImage, 0, 0, 0, 32);
-addItem('body', 'Black platebody', {defence: 10}, 3840, blackplatebodyImage, 0, 0, 0, 41);
-addItem('body', 'Mithril platebody', {defence: 20}, 5200, mithrilplatebodyImage, 0, 0, 0, 46);
-addItem('body', 'Adamant platebody', {defence: 30}, 16640, adamantplatebodyImage, 0, 0, 0, 65);
-addItem('body', 'Rune platebody', {defence: 40}, 65000, runeplatebodyImage, 0, 0, 0, 82);
-addItem('body', 'Fighter torso', {defence: 40}, 0, fightertorsoImage, 0, 0, 4, 85);
+addItem('body', 'Bronze platebody', {}, 160, bronzeplatebodyImage, 0, 0, 0, 15, -10, 0, -30);
+addItem('body', 'Iron platebody', {}, 560, ironplatebodyImage, 0, 0, 0, 21, -10, 0, -30);
+addItem('body', 'Steel platebody', {defence: 5}, 2000, steelplatebodyImage, 0, 0, 0, 32, -10, 0, -30);
+addItem('body', 'Black platebody', {defence: 10}, 3840, blackplatebodyImage, 0, 0, 0, 41, -10, 0, -30);
+addItem('body', 'Mithril platebody', {defence: 20}, 5200, mithrilplatebodyImage, 0, 0, 0, 46, -10, 0, -30);
+addItem('body', 'Adamant platebody', {defence: 30}, 16640, adamantplatebodyImage, 0, 0, 0, 65, -10, 0, -30);
+addItem('body', 'Rune platebody', {defence: 40}, 65000, runeplatebodyImage, 0, 0, 0, 82, -10, 0, -30);
+addItem('body', 'Fighter torso', {defence: 40}, 0, fightertorsoImage, 0, 0, 4, 85, 0, 0, -40);
 
-addItem('shield', 'Bronze kiteshield', {}, 68, bronzekiteshieldImage, 0, 0, 0, 7);
-addItem('shield', 'Iron kiteshield', {}, 238, ironkiteshieldImage, 0, 0, 0, 10);
-addItem('shield', 'Steel kiteshield', {defence: 5}, 850, steelkiteshieldImage, 0, 0, 0, 15);
-addItem('shield', 'Black kiteshield', {defence: 10}, 1632, blackkiteshieldImage, 0, 0, 0, 19);
-addItem('shield', 'Mithril kiteshield', {defence: 20}, 2210, mithrilkiteshieldImage, 0, 0, 0, 22);
-addItem('shield', 'Adamant kiteshield', {defence: 30}, 5440, adamantkiteshieldImage, 0, 0, 0, 31);
-addItem('shield', 'Rune kiteshield', {defence: 40}, 54400, runekiteshieldImage, 0, 0, 0, 48);
-addItem('shield', 'Bronze defender', {}, 0, bronzedefenderImage, 0, 3, 0, 3);
-addItem('shield', 'Iron defender', {}, 0, irondefenderImage, 0, 5, 0, 5);
-addItem('shield', 'Steel defender', {attack: 5, defence: 5}, 0, steeldefenderImage, 0, 7, 1, 7);
-addItem('shield', 'Black defender', {attack: 10, defence: 10}, 0, blackdefenderImage, 0, 9, 2, 9);
-addItem('shield', 'Mithril defender', {attack: 20, defence: 20}, 0, mithrildefenderImage, 0, 10, 3, 10);
-addItem('shield', 'Adamant defender', {attack: 30, defence: 30}, 0, adamantdefenderImage, 0, 13, 4, 13);
-addItem('shield', 'Rune defender', {attack: 40, defence: 40}, 0, runedefenderImage, 0, 20, 5, 20);
-addItem('shield', 'Dragon defender', {attack: 60, defence: 60}, 0, dragondefenderImage, 0, 25, 6, 25);
-addItem('shield', 'Avernic defender', {attack: 70, defence: 70, item: 'Dragon defender'}, 35000000, avernicdefenderImage, 0, 30, 8, 30);
+addItem('shield', 'Bronze kiteshield', {}, 68, bronzekiteshieldImage, 0, 0, 0, 7, -2, 0, -8);
+addItem('shield', 'Iron kiteshield', {}, 238, ironkiteshieldImage, 0, 0, 0, 10, -2, 0, -8);
+addItem('shield', 'Steel kiteshield', {defence: 5}, 850, steelkiteshieldImage, 0, 0, 0, 15, -2, 0, -8);
+addItem('shield', 'Black kiteshield', {defence: 10}, 1632, blackkiteshieldImage, 0, 0, 0, 19, -2, 0, -8);
+addItem('shield', 'Mithril kiteshield', {defence: 20}, 2210, mithrilkiteshieldImage, 0, 0, 0, 22, -2, 0, -8);
+addItem('shield', 'Adamant kiteshield', {defence: 30}, 5440, adamantkiteshieldImage, 0, 0, 0, 31, -2, 0, -8);
+addItem('shield', 'Rune kiteshield', {defence: 40}, 54400, runekiteshieldImage, 0, 0, 0, 48, -2, 0, -8);
+addItem('shield', 'Bronze defender', {}, 0, bronzedefenderImage, 0, 3, 0, 3, -2, 0, -3);
+addItem('shield', 'Iron defender', {}, 0, irondefenderImage, 0, 5, 0, 5, -2, 0, -3);
+addItem('shield', 'Steel defender', {attack: 5, defence: 5}, 0, steeldefenderImage, 0, 7, 1, 7, -2, 0, -3);
+addItem('shield', 'Black defender', {attack: 10, defence: 10}, 0, blackdefenderImage, 0, 9, 2, 9, -2, 0, -3);
+addItem('shield', 'Mithril defender', {attack: 20, defence: 20}, 0, mithrildefenderImage, 0, 10, 3, 10, -2, 0, -3);
+addItem('shield', 'Adamant defender', {attack: 30, defence: 30}, 0, adamantdefenderImage, 0, 13, 4, 13, -2, 0, -3);
+addItem('shield', 'Rune defender', {attack: 40, defence: 40}, 0, runedefenderImage, 0, 20, 5, 20, -2, 0, -3);
+addItem('shield', 'Dragon defender', {attack: 60, defence: 60}, 0, dragondefenderImage, 0, 25, 6, 25, -2, 0, -3);
+addItem('shield', 'Avernic defender', {attack: 70, defence: 70, item: 'Dragon defender'}, 35000000, avernicdefenderImage, 0, 30, 8, 30, -4, 0, -5);
 
-addItem('legs', 'Bronze platelegs', {}, 80, bronzeplatelegsImage, 0, 0, 0, 8);
-addItem('legs', 'Iron platelegs', {}, 280, ironplatelegsImage, 0, 0, 0, 11);
-addItem('legs', 'Steel platelegs', {defence: 5}, 1000, steelplatelegsImage, 0, 0, 0, 17);
-addItem('legs', 'Black platelegs', {defence: 10}, 1920, blackplatelegsImage, 0, 0, 0, 21);
-addItem('legs', 'Mithril platelegs', {defence: 20}, 2600, mithrilplatelegsImage, 0, 0, 0, 24);
-addItem('legs', 'Adamant platelegs', {defence: 30}, 6400, adamantplatelegsImage, 0, 0, 0, 33);
-addItem('legs', 'Rune platelegs', {defence: 40}, 64000, runeplatelegsImage, 0, 0, 0, 51);
+addItem('legs', 'Bronze platelegs', {}, 80, bronzeplatelegsImage, 0, 0, 0, 8, -7, 0, -21);
+addItem('legs', 'Iron platelegs', {}, 280, ironplatelegsImage, 0, 0, 0, 11, -7, 0, -21);
+addItem('legs', 'Steel platelegs', {defence: 5}, 1000, steelplatelegsImage, 0, 0, 0, 17, -7, 0, -21);
+addItem('legs', 'Black platelegs', {defence: 10}, 1920, blackplatelegsImage, 0, 0, 0, 21, -7, 0, -21);
+addItem('legs', 'Mithril platelegs', {defence: 20}, 2600, mithrilplatelegsImage, 0, 0, 0, 24, -7, 0, -21);
+addItem('legs', 'Adamant platelegs', {defence: 30}, 6400, adamantplatelegsImage, 0, 0, 0, 33, -7, 0, -21);
+addItem('legs', 'Rune platelegs', {defence: 40}, 64000, runeplatelegsImage, 0, 0, 0, 51, -7, 0, -21);
 
 addItem('hand', 'Leather gloves', {}, 6, leatherglovesImage, 0, 0, 0, 2);
+addItem('hand', 'Combat bracelet', {}, 21040, combatbraceletImage, 0, 7, 6, 5, 5, 0, 3);
 
 addItem('feet', 'Leather boots', {}, 6, leatherbootsImage, 0, 0, 0, 1);
+addItem('feet', 'Bronze boots', {}, 24, bronzebootsImage, 0, 0, 0, 3, -1, 0, -3);
+addItem('feet', 'Iron boots', {}, 84, ironbootsImage, 0, 0, 0, 4, -1, 0, -3);
+addItem('feet', 'Steel boots', {}, 300, steelbootsImage, 0, 0, 0, 7, -1, 0, -3);
+addItem('feet', 'Black boots', {}, 576, blackbootsImage, 0, 0, 0, 9, -1, 0, -3);
+addItem('feet', 'Mithril boots', {defence: 20}, 780, mithrilbootsImage, 0, 0, 0, 10, -1, 0, -3);
+addItem('feet', 'Adamant boots', {defence: 30}, 1920, adamantbootsImage, 0, 0, 1, 12, -1, 0, -3);
+addItem('feet', 'Rune boots', {defence: 40}, 12500, runebootsImage, 0, 0, 2, 14, -1, 0, -3);
+addItem('feet', 'Dragon boots', {}, 350000, dragonbootsImage, 0, 0, 4, 18, -1, 0, -3);
 
 addItem('ring', 'Gold ring', {}, 210, goldringImage, 1, 0, 0, 0);
 addItem('ring', 'Warrior ring', {}, 100000, warriorringImage, 0, 4, 0, 4);
