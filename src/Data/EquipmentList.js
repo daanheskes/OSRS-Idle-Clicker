@@ -223,8 +223,8 @@ addItem('hand', 'Combat bracelet', {}, 21040, combatbraceletImage, 0, 7, 6, 5, 5
 addItem('feet', 'Leather boots', {}, 6, leatherbootsImage, 0, 0, 0, 1);
 addItem('feet', 'Bronze boots', {}, 24, bronzebootsImage, 0, 0, 0, 3, -1, 0, -3);
 addItem('feet', 'Iron boots', {}, 84, ironbootsImage, 0, 0, 0, 4, -1, 0, -3);
-addItem('feet', 'Steel boots', {}, 300, steelbootsImage, 0, 0, 0, 7, -1, 0, -3);
-addItem('feet', 'Black boots', {}, 576, blackbootsImage, 0, 0, 0, 9, -1, 0, -3);
+addItem('feet', 'Steel boots', {defence: 5}, 300, steelbootsImage, 0, 0, 0, 7, -1, 0, -3);
+addItem('feet', 'Black boots', {defence: 10}, 576, blackbootsImage, 0, 0, 0, 9, -1, 0, -3);
 addItem('feet', 'Mithril boots', {defence: 20}, 780, mithrilbootsImage, 0, 0, 0, 10, -1, 0, -3);
 addItem('feet', 'Adamant boots', {defence: 30}, 1920, adamantbootsImage, 0, 0, 1, 12, -1, 0, -3);
 addItem('feet', 'Rune boots', {defence: 40}, 12500, runebootsImage, 0, 0, 2, 14, -1, 0, -3);
