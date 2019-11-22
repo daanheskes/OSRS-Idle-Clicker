@@ -99,21 +99,7 @@ function createShortName(name) {
 
 function addItem(slot, name, requirements, cost, img, income=0, atk_bonus=0, str_bonus=0, def_bonus=0, rngd_bonus=0, rngd_strength=0, mage_bonus=0, pray_bonus=0) {
 
-	let newItem = {
-		slot: slot,
-		name: name,
-		cost: cost,
-		requirements: requirements,
-		img: img,
-		income: income,
-		atk_bonus: atk_bonus,
-		str_bonus: str_bonus,
-		def_bonus: def_bonus,
-		rngd_bonus: rngd_bonus,
-		rngd_strength: rngd_strength,
-		mage_bonus: mage_bonus,
-		pray_bonus: pray_bonus
-	}
+	let newItem = {slot, name, cost, requirements, img, income, atk_bonus, str_bonus, def_bonus, rngd_bonus, rngd_strength, mage_bonus, pray_bonus}
 
 	if (slot === 'weapon') {
 		switch (name) {
