@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-import combatImage from './../assets/skills/Combat.png';
-import attackImage from './../assets/skills/Attack.png';
-import strengthImage from './../assets/skills/Strength.png';
-import defenceImage from './../assets/skills/Defence.png';
-import rangedImage from './../assets/skills/Ranged.png';
-import magicImage from './../assets/skills/Magic.png';
-import hitpointsImage from './../assets/skills/Hitpoints.png';
-import prayerImage from './../assets/skills/Prayer.png';
-import slayerImage from './../assets/skills/Slayer.png';
-import totalImage from './../assets/skills/Total.png';
+import combatImage from './../../assets/skills/Combat.png';
+import attackImage from './../../assets/skills/Attack.png';
+import strengthImage from './../../assets/skills/Strength.png';
+import defenceImage from './../../assets/skills/Defence.png';
+import rangedImage from './../../assets/skills/Ranged.png';
+import magicImage from './../../assets/skills/Magic.png';
+import hitpointsImage from './../../assets/skills/Hitpoints.png';
+import prayerImage from './../../assets/skills/Prayer.png';
+import slayerImage from './../../assets/skills/Slayer.png';
+import totalImage from './../../assets/skills/Total.png';
 
 class Skills extends Component {
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import coinImages from './../Data/CoinImages';
-import equipment from './../Data/EquipmentList';
+import coinImages from './../../Data/CoinImages';
+import equipment from './../../Data/EquipmentList';
 
 const allStats = [
 	{ name: "Attack", namekey: "atk_bonus" },

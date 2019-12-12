@@ -8,19 +8,29 @@ import prayerExperience from './../Data/PrayerExperience.js';
 import magicSpells from './../Data/MagicSpellsList.js';
 
 // Components
-import Navbar from './Navbar.js';
-import Monster from './Monster.js';
-import AttackStyle from './AttackStyle.js';
-import CoinDisplay from './CoinDisplay.js';
-import ItemShop from './ItemShop.js';
-import GearSets from './GearSets.js';
-import Equipment from './Equipment.js';
-import Skills from './Skills.js';
+import Navbar from './Navbar/Navbar.js';
+import Monster from './Monster/Monster.js';
+import AttackStyle from './AttackStyle/AttackStyle.js';
+import CoinDisplay from './CoinDisplay/CoinDisplay.js';
+import ItemShop from './ItemShop/ItemShop.js';
+import GearSets from './GearSets/GearSets.js';
+import Equipment from './Equipment/Equipment.js';
+import Skills from './Skills/Skills.js';
 
+// Styles
+import './Navbar/Navbar.scss';
+import './Monster/Monster.scss';
+import './AttackStyle/AttackStyle.scss';
+import './CoinDisplay/CoinDisplay.scss';
+import './ItemShop/ItemShop.scss';
+import './GearSets/GearSets.scss';
+import './Equipment/Equipment.scss';
+import './Skills/Skills.scss';
+
+// Settings
 const MULTIPLIER = 1;
 const EXP_MULTIPLIER = 1;
 const GP_MULTIPLIER = 1;
-
 const FIRST_MONSTER = monsters.chicken;
 
 class IdleOSRS extends Component {

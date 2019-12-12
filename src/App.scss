@@ -1,8 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Saira:300,400,700");
-
-$navbarheight: 48px;
-$monsterhpheight: 24px;
-$monsternameheight: 58px;
+@import './_variables.scss';
 
 * {
 	user-select: none;
@@ -29,42 +26,6 @@ html,
 	display: flex;
 }
 
-nav {
-	z-index: 100;
-	position: absolute;
-	width: 100%;
-	height: $navbarheight;
-	background-color: #1e272e;
-	box-shadow: 0px 1px 7px 1px rgba(0, 0, 0, 0.65);
-
-	.logo {
-		margin: 0 auto;
-		font-size: 20px;
-		line-height: 48px;
-		color: #c1cdd7;
-		text-align: center;
-	}
-
-	#github-icon {
-		display: block;
-		width: 32px;
-		height: 32px;
-		position: absolute;
-		top: 8px;
-		right: 8px;
-
-		&:hover svg {
-			fill: hsl(207, 22%, 60%);
-		}
-
-		svg {
-			transition: fill 0.125s ease-in;
-			transform: rotate(25deg);
-			fill: hsl(207, 22%, 80%);
-		}
-	}
-}
-
 .column {
 	margin-top: $navbarheight;
 	height: calc(100% - #{$navbarheight});
@@ -88,46 +49,6 @@ nav {
 	z-index: 3;
 }
 
-@keyframes moveLeft {
-	from {
-		transform: translate(0, 0);
-	}
-
-	to {
-		transform: translate(-35px, -180px);
-	}
-}
-
-@keyframes moveLeft2 {
-	from {
-		transform: translate(0, 0);
-	}
-
-	to {
-		transform: translate(-60px, -210px);
-	}
-}
-
-@keyframes moveRight {
-	from {
-		transform: translate(0, 0);
-	}
-
-	to {
-		transform: translate(35px, -180px);
-	}
-}
-
-@keyframes moveRight2 {
-	from {
-		transform: translate(0, 0);
-	}
-
-	to {
-		transform: translate(60px, -210px);
-	}
-}
-
 .full-width-bar {
 	width: 100%;
 	background-color: #12151a;
@@ -135,251 +56,9 @@ nav {
 	box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.75);
 }
 
-.monster-wrap {
-	z-index: 1;
-	position: relative;
-	height: 50%;
-
-	.monster-name-wrap {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		h1 {
-			font-family: "Saira", sans-serif;
-			margin: 0;
-			color: white;
-			font-size: 24px;
-			font-weight: 400;
-		}
-	}
-
-	.monster-hitpoints {
-		width: 100%;
-		height: $monsterhpheight;
-		background-color: #e74c3c;
-		box-shadow: inset 0px 0px 8px 2px #bf3729;
-		position: relative;
-		z-index: -1;
-
-		&::after {
-			content: "";
-			display: block;
-			width: 100%;
-			height: 100%;
-			box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.55);
-		}
-
-		.monster-hitpoints_stats {
-			z-index: 10;
-			position: absolute;
-			color: white;
-			font-size: 14px;
-			text-align: center;
-			line-height: $monsterhpheight;
-			width: 100%;
-			font-weight: 400;
-		}
-
-		.monster-current_hitpoints {
-			position: absolute;
-			height: 100%;
-			background-color: #2ecc71;
-			box-shadow: inset 0px 0px 8px 2px #17924b;
-			box-sizing: border-box;
-			transition: width 0.075s ease-in;
-		}
-	}
-
-	.monster-background {
-		position: relative;
-		width: 100%;
-		height: calc(100% - 82px);
-		background-image: url(https://pbs.twimg.com/media/DKzHK-LX0AEhMnF.jpg);
-		background-size: cover;
-		background-position: center;
-		overflow: hidden;
-	}
-
-	.monster-image-wrap {
-		position: absolute;
-		width: 32vh;
-		height: 32vh;
-		min-width: 200px;
-		min-height: 200px;
-		max-width: 324px;
-		max-height: 324px;
-		top: 50%;
-		left: 50%;
-		border-radius: 50%;
-		border: 6px solid #0f1319;
-		padding: 34px;
-		transform: translate(-50%, -50%);
-		background: linear-gradient(to bottom, #22282f 0%, #1b2025 100%);
-		box-sizing: border-box;
-		box-shadow: 0 0px 20px 4px rgba(0, 0, 0, 0.55);
-		user-select: none;
-		cursor: pointer;
-
-		#monster-hitsplats {
-			position: absolute;
-			border-radius: 50%;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			z-index: 5;
-
-			.hitsplat {
-				position: absolute;
-				width: 48px;
-				height: 46px;
-				transform: translate(100%, 100%);
-				background-image: url("./assets/hitsplats/Red_hitsplat.png");
-				background-size: cover;
-				color: white;
-				text-align: center;
-				user-select: none;
-				animation-duration: 2s;
-				animation-timing-function: ease-in;
-				animation-timing-function: cubic-bezier(0.35, 0.47, 0.75, 0.1);
-
-				&.blockHitsplat {
-					background-image: url("./assets/hitsplats/Blue_hitsplat.png");
-				}
-
-				&.travelLeft {
-					animation-name: moveLeft;
-				}
-
-				&.travelLeft2 {
-					animation-name: moveLeft2;
-				}
-
-				&.travelRight {
-					animation-name: moveRight;
-				}
-
-				&.travelRight2 {
-					animation-name: moveRight2;
-				}
-
-				span {
-					font-family: "Saira", sans-serif;
-					font-size: 16px;
-					font-weight: 700;
-					display: block;
-					line-height: 46px;
-					letter-spacing: 1px;
-				}
-			}
-		}
-
-		.monster-image {
-			display: block;
-			height: 100%;
-			max-width: 100%;
-			margin: 0 auto;
-			filter: drop-shadow(4px 4px 9px rgba(0, 0, 0, 0.5));
-		}
-	}
-}
-
-#attackStyles {
-	margin-top: 24px;
-	display: flex;
-	justify-content: center;
-	width: 100%;
-
-	#attackMethods {
-		display: grid;
-		grid-template-rows: 1fr 1fr;
-		grid-template-columns: 1fr 1fr;
-		grid-gap: 8px 14px;
-		width: 150px;
-		height: 101px;
-	}
-
-	.attack-style {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 68px;
-		height: 47px;
-		background-image: url(./assets/combatstyles/combatstyle-deselected.png);
-
-		&.attack-style-selected {
-			background-image: url(./assets/combatstyles/combatstyle-selected.png);
-		}
-
-	}
-}
-
-#coinDisplay {
-	display: flex;
-	flex-direction: column;
-
-	.coin-wrapper {
-		display: flex;
-		box-sizing: border-box;
-		height: 70%;
-		margin: 0 12px;
-		padding: 8px 0 0 0;
-
-		.coin-img-wrapper {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: 31px;
-			height: 29px;
-		}
-
-		#coinAmount {
-			color: rgba(255, 255, 255, 0.95);
-			font-family: "Saira", sans-serif;
-			font-size: 24px;
-			line-height: 29px;
-			font-weight: 400;
-			padding-left: 6px;
-			display: inline-block;
-		}
-	}
-
-	.income-wrapper {
-		display: flex;
-		align-items: center;
-		height: 35%;
-		margin: auto 12px;
-
-		#income-amount-wrapper {
-			display: flex;
-			height: 100%;
-			color: rgba(255, 255, 255, 0.7);
-			font-family: "Saira", sans-serif;
-			font-size: 14px;
-			font-weight: 300;
-			padding-bottom: 6px;
-
-			#incomeAmount {
-				color: rgba(255, 255, 255, 0.95);
-			}
-
-			.income-img-wrapper {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-
-				img {
-					padding: 0 6px;
-				}
-			}
-		}
-	}
-}
-
 .tooltip {
-position: relative;
-display: inline-block;
+	position: relative;
+	display: inline-block;
 
 	+ .tooltip {
 		margin-left: 6px;
@@ -410,214 +89,6 @@ svg.owned {
 }
 svg.equipped {
 	fill: #864720;
-}
-
-#itemShop {
-	width: 90%;
-	height: calc(100% - 310px);
-	background-color: rgba(0, 0, 0, 0.35);
-	z-index: -1;
-
-	#shopFilter {
-		position: relative;
-		width: 100%;
-		height: 60px;
-		padding-left: 12px;
-		border-bottom: 1px solid black;
-		box-sizing: border-box;
-
-		&::after {
-			content: "";
-			display: block;
-			position: absolute;
-			bottom: -2px;
-			left: 0;
-			width: 100%;
-			height: 1px;
-			background-color: rgba(255, 255, 255, 0.05);
-		}
-
-		#slotList {
-			width: 100%;
-			max-width: 456px;
-			height: 100%;
-			align-items: center;
-
-			.slot {
-				cursor: pointer;
-				transition: filter 0.2s ease-in;
-
-				&:hover {
-					filter: brightness(1.1) drop-shadow(0px 0px 2px rgba(255,255,255,0.2));
-				}
-
-				&.slot-selected {
-					filter: brightness(1.3) drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.4));
-				}
-			}
-		}
-	}
-	
-	#shopItems {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-		grid-template-rows: repeat(auto-fill, 192px);
-		width: 100%;
-		height: calc(100% - 60px);
-		overflow-y: auto;
-		overflow-x: hidden;
-		scrollbar-width: thin;
-		scrollbar-color: dark;
-
-		&::-webkit-scrollbar {
-			width: 8px;
-			background-color: #353f4c;
-		}
-
-		&::-webkit-scrollbar-thumb {
-			background-color: #4a586a;
-		}
-
-		.shopItem {
-			display: flex;
-			position: relative;
-			border-bottom: 1px solid rgb(0, 0, 0);
-
-			&.item-unbuyable:not(.item-owned) {
-				background-color: rgba(255, 0, 0, 0.05);
-			}
-
-			&::after {
-				content: "";
-				position: absolute;
-				left: 0;
-				bottom: -2px;
-				width: 100%;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-			}
-
-			.shop-column {
-				box-sizing: border-box;
-				position: relative;
-				padding: 12px;
-			}
-
-			.shop-column-1 {
-				width: 152px;
-				box-sizing: border-box;
-
-				.itemPrice {
-					display: flex;
-					width: fit-content;
-					border-radius: 4px;
-					padding: 4px 8px;
-					height: 36px;
-					box-sizing: border-box;
-					background-color: #272b30;
-					
-					align-items: center;
-
-					img + span.itemCost {
-						padding-left: 6px;
-					}
-				}
-
-				.itemStatus {
-					width: 108px;
-					height: 36px;
-					box-sizing: border-box;
-					display: flex;
-					align-items: center;
-				}
-			}
-
-			.shop-column-2 {
-				padding-left: 0;
-				position: relative;
-				width: calc(100% - 152px);
-				border-right: 1px solid rgb(0, 0, 0);
-
-				&::after {
-					content: "";
-					position: absolute;
-					top: 0;
-					right: -2px;
-					height: 100%;
-					border-right: 1px solid rgba(255, 255, 255, 0.05);
-				}
-
-				.imageWrapper {
-					margin-top: 2px;
-					width: 42px;
-					height: 42px;
-					display: inline-block;
-				}
-			}
-
-			.itemName {
-				display: inline-block;
-				vertical-align: top;
-				color: #fff;
-				line-height: 36px;
-			}
-
-			.itemCost {
-				color: rgb(255, 255, 255);
-				font-weight: 400;
-			}
-
-			.itemStats {
-				position: relative;
-				padding: 0;
-				margin-left: 42px;
-			}
-
-			.stat {
-				margin: 0;
-				font-size: 13px;
-				line-height: 18px;
-				font-weight: 300;
-				color: rgba(255, 255, 255, 0.7);
-
-				&.stat-zero {
-					color: rgba(255, 255, 255, 0.25);
-				}
-			}
-
-			.stat-name {
-				display: inline-block;
-				text-align: right;
-				width: 52px;
-			}
-
-			.stat-value {
-				display: inline-block;
-				width: 25px;
-				text-align: right;
-				margin-left: 8px;
-				font-weight: 400;
-			}
-
-			.stat-difference {
-				display: inline-block;
-				text-align: right;
-				width: 42px;
-				padding-left: 6px;
-
-				.stat-difference-value {
-					padding: 0 2px;
-
-					&.positive-difference {
-						color: #27ae60;
-					}
-
-					&.negative-difference {
-						color: #c0392b;
-					}
-				}
-			}
-		}
-	}
 }
 
 .button {
@@ -655,159 +126,6 @@ svg.equipped {
 	}
 }
 
-#equipmentDisplay {
-	width: 100%;
-
-	.character-name {
-		margin: 16px 0 0 0;
-		width: 100%;
-		text-align: center;
-		color: hsl(214, 18%, 92%);
-		font-size: 32px;
-	}
-
-	.equipment-wrapper {
-		margin-top: 24px;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
-		width: 100%;
-	}
-
-	.equipment-display {
-		position: relative;
-		background-image: url(./assets/Equipment_slots.png);
-		background-repeat: no-repeat;
-		min-width: 147px;
-		min-height: 194px;
-
-		.equipment-item {
-			position: absolute;
-			width: 36px;
-			height: 36px;
-			min-width: 36px;
-			min-height: 36px;
-			background-position: center;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-
-			&.hasItem {
-				background-image: url(./assets/slots/Empty_slot.png);
-			}
-
-			&#equipment-head {
-				left: 56px;
-			}
-
-			&#equipment-weapon {
-				top: 78px;
-				left: 1px;
-			}
-
-			&#equipment-hand {
-				top: 158px;
-			}
-
-			&#equipment-neck {
-				top: 39px;
-				left: 56px;
-			}
-
-			&#equipment-ammunition {
-				top: 39px;
-				left: 97px;
-			}
-
-			&#equipment-cape {
-				top: 39px;
-				left: 15px;
-			}
-
-			&#equipment-body {
-				top: 78px;
-				left: 56px;
-			}
-
-			&#equipment-legs {
-				top: 118px;
-				left: 56px;
-			}
-
-			&#equipment-shield {
-				top: 78px;
-				left: 112px;
-			}
-
-			&#equipment-ring {
-				top: 158px;
-				left: 112px;
-			}
-
-			&#equipment-feet {
-				top: 158px;
-				left: 56px;
-			}
-		}
-	}
-	.equipment-stats {
-		background-color: rgba(0, 0, 0, 0.1);
-		border: 1px solid rgba(0, 0, 0, 0.45);
-		padding: 20px;
-		margin-left: 12px;
-		min-width: 150px;
-		height: 100%;
-		align-self: center;
-		box-sizing: border-box;
-		line-height: 30px;
-
-		div {
-			color: rgba(255, 255, 255, 0.94);
-
-			.equipment-skill-name {
-				display: inline-block;
-				width: 78px;
-			}
-			.equipment-skill-stat {
-				display: inline-block;
-				width: 30px;
-				text-align: right;
-			}
-		}
-	}
-}
-
-#gearsets {
-	padding: 12px;
-	width: 90%;
-	box-sizing: border-box;
-	background-color: rgba(0, 0, 0, 0.1);
-
-	.gearsetHeader {
-		height: 40px;
-		display: flex;
-		align-items: center;
-	}
-
-	.gearsetName {
-		display: inline-block;
-		font-weight: 400;
-		font-size: 18px;
-		color: rgba(255, 255, 255, 0.96);
-		margin: 16px 0 0 4px;
-
-		&:first-of-type {
-			margin-top: 0;
-		}
-
-		+ .button, + .tooltip {
-			margin-top: 0px;
-			margin-left: 12px;
-			display: inline-block;
-		}
-	}
-}
-
 .slot-wrapper {
 	display: flex;
 	flex-direction: row;
@@ -823,7 +141,7 @@ svg.equipped {
 	margin: 0px 6px 0 0;
 
 	&.slot-notEmpty {
-		background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjlDRTI4OTk1Q0ZDMTFFOUJCOThFQzA1RTQxODA5RDUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjlDRTI4OUE1Q0ZDMTFFOUJCOThFQzA1RTQxODA5RDUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyOUNFMjg5NzVDRkMxMUU5QkI5OEVDMDVFNDE4MDlENSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyOUNFMjg5ODVDRkMxMUU5QkI5OEVDMDVFNDE4MDlENSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PrVlCCAAAAdLSURBVHjaxJjZjuNE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");
+		background-image: url(./assets/slots/Empty_slot.png);
 	}
 
 	&:last-of-type {
@@ -832,119 +150,45 @@ svg.equipped {
 }
 
 .slot-head {
-	background-image: url("./assets/slots/Head_slot.png");
+	background-image: url(./assets/slots/Head_slot.png);
 }
 
 .slot-cape {
-	background-image: url("./assets/slots/Cape_slot.png");
+	background-image: url(./assets/slots/Cape_slot.png);
 }
 
 .slot-neck {
-	background-image: url("./assets/slots/Neck_slot.png");
+	background-image: url(./assets/slots/Neck_slot.png);
 }
 
 .slot-ammunition {
-	background-image: url("./assets/slots/Ammo_slot.png");
+	background-image: url(./assets/slots/Ammo_slot.png);
 }
 
 .slot-weapon {
-	background-image: url("./assets/slots/Weapon_slot.png");
+	background-image: url(./assets/slots/Weapon_slot.png);
 }
 
 .slot-body {
-	background-image: url("./assets/slots/Body_slot.png");
+	background-image: url(./assets/slots/Body_slot.png);
 }
 
 .slot-shield {
-	background-image: url("./assets/slots/Shield_slot.png");
+	background-image: url(./assets/slots/Shield_slot.png);
 }
 
 .slot-legs {
-	background-image: url("./assets/slots/Legs_slot.png");
+	background-image: url(./assets/slots/Legs_slot.png);
 }
 
 .slot-hand {
-	background-image: url("./assets/slots/Gloves_slot.png");
+	background-image: url(./assets/slots/Gloves_slot.png);
 }
 
 .slot-feet {
-	background-image: url("./assets/slots/Boots_slot.png");
+	background-image: url(./assets/slots/Boots_slot.png);
 }
 
 .slot-ring {
-	background-image: url("./assets/slots/Ring_slot.png");
-}
-
-.skills-wrap {
-	height: calc(100% - 58px);
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	width: 10%;
-	height: calc(100% - 58px);
-	z-index: -1;
-
-	.skill {
-		display: flex;
-		position: relative;
-		align-items: center;
-		width: 100%;
-		height: 10%;
-		box-sizing: border-box;
-		background-color: #353f4c;
-		text-align: center;
-		padding: 0px 6px;
-		border: 1px solid #191e24;
-		border-top: none;
-
-		&:first-of-type {
-			border-top: 1px;
-		}
-
-		&.selectable:not(.selected) {
-			cursor: pointer;
-		}
-
-		&.selected {
-			background-color: #516074;
-		}
-
-		&:hover:not(.selected) {
-			background-color: #4a586a;
-		}
-
-		.skillImg-wrap {
-			width: 50%;
-		}
-
-		.skillLevel {
-			width: 50%;
-			font-weight: 400;
-			color: white;
-		}
-
-		.skillProgress {
-			position: absolute;
-			width: 100%;
-			height: 2px;
-			left: 0;
-			bottom: 0;
-			background-color: #fff;
-			opacity: 1;
-			transition: background-color 0.075s ease-in, opacity 0.075s ease-in;
-			overflow: hidden;
-
-			.skillProgressBar {
-				position: absolute;
-				left: 0;
-				height: 100%;
-				background-color: #e67e22;
-				transition: width 0.075s ease-in;
-			}
-		}
-
-		&:hover .skillProgress {
-			opacity: 1;
-		}
-	}
+	background-image: url(./assets/slots/Ring_slot.png);
 }

@@ -1,0 +1,123 @@
+@import './../../_variables.scss';
+
+#equipmentDisplay {
+	width: 100%;
+
+	.character-name {
+		margin: 16px 0 0 0;
+		width: 100%;
+		text-align: center;
+		color: hsl(214, 18%, 92%);
+		font-size: 32px;
+	}
+
+	.equipment-wrapper {
+		margin-top: 24px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		width: 100%;
+	}
+
+	.equipment-display {
+		position: relative;
+		background-image: url(./../../assets/Equipment_slots.png);
+		background-repeat: no-repeat;
+		min-width: 147px;
+		min-height: 194px;
+
+		.equipment-item {
+			position: absolute;
+			width: 36px;
+			height: 36px;
+			min-width: 36px;
+			min-height: 36px;
+			background-position: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			&.hasItem {
+				background-image: url(./../../assets/slots/Empty_slot.png);
+			}
+
+			&#equipment-head {
+				left: 56px;
+			}
+
+			&#equipment-weapon {
+				top: 78px;
+				left: 1px;
+			}
+
+			&#equipment-hand {
+				top: 158px;
+			}
+
+			&#equipment-neck {
+				top: 39px;
+				left: 56px;
+			}
+
+			&#equipment-ammunition {
+				top: 39px;
+				left: 97px;
+			}
+
+			&#equipment-cape {
+				top: 39px;
+				left: 15px;
+			}
+
+			&#equipment-body {
+				top: 78px;
+				left: 56px;
+			}
+
+			&#equipment-legs {
+				top: 118px;
+				left: 56px;
+			}
+
+			&#equipment-shield {
+				top: 78px;
+				left: 112px;
+			}
+
+			&#equipment-ring {
+				top: 158px;
+				left: 112px;
+			}
+
+			&#equipment-feet {
+				top: 158px;
+				left: 56px;
+			}
+		}
+	}
+	.equipment-stats {
+		background-color: rgba(0, 0, 0, 0.1);
+		border: 1px solid rgba(0, 0, 0, 0.45);
+		padding: 20px;
+		margin-left: 12px;
+		min-width: 150px;
+		height: 100%;
+		align-self: center;
+		box-sizing: border-box;
+		line-height: 30px;
+
+		div {
+			color: rgba(255, 255, 255, 0.94);
+
+			.equipment-skill-name {
+				display: inline-block;
+				width: 78px;
+			}
+			.equipment-skill-stat {
+				display: inline-block;
+				width: 30px;
+				text-align: right;
+			}
+		}
+	}
+}

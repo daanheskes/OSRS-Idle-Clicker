@@ -1,0 +1,37 @@
+@import './../../_variables.scss';
+
+nav {
+	z-index: 100;
+	position: absolute;
+	width: 100%;
+	height: $navbarheight;
+	background-color: #1e272e;
+	box-shadow: 0px 1px 7px 1px rgba(0, 0, 0, 0.65);
+
+	.logo {
+		margin: 0 auto;
+		font-size: 20px;
+		line-height: 48px;
+		color: #c1cdd7;
+		text-align: center;
+	}
+
+	#github-icon {
+		display: block;
+		width: 32px;
+		height: 32px;
+		position: absolute;
+		top: 8px;
+		right: 8px;
+
+		&:hover svg {
+			fill: hsl(207, 22%, 60%);
+		}
+
+		svg {
+			transition: fill 0.125s ease-in;
+			transform: rotate(25deg);
+			fill: hsl(207, 22%, 80%);
+		}
+	}
+}
