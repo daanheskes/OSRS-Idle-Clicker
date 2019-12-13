@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import '../App.scss';
 
 // Data files
-import monsters from './../Data/MonsterList.js';
-import attackStyles from './../Data/AttackStyles.js';
-import prayerExperience from './../Data/PrayerExperience.js';
-import magicSpells from './../Data/MagicSpellsList.js';
+import monsters from './../Data/MonsterList';
+import attackStyles from './../Data/AttackStyles';
+import prayerExperience from './../Data/PrayerExperience';
+import magicSpells from './../Data/MagicSpellsList';
 
 // Components
-import Navbar from './Navbar/Navbar.js';
-import Monster from './Monster/Monster.js';
-import AttackStyle from './AttackStyle/AttackStyle.js';
-import CoinDisplay from './CoinDisplay/CoinDisplay.js';
-import ItemShop from './ItemShop/ItemShop.js';
-import GearSets from './GearSets/GearSets.js';
-import Equipment from './Equipment/Equipment.js';
-import Skills from './Skills/Skills.js';
+import Navbar from './Navbar/Navbar';
+import Monster from './Monster/Monster';
+import AttackStyle from './AttackStyle/AttackStyle';
+import CoinDisplay from './CoinDisplay/CoinDisplay';
+import ItemShop from './ItemShop/ItemShop';
+import GearSets from './GearSets/GearSets';
+import Equipment from './Equipment/Equipment';
+import Skills from './Skills/Skills';
 
 // Styles
 import './Navbar/Navbar.scss';
