@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import attackStyles from './../../Data/AttackStyles';
+import attackStyles from './../../Data/AttackStyles.js';
 
 class AttackStyle extends Component {
 
