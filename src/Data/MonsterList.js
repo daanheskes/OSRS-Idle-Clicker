@@ -92,7 +92,7 @@ export default {
 		combatlevel: 14,
 		hitpoints: 17,
 		img: scorpionImage,
-		bones: "Bones"
+		bones: null
 	},
 	guard: {
 		name: "Guard",
