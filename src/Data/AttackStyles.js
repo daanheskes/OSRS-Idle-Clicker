@@ -10,6 +10,9 @@ import swordChop from './../assets/combatstyles/sword-chop.png';
 import bowAccurate from './../assets/combatstyles/bow-accurate.png';
 import bowRapid from './../assets/combatstyles/bow-rapid.png';
 import bowLongrange from './../assets/combatstyles/bow-longrange.png';
+import crossbowAccurate from './../assets/combatstyles/crossbow-accurate.png';
+import crossbowRapid from './../assets/combatstyles/crossbow-rapid.png';
+import crossbowLongrange from './../assets/combatstyles/crossbow-longrange.png';
 
 export default {
 	'unarmed-punch': {
@@ -105,6 +108,30 @@ export default {
 		name: 'Longrange',
 		experience: ['ranged', 'defence'],
 		img: bowLongrange,
+		combatStyle: 'ranged',
+		style: 'longrange'
+	},
+	'crossbow-accurate': {
+		shortname: 'crossbow-accurate',
+		name: 'Accurate',
+		experience: 'ranged',
+		img: crossbowAccurate,
+		combatStyle: 'ranged',
+		style: 'accurate'
+	},
+	'crossbow-rapid': {
+		shortname: 'crossbow-rapid',
+		name: 'Rapid',
+		experience: 'ranged',
+		img: crossbowRapid,
+		combatStyle: 'ranged',
+		style: 'rapid'
+	},
+	'crossbow-longrange': {
+		shortname: 'crossbow-longrange',
+		name: 'Longrange',
+		experience: ['ranged', 'defence'],
+		img: crossbowLongrange,
 		combatStyle: 'ranged',
 		style: 'longrange'
 	}
