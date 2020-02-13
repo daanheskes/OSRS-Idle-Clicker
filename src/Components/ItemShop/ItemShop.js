@@ -288,6 +288,48 @@ class ItemShop extends Component {
 					<div id='slotList' className='slot-wrapper'>
 						{slotlist}
 					</div>
+					<div className='shopFilters-container'>
+						<div className='shopFilters-category'>
+							<div className='md-checkbox'>
+								<label>
+									<input type="checkbox" name="melee" />
+									<span>Melee</span>
+								</label>
+							</div>
+							<div className='md-checkbox'>
+								<label>
+									<input type="checkbox" name="ranged" />
+									<span>Ranged</span>
+								</label>
+							</div>
+							<div className='md-checkbox'>
+								<label>
+									<input type="checkbox" name="magic" />
+									<span>Magic</span>
+								</label>
+							</div>
+						</div>
+						<div className='shopFilters-category'>
+							<div className='md-checkbox'>
+								<label>
+									<input type="checkbox" name="ownedOnly" />
+									<span>Owned Only</span>
+								</label>
+							</div>
+							<div className='md-checkbox'>
+								<label>
+									<input type="checkbox" name="unownedOnly" />
+									<span>Unowned Only</span>
+								</label>
+							</div>
+							<div className='md-checkbox'>
+								<label>
+									<input type="checkbox" name="equippableOnly" />
+									<span>Equippable Only</span>
+								</label>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div id='shopItems'>
 					{allItems}

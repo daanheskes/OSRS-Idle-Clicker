@@ -7,12 +7,26 @@
 	z-index: -1;
 
 	#shopFilter {
+		display: flex;
 		position: relative;
 		width: 100%;
 		height: 60px;
 		padding-left: 12px;
 		border-bottom: 1px solid black;
 		box-sizing: border-box;
+
+		.shopFilters-container {
+			display: flex;
+			align-items: center;
+
+			.shopFilters-category {
+				display: flex;
+				height: 100%;
+				align-items: center;
+				border-right: 1px solid black;
+				margin-left: 24px;
+			}
+		}
 
 		&::after {
 			content: "";
@@ -206,4 +220,90 @@
 			}
 		}
 	}
+}
+
+.md-checkbox {
+  display: inline-block;
+	user-select: none;
+	
+	+ .md-checkbox {
+		margin-left: 16px;
+	}
+  
+  label {
+    display: block;
+    line-height: 0;
+    cursor: pointer;
+  }
+  
+  span {
+    display: inline-block;
+    padding: 0 4px;
+    color: #8D98A5;
+    font-size: 14px;
+    line-height: 18px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px #000000;
+    vertical-align: top;
+    font-weight: 500;
+    transform: scaleY(0.9);
+  }
+
+  input[type=checkbox] {
+    display: inline-block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    margin: 0;
+    position: relative;
+    outline: 0;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 14px;
+    border-radius: 2px;
+    width: 18px;
+    height: 18px;
+    background-color: transparent;
+    border: 2px solid #8D98A5;
+    transition: all 0.175s ease-in;
+    
+    &::before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      content: "";
+      color: #ffffff;
+      display: block;
+      border-radius: 0;
+      transition: all 0.175s ease-in;
+    }
+    
+    &::after {
+      content: "";
+      display: block;
+      transform: translate(1px, 2px) rotate(-45deg);
+      width: 10px;
+      height: 5px;
+      border: 2px solid transparent;
+      border-top-style: none;
+      border-right-style: none;
+      transition: border-color 0.175s ease-in;
+    }
+  }
+  
+  input[type=checkbox]:checked {
+    border-color: #86A2C5;
+  }
+
+  input[type=checkbox]:checked::before {
+    background-color: #86A2C5;
+  }
+
+  input[type=checkbox]:checked::after {
+    border-color: #15191E;
+  }
 }
