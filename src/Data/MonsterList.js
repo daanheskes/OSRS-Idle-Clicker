@@ -9,6 +9,7 @@ import alkharidwarriorImage from './../assets/monsters/Al-Kharid_warrior.png';
 import wolfImage from './../assets/monsters/Wolf.png';
 import minotaurImage from './../assets/monsters/Minotaur.png';
 import scorpionImage from './../assets/monsters/Scorpion.png';
+import kingScorpionImage from './../assets/monsters/King_Scorpion.png';
 import guardImage from './../assets/monsters/Guard.png';
 import hillgiantImage from './../assets/monsters/Hill_giant.png';
 import mossgiantImage from './../assets/monsters/Moss_giant.png';
@@ -107,6 +108,13 @@ export default {
 		hitpoints: 35,
 		img: hillgiantImage,
 		bones: "Big bones"
+	},
+	kingScorpion: {
+		name: "King Scorpion",
+		combatLevel: 32,
+		hitpoints: 30,
+		img: kingScorpionImage,
+		bones: null
 	},
 	mossgiant: {
 		name: "Moss Giant",
