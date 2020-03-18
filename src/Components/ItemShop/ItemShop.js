@@ -43,20 +43,15 @@ class ItemShop extends Component {
 
 	allShopItems(slot) {
 		return Object.values(equipment[slot]).filter((item) => {
+			// Filter defenders
 			if (item.name.includes('defender')) {
 				const bestDefender = this.getBestDefender();
-				if (this.props.stats.defence.level === 1 && bestDefender !== 'Bronze defender' && bestDefender !== false && item.name === 'Iron defender') {
-					return true;
-				}
-				if (bestDefender === false) {
-					if (item.name === 'Bronze defender') {
-						return true;
-					}
-				} else {
-					if (item.name === bestDefender || (bestDefender === 'Dragon defender' && item.name === 'Avernic defender')) {
-						return true;
-					}
-				}
+				// Show bronze defender if player has no defenders.
+				if (bestDefender === false && item.name === 'Bronze defender') return true;
+				// Show best defender & Show Avernic defender if best defender is Dragon (to upgrade for money).
+				if (item.name === bestDefender || (bestDefender === 'Dragon defender' && item.name === 'Avernic defender')) return true;
+				// Show best defender for 1 def pures
+				if (this.props.stats.defence.level === 1 && bestDefender !== 'Bronze defender' && bestDefender !== false && item.name === 'Iron defender') return true;
 				return false;
 			}
 			return true;
