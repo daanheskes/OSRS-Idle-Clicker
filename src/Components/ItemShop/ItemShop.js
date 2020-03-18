@@ -26,8 +26,7 @@ class ItemShop extends Component {
 	}
 
 	hasItem(item) {
-		if (this.props.ownedItems.includes(item)) return true;
-		return false;
+		return this.props.ownedItems.includes(item);
 	}
 
 	getBestDefender() {
