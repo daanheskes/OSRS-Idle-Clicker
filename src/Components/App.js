@@ -306,7 +306,6 @@ class IdleOSRS extends Component {
 	}
 
 	clickMonster(currentMonster, Xcoord, Ycoord) {
-		// TO DO: Combine all setState functions to one update (optimization)
 		let damage = this.calculateDamage();
 		let newState = this.state;
 
@@ -378,79 +377,57 @@ class IdleOSRS extends Component {
 		return 0;
 	}
 
+	getPlayerMultipliers(stat) {
+		switch(stat) {
+			case 'attack':
+				return [
+					[7,  1.05],
+					[16, 1.10],
+					[34, 1.15],
+					[60, 1.15],
+					[70, 1.20]
+				];
+			case 'strength':
+				return [
+					[4,  1.05],
+					[13, 1.10],
+					[31, 1.15],
+					[60, 1.18],
+					[70, 1.23]
+				];
+			case 'defence':
+				return [
+					[1,  1.05],
+					[10, 1.10],
+					[28, 1.15],
+					[60, 1.20],
+					[70, 1.25]
+				]
+			case 'ranged':
+				return [
+					[8,  1.05],
+					[26, 1.10],
+					[44, 1.15],
+					[74, 1.20]
+				];
+			case 'rangedstrength':
+				return [
+					[74, 1.23]
+				];
+			default:
+				return [];
+		}
+	}
+
 	getPrayerMultiplier(stat, prayerLevel = this.state.stats.prayer.level) {
 		let multiplier = 1;
+		let multipliers = this.getPlayerMultipliers(stat);
 
-		if (stat === 'attack') {
-			if (prayerLevel >= 7) {
-				multiplier = 1.05;
+		multipliers.forEach(([prayerRequirement, prayerMultiplier]) => {
+			if (prayerLevel >= prayerRequirement) {
+				multiplier = prayerMultiplier;
 			}
-			if (prayerLevel >= 16) {
-				multiplier = 1.1;
-			}
-			if (prayerLevel >= 34) {
-				multiplier = 1.15;
-			}
-			if (prayerLevel >= 60) {
-				multiplier = 1.15;
-			}
-			if (prayerLevel >= 70) {
-				multiplier = 1.20;
-			}
-		}
-		if (stat === 'strength') {
-			if (prayerLevel >= 4) {
-				multiplier = 1.05;
-			}
-			if (prayerLevel >= 13) {
-				multiplier = 1.1;
-			}
-			if (prayerLevel >= 31) {
-				multiplier = 1.15;
-			}
-			if (prayerLevel >= 60) {
-				multiplier = 1.18;
-			}
-			if (prayerLevel >= 70) {
-				multiplier = 1.23;
-			}
-		}
-		if (stat === 'defence') {
-			if (prayerLevel >= 1) {
-				multiplier = 1.05;
-			}
-			if (prayerLevel >= 10) {
-				multiplier = 1.10;
-			}
-			if (prayerLevel >= 28) {
-				multiplier = 1.15;
-			}
-			if (prayerLevel >= 60) {
-				multiplier = 1.20;
-			}
-			if (prayerLevel >= 70) {
-				multiplier = 1.25;
-			}
-		}
-		if (stat === 'ranged') {
-			if (prayerLevel >= 8) {
-				multiplier = 1.05;
-			}
-			if (prayerLevel >= 26) {
-				multiplier = 1.10;
-			}
-			if (prayerLevel >= 44) {
-				multiplier = 1.15;
-			}
-			if (prayerLevel >= 74) {
-				multiplier = 1.20;
-			}
-		}
-		if (stat === 'rangedstrength') {
-			if (prayerLevel >= 74) {
-				multiplier = 1.23;
-			}
-		}
+		});
 
 		return multiplier;
 	}
