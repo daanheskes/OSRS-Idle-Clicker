@@ -7,6 +7,9 @@ import swordLungeShared from './../assets/combatstyles/sword-lunge-shared.png';
 import swordSlash from './../assets/combatstyles/sword-slash.png';
 import swordBlock from './../assets/combatstyles/sword-block.png';
 import swordChop from './../assets/combatstyles/sword-chop.png';
+import whipFlick from './../assets/combatstyles/whip-flick.png';
+import whipLash from './../assets/combatstyles/whip-lash.png';
+import whipDeflect from './../assets/combatstyles/whip-deflect.png';
 import bowAccurate from './../assets/combatstyles/bow-accurate.png';
 import bowRapid from './../assets/combatstyles/bow-rapid.png';
 import bowLongrange from './../assets/combatstyles/bow-longrange.png';
@@ -86,6 +89,30 @@ export default {
 		img: swordChop,
 		combatStyle: 'melee',
 		style: 'accurate'
+	},
+	'whip-flick': {
+		shortname: 'whip-flick',
+		name: 'Flick',
+		experience: 'attack',
+		img: whipFlick,
+		combatStyle: 'melee',
+		style: 'accurate'
+	},
+	'whip-lash': {
+		shortname: 'whip-lash',
+		name: 'Lash',
+		experience: ['attack', 'strength', 'defence'],
+		img: whipLash,
+		combatStyle: 'melee',
+		style: 'controlled'
+	},
+	'whip-deflect': {
+		shortname: 'whip-deflect',
+		name: 'Deflect',
+		experience: 'defence',
+		img: whipDeflect,
+		combatStyle: 'melee',
+		style: 'defensive'
 	},
 	'bow-accurate': {
 		shortname: 'bow-accurate',

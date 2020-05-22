@@ -228,10 +228,11 @@ class IdleOSRS extends Component {
 	calculatePassiveIncome() {
 		let passiveIncome = 0;
 
-		passiveIncome += Math.floor(this.calculateItemBonus('def_bonus') / 10);
-		passiveIncome += (Math.floor(this.calculateItemBonus('def_bonus') / 50) * 2);
-		passiveIncome += (Math.floor(this.calculateItemBonus('def_bonus') / 100) * 3);
-		passiveIncome += (Math.floor(this.calculateItemBonus('def_bonus') / 250) * 5);
+		passiveIncome += Math.floor(this.calculateItemBonus('def_bonus') / 8);
+		passiveIncome += Math.floor(this.calculateItemBonus('def_bonus') / 25) * 2;
+		passiveIncome += Math.floor(this.calculateItemBonus('def_bonus') / 50) * 3;
+		passiveIncome += Math.floor(this.calculateItemBonus('def_bonus') / 100) * 4;
+		passiveIncome += Math.floor(this.calculateItemBonus('def_bonus') / 250) * 5;
 		passiveIncome += this.calculateItemBonus('income');
 
 		return Math.floor(passiveIncome * MULTIPLIER);
@@ -642,7 +643,7 @@ class IdleOSRS extends Component {
 		// Jad
 		if (!this.hasItem('Fire cape')) {
 			if (stats.combat.level >= 70) {
-				if (Math.random() >= this.percentageChanceToInteger(0.5 + ((stats.combat.level - 70) * 0.05))) {
+				if (Math.random() >= this.percentageChanceToInteger(0.25 + ((stats.combat.level - 70) * 0.05))) {
 					bossesRolled.push('tztokjad');
 				}
 			}

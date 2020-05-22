@@ -30,6 +30,7 @@ import mithrilscimitarImage from './../assets/items/Mithril_scimitar.png';
 import adamantscimitarImage from './../assets/items/Adamant_scimitar.png';
 import runescimitarImage from './../assets/items/Rune_scimitar.png';
 import dragonscimitarImage from './../assets/items/Dragon_scimitar.png';
+import abyssalWhipImage from './../assets/items/Abyssal_whip.png';
 import shortbowImage from './../assets/items/Shortbow.png';
 import bronzeplatebodyImage from './../assets/items/Bronze_platebody.png';
 import ironplatebodyImage from './../assets/items/Iron_platebody.png';
@@ -105,7 +106,7 @@ function addItem(slot, name, requirements, cost, img, income=0, atk_bonus=0, str
 		switch (name) {
 			case 'Bronze sword':
 				newItem.attackstyles = ['sword-stab', 'sword-lunge-strength', 'sword-slash', 'sword-block'];
-			break;
+				break;
 			case 'Bronze scimitar':
 			case 'Iron scimitar':
 			case 'Steel scimitar':
@@ -115,14 +116,17 @@ function addItem(slot, name, requirements, cost, img, income=0, atk_bonus=0, str
 			case 'Rune scimitar':
 			case 'Dragon scimitar':
 				newItem.attackstyles = ['sword-chop', 'sword-slash', 'sword-lunge-shared', 'sword-block'];
-			break;
+				break;
+			case 'Abyssal whip':
+				newItem.attackstyles = ['whip-flick', 'whip-lash', 'whip-deflect'];
+				break;
 			case 'Shortbow':
 				newItem.attackstyles = ['bow-accurate', 'bow-rapid', 'bow-longrange'];
 				newItem.twoHanded = true;
-			break;
+				break;
 			default:
 				newItem.attackstyles = [];
-			break;
+				break;
 		}
 	}
 
@@ -166,6 +170,8 @@ addItem('weapon', 'Mithril scimitar', {attack: 20}, 1040, mithrilscimitarImage, 
 addItem('weapon', 'Adamant scimitar', {attack: 30}, 2560, adamantscimitarImage, 0, 29, 28, 1);
 addItem('weapon', 'Rune scimitar', {attack: 40}, 25600, runescimitarImage, 0, 45, 44, 1);
 addItem('weapon', 'Dragon scimitar', {attack: 60}, 100000, dragonscimitarImage, 0, 67, 66, 1);
+addItem('weapon', 'Abyssal Whip', {attack: 70}, 1200000, abyssalWhipImage, 0, 82, 82, 0);
+
 // Ranged
 addItem('weapon', 'Shortbow', {}, 50, shortbowImage, 0, 0, 0, 0, 8);
 
