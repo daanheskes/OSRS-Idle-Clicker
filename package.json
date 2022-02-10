@@ -6,7 +6,7 @@
 	"private": false,
 	"license": "MIT",
 	"dependencies": {
-		"node-sass": "^4.14.1",
+		"node-sass": "^7.0.0",
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6",
 		"react-scripts": "^3.4.1"
