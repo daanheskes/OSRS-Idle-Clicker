@@ -6,10 +6,18 @@
 	"private": false,
 	"license": "MIT",
 	"dependencies": {
+		"@ixiaer/icon": "^1.1.6",
+		"@nodestrap/responsive": "^4.0.4",
+		"categorizr": "^0.3.2",
+		"generator-mean-seed": "^1.1.26",
+		"lazo": "^3.0.1",
+		"node-image-processing": "^0.1.10",
 		"node-sass": "^4.14.1",
+		"notanothertable": "^1.1.4",
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6",
 		"react-scripts": "^3.4.1",
+		"svg-sprite": "^1.5.4",
 		"tachyons": "^4.12.0"
 	},
 	"scripts": {
