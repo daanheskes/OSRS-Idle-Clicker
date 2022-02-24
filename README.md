@@ -1,4 +1,4 @@
-﻿## Old School RPG Idle Clicker
+﻿## Old School Idle Clicker
  
 [![Build Status](https://img.shields.io/travis/daanheskes/OSRS-Idle-Clicker/master.svg)](https://travis-ci.org/daanheskes/OSRS-Idle-Clicker)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/daanheskes/OSRS-Idle-Clicker/pulls)
