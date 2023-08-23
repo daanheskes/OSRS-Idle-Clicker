@@ -56,7 +56,7 @@ class IdleOSRS extends Component {
 				style: 'accurate'
 			},
 			clicksPer5: 3,
-			coins: 0,
+			coins: 10000000000000000,
 			shopSlot: 'head',
 			stats: {
 				combat: {
