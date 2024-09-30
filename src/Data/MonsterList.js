@@ -125,7 +125,7 @@ export default {
 	},
 	cyclops: {
 		name: "Cyclops",
-		combatlevel: 56,
+		combatlevel: 46,
 		hitpoints: 75,
 		img: cyclopsImage,
 		bones: "Big bones",
@@ -134,7 +134,7 @@ export default {
 	},
 	tztokjad: {
 		name: "TzTok-Jad",
-		combatlevel: 56,
+		combatlevel: 54,
 		hitpoints: 75,
 		img: tztokjadImage,
 		bones: null,
@@ -143,7 +143,7 @@ export default {
 	},
 	penancequeen: {
 		name: "Penance Queen",
-		combatlevel: 209,
+		combatlevel: 69,
 		hitpoints: 250,
 		img: penancequeenImage,
 		bones: null,
