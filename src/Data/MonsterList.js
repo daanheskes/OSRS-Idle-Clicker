@@ -125,8 +125,8 @@ export default {
 	},
 	cyclops: {
 		name: "Cyclops",
-		combatlevel: 56,
-		hitpoints: 75,
+		combatlevel: 10,
+		hitpoints: 10,
 		img: cyclopsImage,
 		bones: "Big bones",
 		boss: true,
@@ -134,8 +134,8 @@ export default {
 	},
 	tztokjad: {
 		name: "TzTok-Jad",
-		combatlevel: 56,
-		hitpoints: 75,
+		combatlevel: 10,
+		hitpoints: 10,
 		img: tztokjadImage,
 		bones: null,
 		boss: true,
