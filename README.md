@@ -8,7 +8,7 @@ An incremental game based on the game [Old School Runescape](https://oldschool.r
 
 ## Play game
 
-https://osrs-idle-clicker.netlify.com/
+https://osrs-idle-clicker.netlify.app/
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
