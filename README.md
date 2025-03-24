@@ -1,14 +1,9 @@
 ﻿## OSRS Idle Clicker
  
-[![Build Status](https://img.shields.io/travis/daanheskes/OSRS-Idle-Clicker/master.svg)](https://travis-ci.org/daanheskes/OSRS-Idle-Clicker)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/daanheskes/OSRS-Idle-Clicker/pulls)
 [![License](https://img.shields.io/github/license/daanheskes/OSRS-Idle-Clicker.svg)](https://github.com/daanheskes/OSRS-Idle-Clicker/blob/master/LICENSE)
 
 An incremental game based on the game [Old School Runescape](https://oldschool.runescape.com/).
-
-## Play game
-
-https://osrs-idle-clicker.netlify.app/
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
